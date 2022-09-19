@@ -4,10 +4,12 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 
+import org.openstreetmap.gui.jmapviewer.JMapViewer;
+
 public class Interfaz {
 
 	private JFrame frame;
-
+	private JMapViewer mapa;
 	/**
 	 * Launch the application.
 	 */
@@ -35,9 +37,11 @@ public class Interfaz {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		mapa = new JMapViewer();
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().add(mapa);
 	}
 
 }
