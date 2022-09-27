@@ -1,6 +1,8 @@
 package interfaz;
 
 import java.awt.EventQueue;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -14,6 +16,9 @@ public class Interfaz {
 
 	private JFrame frame;
 	private JMapViewer mapa;
+	private Toolkit miPantalla;
+	private Image miIcono;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -43,7 +48,14 @@ public class Interfaz {
 	private void initialize() {
 		mapa = new JMapViewer();
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setResizable(false);
+		frame.setTitle("Clustering con AGM");
+		miPantalla = Toolkit.getDefaultToolkit();
+		miIcono = miPantalla.getImage("src/icono.png");
+		frame.setIconImage(miIcono);
+		
+		frame.setBounds(0, 0, 800, 600);
+		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().add(mapa);
 		
