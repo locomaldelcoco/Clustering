@@ -14,6 +14,9 @@ public class Vertice {
 	}
 	
 	public void agregarVecino(int vecino) {
+		if (vecino < 0) {
+			throw new IllegalArgumentException("No puede existir vecinos negativos");
+		}
 		_vecinos.add(vecino);
 	}
 }
