@@ -19,10 +19,24 @@ public class Vertice {
 		}
 		_vecinos.add(vecino);
 	}
+
 	public void eliminarVecino(int vecino) {
 		if (vecino < 0) {
 			throw new IllegalArgumentException("No puede existir vecinos negativos");
 		}
 		_vecinos.remove(vecino);
 	}
+
+	public long get_x() {
+		return _x;
+	}
+
+	public long get_y() {
+		return _y;
+	}
+
+	public Set<Integer> get_vecinos() {
+		return _vecinos;
+	}
+
 }
