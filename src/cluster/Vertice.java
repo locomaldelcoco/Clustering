@@ -12,4 +12,8 @@ public class Vertice {
 		_y = y;
 		_vecinos = new HashSet<>();
 	}
+	
+	public void agregarVecino(int vecino) {
+		_vecinos.add(vecino);
+	}
 }
