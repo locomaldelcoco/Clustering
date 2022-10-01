@@ -8,14 +8,7 @@ public class Arco {
 	public Arco(Vertice verticeA, Vertice verticeB) {
 		_verticeA = verticeA;
 		_verticeB = verticeB;
-		_distancia = calcularDistancia();
-	}
-
-	private long calcularDistancia() {
-		return (long) Math.sqrt(
-				Math.pow(_verticeB.get_x() - _verticeA.get_x(),2) +
-				Math.pow(_verticeB.get_y() - _verticeA.get_y(),2)
-				);
+		_distancia = DistanciaEuclidea.distancia(verticeA, verticeB);
 	}
 	
 	public Vertice getVerticeA() {
