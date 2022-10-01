@@ -8,18 +8,18 @@ import java.util.Map;
 public class Grafo<Arco> {
 	List <Integer> _nombres;//vertices
 	List <Arco> _aristas;
-	Map<Integer,Object> _nodos;
+	Map<Integer,Vertice> _nodos;
  
  	public Grafo()
  	{
  		_nombres=new ArrayList<Integer>();
  		_aristas=new ArrayList <Arco>();
- 		_nodos=new HashMap <Integer,Object>();
+ 		_nodos=new HashMap <Integer,Vertice>();
  	}
  
  	public void ingresarNodo(Integer nombre){
  		_nombres.add(nombre);
- 		_nodos.put(nombre,new Object(x,y));
+ 		_nodos.put(nombre,new Vertice(0, 0));
  	}
  	
  	public void adicionarEnlace(String nodoInicial,String nodoTerminal,float peso){
@@ -56,32 +56,26 @@ public class Grafo<Arco> {
  		}
  		return -1;
  	}
+
  	
- 	public HashMap<Integer,Object> getNodos(){
- 		return _nodos;
+ 	public List<Integer> get_nombres() {
+		return _nombres;
+	}
+
+	public void set_nombres(List<Integer> _nombres) {
+		this._nombres = _nombres;
+	}
+
+	public Vertice getNodo(Integer nombre){
+ 		return (Vertice)_nodos.get(nombre);
  	}
- 	
- 	public void setNodos(HashMap<Integer,Object > muchos){
- 		_nodos=muchos;
- 	}
- 	
- 	public ArrayList<Integer> getNombres(){
- 		return _nombres;
- 	}
- 	
- 	public Object getNodo(Integer nombre){
- 		return (Object)_nodos.get(nombre);
- 	}
+
+	public List<Arco> get_aristas() {
+		return _aristas;
+	}
+
+	public void set_aristas(List<Arco> _aristas) {
+		this._aristas = _aristas;
+	}
  
- 	public ArrayList<Arco> getAristas() {
- 		return _aristas;
- 	}
- 
- 	public void setAristas(ArrayList<Arco> aristas) {
- 		this._aristas = aristas;
- 	}
- 
- 	public void setNombres(ArrayList<Arco> nombres) {
- 		this._nombres = nombres;
- 	}
 }
