@@ -18,6 +18,14 @@ public class Arco {
 				);
 	}
 	
+	public Vertice getVerticeA() {
+		return _verticeA;
+	}
+
+	public Vertice getVerticeB() {
+		return _verticeB;
+	}
+	
 	public long getDistancia() {
 		return _distancia;
 	}
