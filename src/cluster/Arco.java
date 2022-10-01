@@ -18,7 +18,7 @@ public class Arco {
 				);
 	}
 	
-	private long getDistancia() {
+	public long getDistancia() {
 		return _distancia;
 	}
 }
