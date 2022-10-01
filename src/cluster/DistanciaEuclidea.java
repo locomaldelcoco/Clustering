@@ -1,15 +1,13 @@
 package cluster;
 
-import java.awt.Point;
-
 public class DistanciaEuclidea {
-	public static double distancia(Point p1, Point p2) {
-		if (p1 == null || p2 == null) {
+	public static long distancia(Vertice vA, Vertice vB) {
+		if (vA == null || vB == null) {
 			throw new NullPointerException("los parametros no pueden ser null");
 		}
-		double diferenciaX = p1.getX() - p2.getX();
-		double diferenciaY = p1.getY() - p2.getY();
+		long diferenciaX = vB.get_x() - vA.get_x();
+		long diferenciaY = vB.get_y() - vA.get_y();
 		
-		return Math.sqrt(Math.pow(diferenciaX, 2) + Math.pow(diferenciaY, 2));
+		return (long) Math.sqrt(Math.pow(diferenciaX, 2) + Math.pow(diferenciaY, 2));
 	}
 }
