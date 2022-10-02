@@ -10,7 +10,13 @@ import javax.swing.JFrame;
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
+import org.openstreetmap.gui.jmapviewer.MapPolygonImpl;
 import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
+import org.openstreetmap.gui.jmapviewer.interfaces.MapPolygon;
+
+import cluster.Arco;
+import cluster.Grafo;
+import cluster.Vertice;
 
 public class Interfaz {
 
@@ -59,12 +65,29 @@ public class Interfaz {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().add(mapa);
 		
-		ArrayList<Coordinate> coords = Filter.coordenadas("5"); // Número de instancia en String
-		for (Coordinate c : coords) {
+		Grafo g = new Grafo();
+		g.crearGrafo("5");
+		g.completarGrafo();
+		
+		ArrayList<Vertice> vertices = g.getVertices();
+		
+		for(Vertice v : vertices) {
+			Coordinate c = new Coordinate(v.get_x(), v.get_y());
 			mapa.setDisplayPosition(c, 12);
 			MapMarker m = new MapMarkerDot(c);
 			mapa.addMapMarker(m);
 		}
+		
+		for (int i = 0; i < g.getArcos().size(); i++)
+			dibujarArco(g.getArcos().get(i));
+
 	}
 
+	private void dibujarArco(Arco a) {
+		Coordinate c1 = new Coordinate(a.getVerticeA().get_x(), a.getVerticeA().get_y());
+		Coordinate c2 = new Coordinate(a.getVerticeB().get_x(), a.getVerticeB().get_y());
+		MapPolygon p = new MapPolygonImpl(c1, c2, c2);
+		mapa.addMapPolygon(p);
+	}
+	
 }
