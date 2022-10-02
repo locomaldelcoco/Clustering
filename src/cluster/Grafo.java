@@ -23,10 +23,12 @@ public class Grafo {
 	
 	public void completarGrafo() {
 		for (int i = 0; i < _vertices.size(); i++ ) {
-			for (int j = i + 1; j < _vertices.size(); j++ ) {
-				double distancia = DistanciaEuclidea.distancia(_vertices.get(i), _vertices.get(j));
-				System.out.println(distancia);
-				agregarArco(i, j, distancia);
+	/*j=i+1*/for (int j = 0; j < _vertices.size(); j++ ) {
+				if (i != j) {
+					double distancia = DistanciaEuclidea.distancia(_vertices.get(i), _vertices.get(j));
+					System.out.println(distancia);
+					agregarArco(i, j, distancia);
+				}
 			}
 		}
 	}
