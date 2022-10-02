@@ -4,10 +4,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Vertice {
-	private long _x, _y;
+	private double _x, _y;
 	private Set<Integer> _vecinos;
 
-	public Vertice(long x, long y) {
+	public Vertice(double x, double y) {
 		_x = x;
 		_y = y;
 		_vecinos = new HashSet<>();
@@ -27,11 +27,11 @@ public class Vertice {
 		_vecinos.remove(vecino);
 	}
 
-	public long get_x() {
+	public double get_x() {
 		return _x;
 	}
 
-	public long get_y() {
+	public double get_y() {
 		return _y;
 	}
 
@@ -39,4 +39,8 @@ public class Vertice {
 		return _vecinos;
 	}
 
+	@Override
+	public String toString() {
+		return "(" + _x + ", " + _y + ")\n";
+	}
 }
