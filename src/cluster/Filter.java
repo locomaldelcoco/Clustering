@@ -1,16 +1,14 @@
-package interfaz;
+package cluster;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import org.openstreetmap.gui.jmapviewer.Coordinate;
-
 public class Filter {
 
-	public static ArrayList<Coordinate> coordenadas(String n) {
-		ArrayList<Coordinate> marks = new ArrayList<Coordinate>();
+	public static ArrayList<Vertice> coordenadas(String n) {
+		ArrayList<Vertice> marks = new ArrayList<Vertice>();
 		int count = 0;
 		double coordX = 0.0;
 		double coordY = 0.0;
@@ -26,7 +24,7 @@ public class Filter {
 					coordX = Double.parseDouble(linea);
 				} else {
 					coordY = Double.parseDouble(linea);
-					marks.add(new Coordinate(coordX, coordY));
+					marks.add(new Vertice(coordX, coordY));
 					//System.out.println("X = " + coordX);
 					//System.out.println("Y = " + coordY);
 				}
