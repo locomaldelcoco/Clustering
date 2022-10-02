@@ -3,12 +3,12 @@ package cluster;
 public class Arco {
 	private Vertice _verticeA;
 	private Vertice _verticeB;
-	private long _distancia;
+	private double _distancia;
 
-	public Arco(Vertice verticeA, Vertice verticeB) {
+	public Arco(Vertice verticeA, Vertice verticeB, double distancia) {
 		_verticeA = verticeA;
 		_verticeB = verticeB;
-		_distancia = DistanciaEuclidea.distancia(verticeA, verticeB);
+		_distancia = distancia;
 	}
 	
 	public Vertice getVerticeA() {
@@ -19,7 +19,8 @@ public class Arco {
 		return _verticeB;
 	}
 	
-	public long getDistancia() {
+	public double getDistancia() {
 		return _distancia;
 	}
+
 }
