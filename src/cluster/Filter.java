@@ -8,6 +8,7 @@ import java.util.Scanner;
 public class Filter {
 
 	public static ArrayList<Vertice> coordenadas(String n) {
+		//mover gestorArchivos
 		ArrayList<Vertice> marks = new ArrayList<Vertice>();
 		int count = 0;
 		double coordX = 0.0;
