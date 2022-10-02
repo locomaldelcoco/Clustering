@@ -38,6 +38,17 @@ public class Vertice {
 	public Set<Integer> get_vecinos() {
 		return _vecinos;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) return true;
+		if (obj == null) return false;
+		if (getClass() != obj.getClass()) return false;
+		Vertice other = (Vertice) obj;
+		if (_x != other._x || _y != other._y || _vecinos.containsAll(other.get_vecinos()) || other.get_vecinos().containsAll(_vecinos))
+			return false;
+		return true;
+	}
 
 	@Override
 	public String toString() {
