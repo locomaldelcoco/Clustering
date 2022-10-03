@@ -14,6 +14,7 @@ import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
 import org.openstreetmap.gui.jmapviewer.MapPolygonImpl;
+import org.openstreetmap.gui.jmapviewer.Style;
 import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 import org.openstreetmap.gui.jmapviewer.interfaces.MapPolygon;
 
@@ -23,15 +24,19 @@ import cluster.Vertice;
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JPanel;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class Interfaz {
 
 	private JFrame frame;
+	private JPanel contenedorDeMapa;
+	private JPanel panelDeUsuario;
 	private JMapViewer mapa;
 	private Toolkit miPantalla;
 	private Image miIcono;
-	private JButton btnNewButton;
-	private MapPolygon map;
+	private JButton botonEliminar;
 	
 	/**
 	 * Launch the application.
@@ -61,17 +66,24 @@ public class Interfaz {
 	 */
 	private void initialize() {
 		mapa = new JMapViewer();
+		mapa.setBounds(10, 0, 570, 550);
 		frame = new JFrame();
 		frame.setResizable(false);
 		frame.setTitle("Clustering con AGM");
 		miPantalla = Toolkit.getDefaultToolkit();
 		miIcono = miPantalla.getImage("src/icono.png");
 		frame.setIconImage(miIcono);
-		
+		contenedorDeMapa = new JPanel();
+		contenedorDeMapa.setBounds(10, 11, 556, 358);
 		frame.setBounds(0, 0, 800, 600);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().add(mapa);
+		frame.getContentPane().add(contenedorDeMapa);
+		contenedorDeMapa.setLayout(null);
+		
+		contenedorDeMapa.add(mapa);
+		
+		
 		
 		Grafo g = new Grafo();
 		g.crearGrafo("6");
@@ -87,18 +99,23 @@ public class Interfaz {
 		}
 		System.out.println(g.getArcos().size());
 		recorrerArcos(g);
-
-		btnNewButton = new JButton("New button");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mapa.removeAllMapPolygons();;
-				g.eliminarArcoMasPesado();;
-				System.out.println(g.getArcos().size());
-				recorrerArcos(g);
-			}
-		});
-		frame.getContentPane().add(btnNewButton, BorderLayout.NORTH);
 		
+		panelDeUsuario = new JPanel();
+		panelDeUsuario.setBounds(579, 0, 195, 550);
+		contenedorDeMapa.add(panelDeUsuario);
+		panelDeUsuario.setLayout(null);
+		
+				botonEliminar = new JButton("Eliminar Arista Pesada");
+				botonEliminar.setBounds(10, 270, 175, 22);
+				panelDeUsuario.add(botonEliminar);
+				botonEliminar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						mapa.removeAllMapPolygons();;
+						g.eliminarArcoMasPesado();;
+						System.out.println(g.getArcos().size());
+						recorrerArcos(g);
+					}
+				});
 	}
 
 	private void recorrerArcos(Grafo g) {
@@ -115,5 +132,4 @@ public class Interfaz {
 		mapa.addMapPolygon(map);
 		
 	}
-	
 }
