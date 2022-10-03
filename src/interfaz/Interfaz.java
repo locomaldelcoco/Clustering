@@ -60,7 +60,7 @@ public class Interfaz {
 	 */
 	private void initialize() {
 		mapa = new JMapViewer();
-		mapa.setBounds(10, 0, 570, 550);
+		mapa.setBounds(0, 0, 570, 560);
 		frame = new JFrame();
 		frame.setResizable(false);
 		frame.setTitle("Clustering con AGM");
@@ -95,12 +95,12 @@ public class Interfaz {
 		recorrerArcos(g);
 		
 		panelDeUsuario = new JPanel();
-		panelDeUsuario.setBounds(579, 0, 195, 550);
+		panelDeUsuario.setBounds(570, 0, 213, 560);
 		contenedorDeMapa.add(panelDeUsuario);
 		panelDeUsuario.setLayout(null);
 		
 				botonEliminar = new JButton("Eliminar Arista Pesada");
-				botonEliminar.setBounds(10, 270, 175, 22);
+				botonEliminar.setBounds(28, 269, 162, 22);
 				panelDeUsuario.add(botonEliminar);
 				botonEliminar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
