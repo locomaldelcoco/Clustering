@@ -40,12 +40,19 @@ public class Grafo {
 		_arcos.add(new Arco(_vertices.get(indexA), _vertices.get(indexB), distancia));
 		agregarVecinos(indexA, indexB);
 	}
-
+	
+	public void eliminarArco(int numArco) {			
+		if (numArco < 0 || numArco > _arcos.size()) {
+			throw new IndexOutOfBoundsException("el indice es menor o mayor al tamano del arco");
+		}
+		_arcos.remove(numArco);
+	}
+	
 	private void agregarVecinos(int indexA, int indexB) {
 		_vertices.get(indexA).agregarVecino(indexB);
 		_vertices.get(indexB).agregarVecino(indexA);
-	}
-
+	}	
+	
 	public ArrayList<Vertice> getVertices() {
 		return _vertices;
 	}
