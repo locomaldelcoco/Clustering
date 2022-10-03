@@ -1,9 +1,10 @@
 package cluster;
 
 import java.util.Set;
+import java.util.Comparator;
 import java.util.HashSet;
 
-public class Arco {
+public class Arco implements Comparator<Arco> {
 	private Vertice _verticeA;
 	private Vertice _verticeB;
 	private double _distancia;
@@ -25,7 +26,7 @@ public class Arco {
 	public double getDistancia() {
 		return _distancia;
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) return true;
@@ -47,5 +48,10 @@ public class Arco {
 			return false;
 		
 		return true;
+	}
+
+	@Override
+	public int compare(Arco arco1, Arco arco2) {
+		return  arco1.getDistancia() < arco2.getDistancia() ? 1 : arco1.getDistancia() > arco2.getDistancia() ? -1 : 0;
 	}
 }
