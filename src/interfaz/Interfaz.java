@@ -106,6 +106,7 @@ public class Interfaz {
 				}
 				//##END eliminarArcoPesado
 				
+				System.out.println("Distancia arco pesado: " + arcos.get(indexArcoPesado).getDistancia());
 				g.eliminarArco(indexArcoPesado);
 				System.out.println(g.getArcos().size());
 				recorrerArcos(g);
