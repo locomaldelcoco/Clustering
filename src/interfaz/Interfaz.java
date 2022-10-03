@@ -120,7 +120,7 @@ public class Interfaz {
 		mapContainer.setBounds(1, 1, 798, 598);
 		mapContainer.setLayout(null);
 		mapa = new JMapViewer();
-		mapa.setBounds(0, 0, 798, 598);
+		mapa.setBounds(0, 0, 798, 528);
 		mapContainer.add(mapa);
 		frame.getContentPane().add(mapContainer);
 	}
