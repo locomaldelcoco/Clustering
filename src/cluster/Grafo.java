@@ -50,8 +50,13 @@ public class Grafo {
 	}
 	
 	public void eliminarArcoMasPesado() {
-		System.out.println("Se eliminó " + arcoMasPesado().getDistancia());
-		_arcos.remove(arcoMasPesado());
+		if(!_arcos.isEmpty()) {
+			System.out.println("Se eliminó " + arcoMasPesado().getDistancia());
+			_arcos.remove(arcoMasPesado());
+		}else{
+			throw new IndexOutOfBoundsException("No hay arcos para eliminar");
+		}
+		
 	}
 	
 	private Arco arcoMasPesado() {

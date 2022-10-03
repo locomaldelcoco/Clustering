@@ -88,7 +88,7 @@ public class Interfaz {
 		for(Vertice v : vertices) {
 			Coordinate c = new Coordinate(v.get_x(), v.get_y());
 			mapa.setDisplayPosition(c, 12);
-			MapMarker m = new MapMarkerDot(c);
+			MapMarker m = new MapMarkerDot(v.get_nombre()+"",c);
 			mapa.addMapMarker(m);
 		}
 		System.out.println(g.getArcos().size());

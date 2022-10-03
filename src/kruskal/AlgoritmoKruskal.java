@@ -29,7 +29,7 @@ public class AlgoritmoKruskal{
 		ArrayList<Integer> aux = (ArrayList<Integer>)vertice.get_vecinos();
 		if(aux.isEmpty())
 			return false;
+		return true;
 		
-		if(vertice.)
 	}
 }
