@@ -4,11 +4,10 @@ import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
@@ -27,11 +26,12 @@ import java.awt.event.ActionEvent;
 public class Interfaz {
 
 	private JFrame frame;
+	private JPanel mapContainer;
+	private JPanel btnsContainer;
 	private JMapViewer mapa;
 	private Toolkit miPantalla;
 	private Image miIcono;
-	private JButton btnNewButton;
-	private MapPolygon map;
+	private JButton btnEliminarArco;
 	
 	/**
 	 * Launch the application.
@@ -60,25 +60,22 @@ public class Interfaz {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		mapa = new JMapViewer();
-		frame = new JFrame();
-		frame.setResizable(false);
-		frame.setTitle("Clustering con AGM");
-		miPantalla = Toolkit.getDefaultToolkit();
-		miIcono = miPantalla.getImage("src/icono.png");
-		frame.setIconImage(miIcono);
+		setupFrame();
 		
-		frame.setBounds(0, 0, 800, 600);
-		frame.setLocationRelativeTo(null);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().add(mapa);
-		
+		setupMapContainer();
+
 		Grafo g = new Grafo();
 		g.crearGrafo("6");
 		g.completarGrafo();
-		
+
+		setupBtnsContainer(g);
+		showMapMarkers(g);
+		recorrerArcos(g);
+
+	}
+
+	private void showMapMarkers(Grafo g) {
 		ArrayList<Vertice> vertices = g.getVertices();
-		
 		for(Vertice v : vertices) {
 			Coordinate c = new Coordinate(v.get_x(), v.get_y());
 			mapa.setDisplayPosition(c, 12);
@@ -86,10 +83,12 @@ public class Interfaz {
 			mapa.addMapMarker(m);
 		}
 		System.out.println(g.getArcos().size());
-		recorrerArcos(g);
+	}
 
-		btnNewButton = new JButton("New button");
-		btnNewButton.addActionListener(new ActionListener() {
+	private void setupBtnsContainer(Grafo g) {
+		btnsContainer = new JPanel();
+		btnEliminarArco = new JButton("Eliminar Arco");
+		btnEliminarArco.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mapa.removeAllMapPolygons();;
 				g.eliminarArco(0);
@@ -97,8 +96,32 @@ public class Interfaz {
 				recorrerArcos(g);
 			}
 		});
-		frame.getContentPane().add(btnNewButton, BorderLayout.NORTH);
-		
+		btnsContainer.add(btnEliminarArco);
+		frame.getContentPane().add(btnsContainer, BorderLayout.NORTH);
+	}
+
+	private void setupMapContainer() {
+		mapContainer = new JPanel();
+		mapContainer.setBounds(1, 1, 798, 598);
+		mapContainer.setLayout(null);
+		mapa = new JMapViewer();
+		mapa.setBounds(0, 0, 798, 598);
+		mapContainer.add(mapa);
+		frame.getContentPane().add(mapContainer);
+	}
+
+	private void setupFrame() {
+		miPantalla = Toolkit.getDefaultToolkit();
+		miIcono = miPantalla.getImage("src/icono.png");
+
+		frame = new JFrame();
+		frame.setResizable(false);
+		frame.setTitle("Clustering con AGM");
+
+		frame.setIconImage(miIcono);
+		frame.setBounds(0, 0, 800, 600);
+		frame.setLocationRelativeTo(null);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	private void recorrerArcos(Grafo g) {
@@ -106,7 +129,6 @@ public class Interfaz {
 			dibujarArco(g.getArcos().get(i));
 		}
 	}
-
 
 	private void dibujarArco(Arco a) {
 		Coordinate c1 = new Coordinate(a.getVerticeA().get_x(), a.getVerticeA().get_y());
