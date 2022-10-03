@@ -4,11 +4,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Vertice {
-
+	private int _nombre;
 	private double _x, _y;
 	private Set<Integer> _vecinos;
-
+	private static int cont=1;
+	
 	public Vertice(double x, double y) {
+		_nombre = cont++;
 		_x = x;
 		_y = y;
 		_vecinos = new HashSet<>();
@@ -27,7 +29,14 @@ public class Vertice {
 		}
 		_vecinos.remove(vecino);
 	}
-
+	
+	public boolean sonVecinos(Vertice otroVertice) {
+		return _vecinos.contains(otroVertice.get_nombre()) && otroVertice.get_vecinos().contains(_nombre);
+	}
+	
+	public int get_nombre() {
+		return _nombre;
+	}
 	public double get_x() {
 		return _x;
 	}
