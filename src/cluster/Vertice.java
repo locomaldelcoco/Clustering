@@ -4,24 +4,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Vertice {
-<<<<<<< HEAD
-	private long _x, _y;
-	private Set<Integer> _vecinos;
 
-	public Vertice(long x, long y) {
-=======
 	private double _x, _y;
 	private Set<Integer> _vecinos;
 
 	public Vertice(double x, double y) {
->>>>>>> pre-main
 		_x = x;
 		_y = y;
 		_vecinos = new HashSet<>();
 	}
-<<<<<<< HEAD
-}
-=======
 
 	public void agregarVecino(int vecino) {
 		if (vecino < 0) {
@@ -65,4 +56,3 @@ public class Vertice {
 		return "(" + _x + ", " + _y + ")\n";
 	}
 }
->>>>>>> pre-main
