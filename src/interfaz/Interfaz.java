@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -91,7 +92,21 @@ public class Interfaz {
 		btnEliminarArco.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mapa.removeAllMapPolygons();;
-				g.eliminarArco(0);
+				
+				//##START eliminarArcoPesado
+				//-- Primer acercamiento
+				int indexArcoPesado = 0;
+				
+				ArrayList<Arco> arcos = g.getArcos();
+				
+				for (int i = 0; i < arcos.size(); i++) {
+					if (arcos.get(i).getDistancia() > arcos.get(indexArcoPesado).getDistancia()) {
+						indexArcoPesado = i;
+					}
+				}
+				//##END eliminarArcoPesado
+				
+				g.eliminarArco(indexArcoPesado);
 				System.out.println(g.getArcos().size());
 				recorrerArcos(g);
 			}
