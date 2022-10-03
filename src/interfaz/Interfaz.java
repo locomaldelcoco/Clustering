@@ -92,7 +92,7 @@ public class Interfaz {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mapa.removeAllMapPolygons();;
-				g.eliminarArco(0);
+				g.eliminarArcoMasPesado();;
 				System.out.println(g.getArcos().size());
 				recorrerArcos(g);
 			}

@@ -49,6 +49,15 @@ public class Grafo {
 		_arcos.remove(numArco);
 	}
 	
+	public void eliminarArcoMasPesado() {
+		System.out.println("Se eliminó " + arcoMasPesado().getDistancia());
+		_arcos.remove(arcoMasPesado());
+	}
+	
+	private Arco arcoMasPesado() {
+		return _arcos.get(0);
+	}
+	
 	private void ordenarArcos() {
 		Collections.sort(_arcos, Collections.reverseOrder());
 		if (_arcos.isEmpty()) {
