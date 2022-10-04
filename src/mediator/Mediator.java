@@ -41,5 +41,9 @@ public class Mediator {
         }
         return ret;
     }
+    
+    public void eliminarArcoMasPesado() {
+    	_g.eliminarArcoMasPesado();
+    }
 
 }

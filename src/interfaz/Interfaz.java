@@ -16,8 +16,6 @@ import org.openstreetmap.gui.jmapviewer.MapPolygonImpl;
 import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 import org.openstreetmap.gui.jmapviewer.interfaces.MapPolygon;
 import mediator.Mediator;
-import cluster.Arco;
-import cluster.Grafo;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -59,19 +57,13 @@ public class Interfaz {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		setupFrame();
-		
-		setupMapContainer();
-		
 		mediator = new Mediator(6);
-
-		Grafo g = new Grafo();
-		g.crearGrafo(6);
-		g.completarGrafo();
-
-		setupBtnsContainer(g);
+		setupFrame();
+		setupMapContainer();
+		setupPanelDeUsuario();
+		addPanelDeUsuarioEvents();
 		showMapMarkers();
-		recorrerArcos(g);
+		recorrerArcos();
 
 	}
 
@@ -85,26 +77,24 @@ public class Interfaz {
 		System.out.println(coords.size());
 	}
 
-	private void setupBtnsContainer(Grafo g) {
-		
+	private void setupPanelDeUsuario() {
 		panelDeUsuario = new JPanel();
 		panelDeUsuario.setBounds(579, 0, 195, 550);
-		mapContainer.add(panelDeUsuario);
 		panelDeUsuario.setLayout(null);
-		
 		btnEliminarArco = new JButton("Eliminar Arista Pesada");
 		btnEliminarArco.setBounds(10, 270, 175, 22);
 		panelDeUsuario.add(btnEliminarArco);
+		frame.getContentPane().add(panelDeUsuario);
+	}
+	
+	private void addPanelDeUsuarioEvents() {
 		btnEliminarArco.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mapa.removeAllMapPolygons();;
-				g.eliminarArcoMasPesado();;
-				System.out.println(g.getArcos().size());
-				recorrerArcos(g);
+				mediator.eliminarArcoMasPesado();;
+				recorrerArcos();
 			}
 		});
-	
-		
 	}
 
 	private void setupMapContainer() {
@@ -134,17 +124,21 @@ public class Interfaz {
 		
 	
 
-	private void recorrerArcos(Grafo g) {
-		for (int i = 0; i < g.getArcos().size(); i++) {
-			dibujarArco(g.getArcos().get(i));
+	private void recorrerArcos() {
+		ArrayList<Coordinate[]> arcos = mediator.getCoordArcos();
+		
+		for (Coordinate[] c : arcos) {
+			dibujarArco(c[0], c[1]);
 		}
+		
+		System.out.println(arcos.size());
 	}
 
-	private void dibujarArco(Arco a) {
-		Coordinate c1 = new Coordinate(a.getVerticeA().get_x(), a.getVerticeA().get_y());
-		Coordinate c2 = new Coordinate(a.getVerticeB().get_x(), a.getVerticeB().get_y());
+	private void dibujarArco(Coordinate c1, Coordinate c2) {
 		MapPolygon map = new MapPolygonImpl(c1, c2, c2);
 		mapa.addMapPolygon(map);
 		
 	}
+	
+	
 }
