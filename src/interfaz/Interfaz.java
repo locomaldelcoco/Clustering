@@ -16,7 +16,7 @@ import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
 import org.openstreetmap.gui.jmapviewer.MapPolygonImpl;
 import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 import org.openstreetmap.gui.jmapviewer.interfaces.MapPolygon;
-
+import mediator.Mediator;
 import cluster.Arco;
 import cluster.Grafo;
 import cluster.Vertice;
@@ -33,6 +33,7 @@ public class Interfaz {
 	private Toolkit miPantalla;
 	private Image miIcono;
 	private JButton btnEliminarArco;
+	private Mediator mediator;
 	
 	/**
 	 * Launch the application.
@@ -64,26 +65,28 @@ public class Interfaz {
 		setupFrame();
 		
 		setupMapContainer();
+		
+		mediator = new Mediator(6);
+
 
 		Grafo g = new Grafo();
 		g.crearGrafo(6);
 		g.completarGrafo();
 
 		setupBtnsContainer(g);
-		showMapMarkers(g);
+		showMapMarkers();
 		recorrerArcos(g);
 
 	}
 
-	private void showMapMarkers(Grafo g) {
-		ArrayList<Vertice> vertices = g.getVertices();
-		for(Vertice v : vertices) {
-			Coordinate c = new Coordinate(v.get_x(), v.get_y());
+	private void showMapMarkers() {
+		ArrayList<Coordinate> coords = mediator.getCoordenadas();
+		for(Coordinate c : coords) {
 			mapa.setDisplayPosition(c, 12);
 			MapMarker m = new MapMarkerDot(c);
 			mapa.addMapMarker(m);
 		}
-		System.out.println(g.getArcos().size());
+		System.out.println(coords.size());
 	}
 
 	private void setupBtnsContainer(Grafo g) {
