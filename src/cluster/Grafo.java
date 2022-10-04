@@ -11,7 +11,7 @@ public class Grafo {
 		_arcos = new ArrayList<>();
 	}
 
-	public void crearGrafo(String n) {
+	public void crearGrafo(int n) {
 		ArrayList<Vertice> coords = Filter.coordenadas(n);
 		for (Vertice v : coords)
 			agregarVertice(v);

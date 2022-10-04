@@ -66,7 +66,7 @@ public class Interfaz {
 		setupMapContainer();
 
 		Grafo g = new Grafo();
-		g.crearGrafo("6");
+		g.crearGrafo(6);
 		g.completarGrafo();
 
 		setupBtnsContainer(g);
