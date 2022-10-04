@@ -4,7 +4,6 @@ import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,8 +18,6 @@ import org.openstreetmap.gui.jmapviewer.interfaces.MapPolygon;
 import mediator.Mediator;
 import cluster.Arco;
 import cluster.Grafo;
-import cluster.Vertice;
-import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -28,11 +25,11 @@ public class Interfaz {
 
 	private JFrame frame;
 	private JPanel mapContainer;
-	private JPanel btnsContainer;
 	private JMapViewer mapa;
 	private Toolkit miPantalla;
 	private Image miIcono;
 	private JButton btnEliminarArco;
+	private JPanel panelDeUsuario;
 	private Mediator mediator;
 	
 	/**
@@ -68,7 +65,6 @@ public class Interfaz {
 		
 		mediator = new Mediator(6);
 
-
 		Grafo g = new Grafo();
 		g.crearGrafo(6);
 		g.completarGrafo();
@@ -90,33 +86,25 @@ public class Interfaz {
 	}
 
 	private void setupBtnsContainer(Grafo g) {
-		btnsContainer = new JPanel();
-		btnEliminarArco = new JButton("Eliminar Arco");
+		
+		panelDeUsuario = new JPanel();
+		panelDeUsuario.setBounds(579, 0, 195, 550);
+		mapContainer.add(panelDeUsuario);
+		panelDeUsuario.setLayout(null);
+		
+		btnEliminarArco = new JButton("Eliminar Arista Pesada");
+		btnEliminarArco.setBounds(10, 270, 175, 22);
+		panelDeUsuario.add(btnEliminarArco);
 		btnEliminarArco.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mapa.removeAllMapPolygons();;
-				
-				//##START eliminarArcoPesado
-				//-- Primer acercamiento
-				int indexArcoPesado = 0;
-				
-				ArrayList<Arco> arcos = g.getArcos();
-				
-				for (int i = 0; i < arcos.size(); i++) {
-					if (arcos.get(i).getDistancia() > arcos.get(indexArcoPesado).getDistancia()) {
-						indexArcoPesado = i;
-					}
-				}
-				//##END eliminarArcoPesado
-				
-				System.out.println("Distancia arco pesado: " + arcos.get(indexArcoPesado).getDistancia());
-				g.eliminarArco(indexArcoPesado);
+				g.eliminarArcoMasPesado();;
 				System.out.println(g.getArcos().size());
 				recorrerArcos(g);
 			}
 		});
-		btnsContainer.add(btnEliminarArco);
-		frame.getContentPane().add(btnsContainer, BorderLayout.NORTH);
+	
+		
 	}
 
 	private void setupMapContainer() {
@@ -128,6 +116,7 @@ public class Interfaz {
 		mapContainer.add(mapa);
 		frame.getContentPane().add(mapContainer);
 	}
+
 
 	private void setupFrame() {
 		miPantalla = Toolkit.getDefaultToolkit();
@@ -142,6 +131,8 @@ public class Interfaz {
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
+		
+	
 
 	private void recorrerArcos(Grafo g) {
 		for (int i = 0; i < g.getArcos().size(); i++) {
@@ -156,5 +147,4 @@ public class Interfaz {
 		mapa.addMapPolygon(map);
 		
 	}
-	
 }

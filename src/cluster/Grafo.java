@@ -1,6 +1,7 @@
 package cluster;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Grafo {
 	private ArrayList<Vertice> _vertices;
@@ -30,13 +31,13 @@ public class Grafo {
 					agregarArco(i, j, distancia);
 				}
 			}
-		}
+		}ordenarArcos();
 	}
 
 	public void agregarArco(int indexA, int indexB, double distancia) {
-		if (indexA < 0 || indexB < 0 || indexA >= _vertices.size() || indexB >= _vertices.size())
+		if (indexA < 0 || indexB < 0 || indexA >= _vertices.size() || indexB >= _vertices.size()) {
 			throw new IllegalArgumentException("Indice no válido");
-
+		}
 		_arcos.add(new Arco(_vertices.get(indexA), _vertices.get(indexB), distancia));
 		agregarVecinos(indexA, indexB);
 	}
@@ -46,6 +47,22 @@ public class Grafo {
 			throw new IndexOutOfBoundsException("el indice es menor o mayor al tamano del arco");
 		}
 		_arcos.remove(numArco);
+	}
+	
+	public void eliminarArcoMasPesado() {
+		System.out.println("Se eliminó " + arcoMasPesado().getDistancia());
+		_arcos.remove(arcoMasPesado());
+	}
+	
+	private Arco arcoMasPesado() {
+		return _arcos.get(0);
+	}
+	
+	private void ordenarArcos() {
+		Collections.sort(_arcos, Collections.reverseOrder());
+		if (_arcos.isEmpty()) {
+			return;
+		}	
 	}
 	
 	private void agregarVecinos(int indexA, int indexB) {
@@ -60,4 +77,5 @@ public class Grafo {
 	public ArrayList<Arco> getArcos() {
 		return _arcos;
 	}
+
 }
