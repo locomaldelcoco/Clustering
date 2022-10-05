@@ -79,10 +79,10 @@ public class Interfaz {
 
 	private void setupPanelDeUsuario() {
 		panelDeUsuario = new JPanel();
-		panelDeUsuario.setBounds(579, 0, 195, 550);
+		panelDeUsuario.setBounds(0, 0, 195, 550);
 		panelDeUsuario.setLayout(null);
 		btnEliminarArco = new JButton("Eliminar Arista Pesada");
-		btnEliminarArco.setBounds(10, 270, 175, 22);
+		btnEliminarArco.setBounds(599, 269, 175, 22);
 		panelDeUsuario.add(btnEliminarArco);
 		frame.getContentPane().add(panelDeUsuario);
 	}
@@ -99,10 +99,10 @@ public class Interfaz {
 
 	private void setupMapContainer() {
 		mapContainer = new JPanel();
-		mapContainer.setBounds(1, 1, 798, 598);
+		mapContainer.setBounds(0, 0, 571, 561);
 		mapContainer.setLayout(null);
 		mapa = new JMapViewer();
-		mapa.setBounds(0, 0, 798, 528);
+		mapa.setBounds(0, 0, 571, 561);
 		mapContainer.add(mapa);
 		frame.getContentPane().add(mapContainer);
 	}
