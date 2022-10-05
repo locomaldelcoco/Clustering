@@ -96,18 +96,21 @@ public class Interfaz {
 		btnEliminarArco = new JButton("Eliminar Arista Pesada");
 		btnEliminarArco.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnEliminarArco.setBounds(591, 269, 183, 22);
+		btnEliminarArco.setEnabled(false);
 		panelDeUsuario.add(btnEliminarArco);
 	}
 	
 	private void setupBtnCargarArchivo() {
 		btnCargarArchivo = new JButton("Cargar archivo");
 		btnCargarArchivo.setBounds(591, 65, 183, 23);
+		btnCargarArchivo.setEnabled(false);
 		panelDeUsuario.add(btnCargarArchivo);
 	}
 	
 	private void setupBtnDibujarGrafoCompleto(){
 		btnDibujarGrafoCompleto = new JButton("Completar Grafo");
 		btnDibujarGrafoCompleto.setBounds(591, 99, 183, 23);
+		btnDibujarGrafoCompleto.setEnabled(false);
 		panelDeUsuario.add(btnDibujarGrafoCompleto);
 	}
 
@@ -131,11 +134,21 @@ public class Interfaz {
 		menuSeleccionArchivo = new JComboBox();
 		menuSeleccionArchivo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		menuSeleccionArchivo.setToolTipText("Lista de archivos");
-		String[] archivos = Mediator.getArchivos();
+		String[] archivos = setupModelMenuArchivo();
 		DefaultComboBoxModel model = new DefaultComboBoxModel(archivos);
 		menuSeleccionArchivo.setModel(model);
+		menuSeleccionArchivo.setSelectedIndex(0);
 		menuSeleccionArchivo.setBounds(591, 32, 183, 22);
 		panelDeUsuario.add(menuSeleccionArchivo);
+	}
+
+	private String[] setupModelMenuArchivo() {
+		String[] files = Mediator.getArchivos();
+		String[] ret = new String[files.length+1];
+		ret[0] = "Seleccione un archivo...";
+		for (int i = 1; i < ret.length; i++)
+			ret[i] = files[i-1];
+		return ret;
 	}
 
 	private void addPanelDeUsuarioEvents() {
@@ -152,12 +165,27 @@ public class Interfaz {
 					limpiarMapa();
 				}
 				cargarArchivo();
+				activarBtnDibujarGrafoCompleto();
 			}
+		});
+		
+		menuSeleccionArchivo.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (menuSeleccionArchivo.getSelectedIndex() == 0) {
+					desactivarBtnCargarArchivo();
+				} else {
+					activarBtnCargarArchivo();
+				}
+				
+			}
+			
 		});
 
 		btnDibujarGrafoCompleto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dibujarGrafoCompleto();
+				desactivarBtnEliminarArco();
 			}
 		});
 		
@@ -203,4 +231,29 @@ public class Interfaz {
 		mapa.addMapPolygon(map);
 		
 	}
+	
+	private void desactivarBtnCargarArchivo() {
+		btnCargarArchivo.setEnabled(false);
+	}
+
+	private void activarBtnCargarArchivo() {
+		btnCargarArchivo.setEnabled(true);
+	}
+	
+	private void desactivarBtnDibujarGrafoCompleto() {
+		btnDibujarGrafoCompleto.setEnabled(false);
+	}
+
+	private void activarBtnDibujarGrafoCompleto() {
+		btnDibujarGrafoCompleto.setEnabled(true);
+	}
+
+	private void desactivarBtnEliminarArco() {
+		btnEliminarArco.setEnabled(false);
+	}
+
+	private void activarBtnEliminarArco() {
+		btnEliminarArco.setEnabled(true);
+	}
+	
 }
