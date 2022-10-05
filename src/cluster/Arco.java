@@ -51,7 +51,12 @@ public class Arco implements Comparable<Arco>{
 
 	@Override
 	public int compareTo(Arco o) {
-		// TODO Auto-generated method stub
-		return 0;
+		if(_distancia <o.getDistancia()) {
+			return -1;
+		}
+		if (_distancia == o.getDistancia()) {
+			return 0;
+		}
+		return 1;
 	}
 }
