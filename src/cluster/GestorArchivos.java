@@ -14,7 +14,7 @@ public class GestorArchivos {
 		double coordX = 0.0;
 		double coordY = 0.0;
 
-		File archivoRanking = new File("instancia" + n + ".txt");
+		File archivoRanking = new File("files\\instancia" + n + ".txt");
 		try {
 			Scanner palabras = new Scanner(archivoRanking);
 
@@ -37,5 +37,9 @@ public class GestorArchivos {
 		}
 
 		return marks;
+	}
+
+	public static String[] getArchivos() {
+		return new File("files\\").list();
 	}
 }
