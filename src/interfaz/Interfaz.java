@@ -33,6 +33,8 @@ public class Interfaz {
 	private JPanel panelDeUsuario;
 	private Mediator mediator;
 	private JComboBox menuSeleccionArchivo;
+	private JButton btnCargarArchivo;
+	private JButton btnDibujarGrafoCompleto;
 	
 	/**
 	 * Launch the application.
@@ -61,14 +63,11 @@ public class Interfaz {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		mediator = new Mediator(6);
+		mediator = null;
 		setupFrame();
 		setupMapContainer();
 		setupPanelDeUsuario();
 		addPanelDeUsuarioEvents();
-		showMapMarkers();
-		recorrerArcos();
-
 	}
 
 	private void showMapMarkers() {
@@ -92,9 +91,39 @@ public class Interfaz {
 		frame.getContentPane().add(panelDeUsuario);
 		
 		setupMenuSeleccionArchivo();
+		setupBtnCargarArchivo();
+		setupBtnDibujarGrafoCompleto();
 		
 	}
 	
+	private void setupBtnCargarArchivo() {
+		btnCargarArchivo = new JButton("Cargar archivo");
+		btnCargarArchivo.setBounds(591, 65, 183, 23);
+		panelDeUsuario.add(btnCargarArchivo);
+	}
+	
+	private void setupBtnDibujarGrafoCompleto(){
+		btnDibujarGrafoCompleto = new JButton("Completar Grafo");
+		btnDibujarGrafoCompleto.setBounds(591, 99, 183, 23);
+		panelDeUsuario.add(btnDibujarGrafoCompleto);
+	}
+
+	private void cargarArchivo() {
+		mediator = new Mediator((String) menuSeleccionArchivo.getSelectedItem());
+		showMapMarkers();
+	}
+	
+	private void dibujarGrafoCompleto() {
+		if (!mediator.isCompleto())
+			mediator.completarGrafo();
+		mostrarArcos();
+	}
+
+	private void limpiarMapa() {
+		mapa.removeAllMapMarkers();
+		mapa.removeAllMapPolygons();
+	}
+
 	private void setupMenuSeleccionArchivo() {
 		menuSeleccionArchivo = new JComboBox();
 		menuSeleccionArchivo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -109,11 +138,26 @@ public class Interfaz {
 	private void addPanelDeUsuarioEvents() {
 		btnEliminarArco.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mapa.removeAllMapPolygons();;
 				mediator.eliminarArcoMasPesado();;
-				recorrerArcos();
+				mostrarArcos();
 			}
 		});
+
+		btnCargarArchivo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (mediator != null) {
+					limpiarMapa();
+				}
+				cargarArchivo();
+			}
+		});
+
+		btnDibujarGrafoCompleto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dibujarGrafoCompleto();
+			}
+		});
+		
 	}
 
 	private void setupMapContainer() {
@@ -140,10 +184,9 @@ public class Interfaz {
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
-		
 	
-
-	private void recorrerArcos() {
+	private void mostrarArcos() {
+		mapa.removeAllMapPolygons();
 		ArrayList<Coordinate[]> arcos = mediator.getCoordArcos();
 		
 		for (Coordinate[] c : arcos) {
@@ -158,6 +201,4 @@ public class Interfaz {
 		mapa.addMapPolygon(map);
 		
 	}
-	
-	
 }
