@@ -7,14 +7,13 @@ import java.util.Scanner;
 
 public class GestorArchivos {
 
-	public static ArrayList<Vertice> coordenadas(int n) {
-		//mover gestorArchivos
+	public static ArrayList<Vertice> getCoordenadas(String file) {
 		ArrayList<Vertice> marks = new ArrayList<Vertice>();
 		int count = 0;
 		double coordX = 0.0;
 		double coordY = 0.0;
 
-		File archivoRanking = new File("files\\instancia" + n + ".txt");
+		File archivoRanking = new File("files\\" + file);
 		try {
 			Scanner palabras = new Scanner(archivoRanking);
 
@@ -26,8 +25,6 @@ public class GestorArchivos {
 				} else {
 					coordY = Double.parseDouble(linea);
 					marks.add(new Vertice(coordX, coordY));
-					//System.out.println("X = " + coordX);
-					//System.out.println("Y = " + coordY);
 				}
 				count++;
 			}
