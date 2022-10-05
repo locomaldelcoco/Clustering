@@ -13,7 +13,7 @@ public class Grafo {
 	}
 
 	public void crearGrafo(int n) {
-		ArrayList<Vertice> coords = Filter.coordenadas(n);
+		ArrayList<Vertice> coords = GestorArchivos.coordenadas(n);
 		for (Vertice v : coords)
 			agregarVertice(v);
 	}
