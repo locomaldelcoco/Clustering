@@ -185,7 +185,7 @@ public class Interfaz {
 		btnDibujarGrafoCompleto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dibujarGrafoCompleto();
-				desactivarBtnEliminarArco();
+				activarBtnEliminarArco();
 			}
 		});
 		
