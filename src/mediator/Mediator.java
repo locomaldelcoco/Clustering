@@ -2,6 +2,8 @@ package mediator;
 import cluster.Grafo;
 import cluster.Vertice;
 import cluster.Arco;
+import cluster.GestorArchivos;
+
 import java.util.ArrayList;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
@@ -47,10 +49,8 @@ public class Mediator {
     }
 
 	public String[] getArchivos() {
-		//TODO
-		ArrayList<String> files = new ArrayList<String>();
-		files.add("+");
-		return files.toArray(new String[0]);
+		String[] files = GestorArchivos.getArchivos(); 
+		return files;
 	}
 
 }
