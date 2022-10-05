@@ -10,11 +10,17 @@ import org.openstreetmap.gui.jmapviewer.Coordinate;
 
 public class Mediator {
     Grafo _g;
+    boolean isCompleto;
 
-    public Mediator(int n){
+    public Mediator(String s){
         _g = new Grafo();
-        _g.crearGrafo(n);
-        _g.completarGrafo();
+        _g.cargarGrafo(s);
+        isCompleto = false;
+    }
+    
+    public void completarGrafo() {
+    	_g.completarGrafo();   
+    	isCompleto = true;
     }
 
     public ArrayList<Coordinate> getCoordenadas() {
@@ -48,9 +54,13 @@ public class Mediator {
     	_g.eliminarArcoMasPesado();
     }
 
-	public String[] getArchivos() {
+	public static String[] getArchivos() {
 		String[] files = GestorArchivos.getArchivos(); 
 		return files;
+	}
+
+	public boolean isCompleto() {
+		return isCompleto;
 	}
 
 }
