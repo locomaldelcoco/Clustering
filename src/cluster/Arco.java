@@ -3,7 +3,7 @@ package cluster;
 import java.util.Set;
 import java.util.HashSet;
 
-public class Arco {
+public class Arco implements Comparable<T>{
 	private Vertice _verticeA;
 	private Vertice _verticeB;
 	private double _distancia;
