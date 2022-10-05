@@ -46,4 +46,11 @@ public class Mediator {
     	_g.eliminarArcoMasPesado();
     }
 
+	public String[] getArchivos() {
+		//TODO
+		ArrayList<String> files = new ArrayList<String>();
+		files.add("+");
+		return files.toArray(new String[0]);
+	}
+
 }
