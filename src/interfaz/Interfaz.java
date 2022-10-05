@@ -18,6 +18,8 @@ import org.openstreetmap.gui.jmapviewer.interfaces.MapPolygon;
 import mediator.Mediator;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class Interfaz {
 
@@ -29,6 +31,7 @@ public class Interfaz {
 	private JButton btnEliminarArco;
 	private JPanel panelDeUsuario;
 	private Mediator mediator;
+	private JComboBox menuSeleccionArchivo;
 	
 	/**
 	 * Launch the application.
@@ -82,11 +85,23 @@ public class Interfaz {
 		panelDeUsuario.setBounds(0, 0, 195, 550);
 		panelDeUsuario.setLayout(null);
 		btnEliminarArco = new JButton("Eliminar Arista Pesada");
-		btnEliminarArco.setBounds(599, 269, 175, 22);
+		btnEliminarArco.setBounds(591, 269, 183, 22);
 		panelDeUsuario.add(btnEliminarArco);
 		frame.getContentPane().add(panelDeUsuario);
+		
+		setupMenuSeleccionArchivo();
+		
 	}
 	
+	private void setupMenuSeleccionArchivo() {
+		menuSeleccionArchivo = new JComboBox();
+		String[] archivos = mediator.getArchivos();
+		DefaultComboBoxModel model = new DefaultComboBoxModel(archivos);
+		menuSeleccionArchivo.setModel(model);
+		menuSeleccionArchivo.setBounds(591, 32, 183, 22);
+		panelDeUsuario.add(menuSeleccionArchivo);
+	}
+
 	private void addPanelDeUsuarioEvents() {
 		btnEliminarArco.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
