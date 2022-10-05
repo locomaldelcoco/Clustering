@@ -22,6 +22,7 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.Cursor;
 
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class Interfaz {
 
 	private JFrame frame;
@@ -130,7 +131,7 @@ public class Interfaz {
 		menuSeleccionArchivo = new JComboBox();
 		menuSeleccionArchivo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		menuSeleccionArchivo.setToolTipText("Lista de archivos");
-		String[] archivos = mediator.getArchivos();
+		String[] archivos = Mediator.getArchivos();
 		DefaultComboBoxModel model = new DefaultComboBoxModel(archivos);
 		menuSeleccionArchivo.setModel(model);
 		menuSeleccionArchivo.setBounds(591, 32, 183, 22);
@@ -171,7 +172,6 @@ public class Interfaz {
 		mapContainer.add(mapa);
 		frame.getContentPane().add(mapContainer);
 	}
-
 
 	private void setupFrame() {
 		miPantalla = Toolkit.getDefaultToolkit();
