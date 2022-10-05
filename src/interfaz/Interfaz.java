@@ -20,6 +20,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import java.awt.Cursor;
 
 public class Interfaz {
 
@@ -85,6 +86,7 @@ public class Interfaz {
 		panelDeUsuario.setBounds(0, 0, 195, 550);
 		panelDeUsuario.setLayout(null);
 		btnEliminarArco = new JButton("Eliminar Arista Pesada");
+		btnEliminarArco.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnEliminarArco.setBounds(591, 269, 183, 22);
 		panelDeUsuario.add(btnEliminarArco);
 		frame.getContentPane().add(panelDeUsuario);
@@ -95,6 +97,8 @@ public class Interfaz {
 	
 	private void setupMenuSeleccionArchivo() {
 		menuSeleccionArchivo = new JComboBox();
+		menuSeleccionArchivo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		menuSeleccionArchivo.setToolTipText("Lista de archivos");
 		String[] archivos = mediator.getArchivos();
 		DefaultComboBoxModel model = new DefaultComboBoxModel(archivos);
 		menuSeleccionArchivo.setModel(model);
