@@ -84,16 +84,18 @@ public class Interfaz {
 		panelDeUsuario = new JPanel();
 		panelDeUsuario.setBounds(0, 0, 195, 550);
 		panelDeUsuario.setLayout(null);
+		setupBtnEliminarArco();
+		setupMenuSeleccionArchivo();
+		setupBtnCargarArchivo();
+		setupBtnDibujarGrafoCompleto();
+		frame.getContentPane().add(panelDeUsuario);
+	}
+
+	private void setupBtnEliminarArco() {
 		btnEliminarArco = new JButton("Eliminar Arista Pesada");
 		btnEliminarArco.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnEliminarArco.setBounds(591, 269, 183, 22);
 		panelDeUsuario.add(btnEliminarArco);
-		frame.getContentPane().add(panelDeUsuario);
-		
-		setupMenuSeleccionArchivo();
-		setupBtnCargarArchivo();
-		setupBtnDibujarGrafoCompleto();
-		
 	}
 	
 	private void setupBtnCargarArchivo() {
