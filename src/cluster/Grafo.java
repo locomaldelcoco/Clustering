@@ -17,7 +17,7 @@ public class Grafo {
 			agregarVertice(v);
 	}
 
-	private void agregarVertice(Vertice v) {
+	public void agregarVertice(Vertice v) {
 		_vertices.add(v);
 	}
 	
