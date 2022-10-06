@@ -83,7 +83,6 @@ public class Interfaz {
 
 	private void setupPanelDeUsuario() {
 		panelDeUsuario = new JPanel();
-		panelDeUsuario.setBounds(0, 0, 195, 550);
 		panelDeUsuario.setLayout(null);
 		setupBtnEliminarArco();
 		setupMenuSeleccionArchivo();
@@ -188,7 +187,6 @@ public class Interfaz {
 				activarBtnEliminarArco();
 			}
 		});
-		
 	}
 
 	private void setupMapContainer() {
