@@ -11,7 +11,7 @@ public class ArcoTest {
 	@Before
 	public void setUp() {
 		g = new Grafo(); 
-		g.crearGrafo("6");
+		g.cargarGrafo("instancia6.txt");
 		g.completarGrafo();
 	}
 	

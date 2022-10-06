@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Vertice {
+
 	private double _x, _y;
 	private Set<Integer> _vecinos;
 
