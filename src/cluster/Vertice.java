@@ -7,7 +7,7 @@ public class Vertice {
 
 	private double _x, _y;
 	private Set<Integer> _vecinos;
-	private int _id;
+	private Integer _id;
 
 	public Vertice(double x, double y, int id) {
 		_x = x;
@@ -42,7 +42,7 @@ public class Vertice {
 		return _vecinos;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return _id;
 	}
 
