@@ -28,18 +28,16 @@ public class Grafo {
 				if (i != j) {
 					double distancia = DistanciaEuclidea.distancia(_vertices.get(i), _vertices.get(j));
 					System.out.println(distancia);
-					agregarArco(i, j, distancia);
+					agregarArco(i,j,distancia);
+					//agregarArco(i, j, distancia);
 				}
 			}
 		}ordenarArcos();
 	}
 
-	public void agregarArco(int indexA, int indexB, double distancia) {
-		if (indexA < 0 || indexB < 0 || indexA >= _vertices.size() || indexB >= _vertices.size()) {
-			throw new IllegalArgumentException("Indice no válido");
-		}
-		_arcos.add(new Arco(_vertices.get(indexA), _vertices.get(indexB), distancia));
-		agregarVecinos(indexA, indexB);
+	public void agregarArco(Vertice indexA, Vertice indexB, double distancia) {
+		_arcos.add(new Arco(indexA, indexB, distancia));
+		agregarSusVecinos(indexA, indexB);
 	}
 	
 	public void eliminarArco(int numArco) {			
@@ -70,7 +68,7 @@ public class Grafo {
 		}	
 	}
 	
-	private void agregarVecinos(int indexA, int indexB) {
+	private void agregarSusVecinos(int verticeA, int verticeB) {
 		_vertices.get(indexA).agregarVecino(indexB);
 		_vertices.get(indexB).agregarVecino(indexA);
 	}	
