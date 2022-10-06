@@ -10,7 +10,7 @@ public class VerticeTest {
 
 	@Before
 	public void inicializarVertice() {
-		vertice = new Vertice(10, 10);
+		vertice = new Vertice(10, 10, 0);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
