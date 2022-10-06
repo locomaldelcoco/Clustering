@@ -1,6 +1,7 @@
 package cluster;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Grafo {
 	private ArrayList<Vertice> _vertices;
@@ -11,8 +12,8 @@ public class Grafo {
 		_arcos = new ArrayList<>();
 	}
 
-	public void crearGrafo(String n) {
-		ArrayList<Vertice> coords = Filter.coordenadas(n);
+	public void cargarGrafo(String s) {
+		ArrayList<Vertice> coords = GestorArchivos.getCoordenadas(s);
 		for (Vertice v : coords)
 			agregarVertice(v);
 	}
@@ -30,22 +31,45 @@ public class Grafo {
 					agregarArco(i, j, distancia);
 				}
 			}
-		}
+		}ordenarArcos();
 	}
 
 	public void agregarArco(int indexA, int indexB, double distancia) {
-		if (indexA < 0 || indexB < 0 || indexA >= _vertices.size() || indexB >= _vertices.size())
+		if (indexA < 0 || indexB < 0 || indexA >= _vertices.size() || indexB >= _vertices.size()) {
 			throw new IllegalArgumentException("Indice no válido");
-
+		}
 		_arcos.add(new Arco(_vertices.get(indexA), _vertices.get(indexB), distancia));
 		agregarVecinos(indexA, indexB);
 	}
-
+	
+	public void eliminarArco(int numArco) {			
+		if (numArco < 0 || numArco > _arcos.size()) {
+			throw new IndexOutOfBoundsException("el indice es menor o mayor al tamano del arco");
+		}
+		_arcos.remove(numArco);
+	}
+	
+	public void eliminarArcoMasPesado() {
+		System.out.println("Se eliminó " + arcoMasPesado().getDistancia());
+		_arcos.remove(arcoMasPesado());
+	}
+	
+	private Arco arcoMasPesado() {
+		return _arcos.get(0);
+	}
+	
+	private void ordenarArcos() {
+		Collections.sort(_arcos, Collections.reverseOrder());
+		if (_arcos.isEmpty()) {
+			return;
+		}	
+	}
+	
 	private void agregarVecinos(int indexA, int indexB) {
 		_vertices.get(indexA).agregarVecino(indexB);
 		_vertices.get(indexB).agregarVecino(indexA);
-	}
-
+	}	
+	
 	public ArrayList<Vertice> getVertices() {
 		return _vertices;
 	}
@@ -53,4 +77,5 @@ public class Grafo {
 	public ArrayList<Arco> getArcos() {
 		return _arcos;
 	}
+
 }
