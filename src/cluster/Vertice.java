@@ -6,7 +6,7 @@ import java.util.Set;
 public class Vertice {
 	private int _nombre;
 	private double _x, _y;
-	private Set<Integer> _vecinos;
+	private Set<Vertice> _vecinos;
 	private static int cont=1;
 	
 	public Vertice(double x, double y) {
@@ -16,22 +16,16 @@ public class Vertice {
 		_vecinos = new HashSet<>();
 	}
 
-	public void agregarVecino(int vecino) {
-		if (vecino < 0) {
-			throw new IllegalArgumentException("No puede existir vecinos negativos");
-		}
+	public void agregarVecino(Vertice vecino) {
 		_vecinos.add(vecino);
 	}
 
-	public void eliminarVecino(int vecino) {
-		if (vecino < 0) {
-			throw new IllegalArgumentException("No puede existir vecinos negativos");
-		}
+	public void eliminarVecino(Vertice vecino) {
 		_vecinos.remove(vecino);
 	}
 	
 	public boolean sonVecinos(Vertice otroVertice) {
-		return _vecinos.contains(otroVertice.get_nombre()) && otroVertice.get_vecinos().contains(_nombre);
+		return _vecinos.contains(otroVertice);
 	}
 	
 	public int get_nombre() {
@@ -45,7 +39,7 @@ public class Vertice {
 		return _y;
 	}
 
-	public Set<Integer> get_vecinos() {
+	public Set<Vertice> get_vecinos() {
 		return _vecinos;
 	}
 	
