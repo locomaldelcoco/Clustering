@@ -26,7 +26,7 @@ public class AlgoritmoKruskal{
 	}
 	
 	public boolean hayCiclo(Grafo grafo, Arco arco, Vertice vertice) {
-		ArrayList<Integer> aux = (ArrayList<Integer>)vertice.get_vecinos();
+		ArrayList<Vertice> aux = (ArrayList<Vertice>)vertice.get_vecinos();
 		if(aux.isEmpty())
 			return false;
 		return true;
