@@ -28,8 +28,7 @@ public class Grafo {
 				if (i != j) {
 					double distancia = DistanciaEuclidea.distancia(_vertices.get(i), _vertices.get(j));
 					System.out.println(distancia);
-					agregarArco(i,j,distancia);
-					//agregarArco(i, j, distancia);
+					agregarArco(_vertices.get(i),_vertices.get(j),distancia);
 				}
 			}
 		}ordenarArcos();
@@ -68,9 +67,9 @@ public class Grafo {
 		}	
 	}
 	
-	private void agregarSusVecinos(int verticeA, int verticeB) {
-		_vertices.get(indexA).agregarVecino(indexB);
-		_vertices.get(indexB).agregarVecino(indexA);
+	private void agregarSusVecinos(Vertice verticeA,Vertice verticeB) {
+		verticeA.agregarVecino(verticeB);
+		verticeB.agregarVecino(verticeA);
 	}	
 	
 	public ArrayList<Vertice> getVertices() {
