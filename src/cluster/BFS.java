@@ -39,7 +39,7 @@ public class BFS {
 	}
 
 	private static void agregarVecinosNoMarcados(Grafo g, int vertice) {		
-		for (int vecino : g.vecinos(vertice)) {
+		for (int vecino : g.getVertices().get(vertice).get_vecinos()) {
 			if (!marcados[vecino] && !L.contains(vecino))
 				L.add(vecino);
 		}
