@@ -21,17 +21,22 @@ public class Grafo {
 	public void agregarVertice(Vertice v) {
 		_vertices.add(v);
 	}
-	
+
+	public int tamano() {
+		return _vertices.size();
+	}
+
 	public void completarGrafo() {
-		for (int i = 0; i < _vertices.size(); i++ ) {
-	/*j=i+1*/for (int j=i+1; j < _vertices.size(); j++ ) {
+		for (int i = 0; i < _vertices.size(); i++) {
+			/* j=i+1 */for (int j = i + 1; j < _vertices.size(); j++) {
 				if (i != j) {
 					double distancia = DistanciaEuclidea.distancia(_vertices.get(i), _vertices.get(j));
 					System.out.println(distancia);
 					agregarArco(i, j, distancia);
 				}
 			}
-		}ordenarArcos();
+		}
+		ordenarArcos();
 	}
 
 	public void agregarArco(int indexA, int indexB, double distancia) {
@@ -41,35 +46,35 @@ public class Grafo {
 		_arcos.add(new Arco(_vertices.get(indexA), _vertices.get(indexB), distancia));
 		agregarVecinos(indexA, indexB);
 	}
-	
-	public void eliminarArco(int numArco) {			
+
+	public void eliminarArco(int numArco) {
 		if (numArco < 0 || numArco > _arcos.size()) {
 			throw new IndexOutOfBoundsException("el indice es menor o mayor al tamano del arco");
 		}
 		_arcos.remove(numArco);
 	}
-	
+
 	public void eliminarArcoMasPesado() {
 		System.out.println("Se eliminó " + arcoMasPesado().getDistancia());
 		_arcos.remove(arcoMasPesado());
 	}
-	
+
 	private Arco arcoMasPesado() {
 		return _arcos.get(0);
 	}
-	
+
 	private void ordenarArcos() {
 		Collections.sort(_arcos, Collections.reverseOrder());
 		if (_arcos.isEmpty()) {
 			return;
-		}	
+		}
 	}
-	
+
 	private void agregarVecinos(int indexA, int indexB) {
 		_vertices.get(indexA).agregarVecino(indexB);
 		_vertices.get(indexB).agregarVecino(indexA);
-	}	
-	
+	}
+
 	public ArrayList<Vertice> getVertices() {
 		return _vertices;
 	}
