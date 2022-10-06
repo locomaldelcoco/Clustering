@@ -6,11 +6,13 @@ import java.util.Set;
 public class Vertice {
 
 	private double _x, _y;
+	private int _id;
 	private Set<Integer> _vecinos;
 
-	public Vertice(double x, double y) {
+	public Vertice(double x, double y, int id) {
 		_x = x;
 		_y = y;
+		_id = id;
 		_vecinos = new HashSet<>();
 	}
 
@@ -38,6 +40,9 @@ public class Vertice {
 
 	public Set<Integer> get_vecinos() {
 		return _vecinos;
+	}
+	public int getID() {
+		return _id;
 	}
 	
 	@Override
