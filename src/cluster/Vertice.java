@@ -7,10 +7,12 @@ public class Vertice {
 
 	private double _x, _y;
 	private Set<Integer> _vecinos;
+	private int _id;
 
-	public Vertice(double x, double y) {
+	public Vertice(double x, double y, int id) {
 		_x = x;
 		_y = y;
+		_id = id;
 		_vecinos = new HashSet<>();
 	}
 
@@ -39,14 +41,22 @@ public class Vertice {
 	public Set<Integer> get_vecinos() {
 		return _vecinos;
 	}
-	
+
+	public int getId() {
+		return _id;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) return true;
-		if (obj == null) return false;
-		if (getClass() != obj.getClass()) return false;
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
 		Vertice other = (Vertice) obj;
-		if (_x != other._x || _y != other._y || _vecinos.containsAll(other.get_vecinos()) || other.get_vecinos().containsAll(_vecinos))
+		if (_x != other._x || _y != other._y || _vecinos.containsAll(other.get_vecinos())
+				|| other.get_vecinos().containsAll(_vecinos))
 			return false;
 		return true;
 	}
