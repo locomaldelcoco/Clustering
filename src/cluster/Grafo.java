@@ -32,7 +32,9 @@ public class Grafo {
 				if (i != j) {
 					double distancia = DistanciaEuclidea.distancia(_vertices.get(i), _vertices.get(j));
 					System.out.println(distancia);
-					agregarArco(i, j, distancia);
+					Vertice vA = _vertices.get(i);
+					Vertice vB = _vertices.get(j);
+					agregarArco(vA, vB, distancia);
 				}
 			}
 		}
@@ -43,20 +45,32 @@ public class Grafo {
 		if (indexA < 0 || indexB < 0 || indexA >= _vertices.size() || indexB >= _vertices.size()) {
 			throw new IllegalArgumentException("Indice no válido");
 		}
-		_arcos.add(new Arco(_vertices.get(indexA), _vertices.get(indexB), distancia));
-		agregarVecinos(indexA, indexB);
+		ordenarArcos();
 	}
 
 	public void eliminarArco(int numArco) {
 		if (numArco < 0 || numArco > _arcos.size()) {
 			throw new IndexOutOfBoundsException("el indice es menor o mayor al tamano del arco");
 		}
-		_arcos.remove(numArco);
+	}
+
+	public void agregarArco(Vertice vA, Vertice vB, double distancia) {
+		_arcos.add(new Arco(vA, vB, distancia));
+		agregarVecinos(vA, vB);
+	}
+
+	public void eliminarArco(Arco arco) {
+		_arcos.remove(arco);
 	}
 
 	public void eliminarArcoMasPesado() {
-		System.out.println("Se eliminó " + arcoMasPesado().getDistancia());
-		_arcos.remove(arcoMasPesado());
+		if (!_arcos.isEmpty()) {
+			System.out.println("Se eliminó " + arcoMasPesado().getDistancia());
+			_arcos.remove(arcoMasPesado());
+		} else {
+			throw new IndexOutOfBoundsException("No hay arcos para eliminar");
+		}
+
 	}
 
 	private Arco arcoMasPesado() {
@@ -70,9 +84,9 @@ public class Grafo {
 		}
 	}
 
-	private void agregarVecinos(int indexA, int indexB) {
-		_vertices.get(indexA).agregarVecino(indexB);
-		_vertices.get(indexB).agregarVecino(indexA);
+	private void agregarVecinos(Vertice vA, Vertice vB) {
+		vA.agregarVecino(vB);
+		vB.agregarVecino(vA);
 	}
 
 	public ArrayList<Vertice> getVertices() {
@@ -82,13 +96,22 @@ public class Grafo {
 	public ArrayList<Arco> getArcos() {
 		return _arcos;
 	}
-	
+
 	protected boolean contieneAlVertice(Vertice v) {
 		for (Vertice vertice : this._vertices) {
-			if (vertice.compareTo(v) == 0)
+			if (vertice.equals(v)) {
 				return true;
+			}
 		}
 		return false;
+	}
+
+	public Vertice getVertice(Vertice vA) throws IllegalArgumentException {
+		for (Vertice v : _vertices) {
+			if (v.equals(vA))
+				return v;
+		}
+		throw new IllegalArgumentException("No existe vértice");
 	}
 
 }
