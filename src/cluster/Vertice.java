@@ -54,13 +54,13 @@ public class Vertice {
 		if (obj == null) return false;
 		if (getClass() != obj.getClass()) return false;
 		Vertice other = (Vertice) obj;
-		if (_x != other._x || _y != other._y || _vecinos.containsAll(other.get_vecinos()) || other.get_vecinos().containsAll(_vecinos))
+		if (_x != other._x || _y != other._y)
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "(" + _x + ", " + _y + ")\n";
+		return "(" + _x + ", " + _y + ") ";
 	}
 }

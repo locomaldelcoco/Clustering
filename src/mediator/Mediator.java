@@ -69,6 +69,7 @@ public class Mediator {
 
 	public void aplicarKruskal() {
 		_g = AlgoritmoKruskal.kruskal(_g);
+		isCompleto = false;
 	}
 
 }

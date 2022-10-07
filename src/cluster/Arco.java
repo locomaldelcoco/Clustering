@@ -50,7 +50,11 @@ public class Arco implements Comparable<Arco> {
 	}
 
 	public int compareTo(Arco arco1) {
-		return getDistancia() > arco1.getDistancia() ? 1 : getDistancia() < arco1.getDistancia() ? -1 : 0;
+		return getDistancia() < arco1.getDistancia() ? 1 : getDistancia() > arco1.getDistancia() ? -1 : 0;
 	}
 	
+	@Override
+	public String toString() {
+		return "[" + _verticeA + "_" + _verticeB + "] ";
+	}
 }

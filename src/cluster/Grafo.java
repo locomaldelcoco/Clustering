@@ -84,4 +84,12 @@ public class Grafo {
 		return _vertices.size();
 	}
 
+	public Vertice getVertice(Vertice vA) throws IllegalArgumentException {
+		for (Vertice v : _vertices) {
+			if (v.equals(vA))
+				return v;
+		}
+		throw new IllegalArgumentException("No existe vértice");
+	}
+
 }

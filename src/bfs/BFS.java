@@ -24,11 +24,14 @@ public class BFS {
 	public static Set<Vertice> alcanzables(Vertice origen) {
 		Set<Vertice> ret = new HashSet<Vertice>();
 		
+		System.out.println("\n#####");
+		System.out.println("Origen: " + origen);
 		inicializarBusqueda(origen);
 		
 		while (!pendientes.isEmpty()) {
+			System.out.println("Pendientes: " + pendientes);
 			Vertice v = seleccionarYMarcarVertice();
-			if (!v.equals(origen))
+			if(!v.equals(origen))
 				ret.add(v);
 
 			agregarVecinosNoMarcados(v);
@@ -43,6 +46,7 @@ public class BFS {
 
 	private static void agregarVecinosNoMarcados(Vertice vertice) {		
 		//recorrer vecinos del vértice
+		System.out.println("Vecinos: " + vertice.get_vecinos());
 		for (Vertice vecino : vertice.get_vecinos()){
 			if (!marcados.contains(vecino) && !pendientes.contains(vecino))
 				pendientes.add(vecino);
