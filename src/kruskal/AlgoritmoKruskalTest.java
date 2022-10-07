@@ -6,7 +6,6 @@ import org.junit.Test;
 
 import cluster.Grafo;
 import cluster.Vertice;
-import cluster.Arco;
 
 public class AlgoritmoKruskalTest {
 
