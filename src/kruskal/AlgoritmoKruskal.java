@@ -25,11 +25,24 @@ public class AlgoritmoKruskal{
 		return grafo;
 	}
 	
-	public boolean hayCiclo(Grafo grafo, Arco arco, Vertice vertice) {
-		ArrayList<Vertice> aux = (ArrayList<Vertice>)vertice.get_vecinos();
-		if(aux.isEmpty())
+	public boolean hayCiclo(Grafo grafo, Arco arcoAVerificar, Vertice verticeTerminal, Vertice verticeAChequear) {
+		ArrayList<Arco> aux = grafo.getArcos();
+		if( aux.isEmpty())
 			return false;
-		return true;
+		if( verticeTerminal.sonVecinos( arcoAVerificar.getVerticeA() ) ) {
+			return true;
+		}
 		
+		
+		for (int i = 0; i < aux.size(); i++) {
+			Arco otroArco = aux.get(i);
+			if( !otroArco.getVerticeB().equals(verticeAChequear) ) {
+				if( hayCiclo (grafo, arcoAVerificar, grafo.getArcos().get(i).getVerticeB(),verticeAChequear)) {
+					return true;
+				}
+			}
+		}return false;
 	}
+	
+	
 }
