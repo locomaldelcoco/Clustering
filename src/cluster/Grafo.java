@@ -21,14 +21,10 @@ public class Grafo {
 	public void agregarVertice(Vertice v) {
 		_vertices.add(v);
 	}
-
-	public int tamano() {
-		return _vertices.size();
-	}
-
+	
 	public void completarGrafo() {
-		for (int i = 0; i < _vertices.size(); i++) {
-			/* j=i+1 */for (int j = i + 1; j < _vertices.size(); j++) {
+		for (int i = 0; i < _vertices.size(); i++ ) {
+	/*j=i+1*/for (int j=i+1; j < _vertices.size(); j++ ) {
 				if (i != j) {
 					double distancia = DistanciaEuclidea.distancia(_vertices.get(i), _vertices.get(j));
 					System.out.println(distancia);
@@ -40,55 +36,42 @@ public class Grafo {
 		}
 		ordenarArcos();
 	}
-
-	public void agregarArco(int indexA, int indexB, double distancia) {
-		if (indexA < 0 || indexB < 0 || indexA >= _vertices.size() || indexB >= _vertices.size()) {
-			throw new IllegalArgumentException("Indice no válido");
-		}
-		ordenarArcos();
-	}
-
-	public void eliminarArco(int numArco) {
-		if (numArco < 0 || numArco > _arcos.size()) {
-			throw new IndexOutOfBoundsException("el indice es menor o mayor al tamano del arco");
-		}
-	}
-
+	
 	public void agregarArco(Vertice vA, Vertice vB, double distancia) {
 		_arcos.add(new Arco(vA, vB, distancia));
 		agregarVecinos(vA, vB);
 	}
-
-	public void eliminarArco(Arco arco) {
+	
+	public void eliminarArco(Arco arco) {			
 		_arcos.remove(arco);
 	}
-
+	
 	public void eliminarArcoMasPesado() {
-		if (!_arcos.isEmpty()) {
+		if(!_arcos.isEmpty()) {
 			System.out.println("Se eliminó " + arcoMasPesado().getDistancia());
 			_arcos.remove(arcoMasPesado());
-		} else {
+		}else{
 			throw new IndexOutOfBoundsException("No hay arcos para eliminar");
 		}
-
+		
 	}
-
+	
 	private Arco arcoMasPesado() {
 		return _arcos.get(0);
 	}
-
+	
 	private void ordenarArcos() {
 		Collections.sort(_arcos, Collections.reverseOrder());
 		if (_arcos.isEmpty()) {
 			return;
-		}
+		}	
 	}
-
+	
 	private void agregarVecinos(Vertice vA, Vertice vB) {
 		vA.agregarVecino(vB);
 		vB.agregarVecino(vA);
-	}
-
+	}	
+	
 	public ArrayList<Vertice> getVertices() {
 		return _vertices;
 	}
@@ -97,13 +80,8 @@ public class Grafo {
 		return _arcos;
 	}
 
-	protected boolean contieneAlVertice(Vertice v) {
-		for (Vertice vertice : this._vertices) {
-			if (vertice.equals(v)) {
-				return true;
-			}
-		}
-		return false;
+	public int tamano() {
+		return _vertices.size();
 	}
 
 	public Vertice getVertice(Vertice vA) throws IllegalArgumentException {
