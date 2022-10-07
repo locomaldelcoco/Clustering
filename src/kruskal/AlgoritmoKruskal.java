@@ -11,7 +11,7 @@ import bfs.BFS;
 
 public class AlgoritmoKruskal{
 	
-	public static Grafo Kruskal(Grafo g) {
+	public static Grafo kruskal(Grafo g) {
 		Grafo agm = new Grafo();
 		ArrayList<Vertice> nuevoVertices = agm.getVertices();
 		ArrayList<Arco> nuevoArcos = agm.getArcos();
@@ -44,7 +44,7 @@ public class AlgoritmoKruskal{
 				nuevoVertices.add(vB);
 				nuevoArcos.add(arista);
 			}
-			nuevoArcos.remove(0);
+			arcos.remove(0);
 		}
 		
 		
