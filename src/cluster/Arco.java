@@ -33,20 +33,7 @@ public class Arco implements Comparable<Arco> {
 		if (getClass() != obj.getClass()) return false;
 
 		Arco other = (Arco) obj;
-		Set<Vertice> verticesThis = new HashSet<Vertice>();
-		Set<Vertice> verticesOther = new HashSet<Vertice>();
-		verticesThis.add(_verticeA);
-		verticesThis.add(_verticeB);
-		verticesOther.add(other._verticeA);
-		verticesOther.add(other._verticeB);
-
-		if (!verticesThis.contains(other._verticeA) || 
-				!verticesThis.contains(other._verticeB) || 
-				!verticesOther.contains(_verticeA) || 
-				!verticesOther.contains(_verticeB))
-			return false;
-		
-		return true;
+		return (other._verticeA.equals(this._verticeA) && other._verticeB.equals(this._verticeB) && other._distancia == this._distancia);
 	}
 
 	public int compareTo(Arco arco1) {

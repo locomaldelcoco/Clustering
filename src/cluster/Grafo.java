@@ -60,7 +60,7 @@ public class Grafo {
 		return _arcos.get(0);
 	}
 	
-	private void ordenarArcos() {
+	public void ordenarArcos() {
 		Collections.sort(_arcos, Collections.reverseOrder());
 		if (_arcos.isEmpty()) {
 			return;

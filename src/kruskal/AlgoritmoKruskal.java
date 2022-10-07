@@ -22,16 +22,16 @@ public class AlgoritmoKruskal{
 		
 		while (nuevoArcos.size() != g.getVertices().size()-1) {
 			System.out.println(nuevoArcos.size() + " --- " + (g.getVertices().size()-1));
-			Arco aristax = arcos.get(0);
-			Arco arista = new Arco(aristax.getVerticeA(), aristax.getVerticeB(), aristax.getDistancia());
-			Vertice vX = arista.getVerticeA();
-			Vertice vA = new Vertice(vX.get_x(), vX.get_y());
+		
+			Arco arista = new Arco(arcos.get(0).getVerticeA(), arcos.get(0).getVerticeB(), arcos.get(0).getDistancia());
+			Vertice verticeInicial = arista.getVerticeA();
+			Vertice vA = new Vertice(verticeInicial.get_x(), verticeInicial.get_y());
 
-			Vertice vY = arista.getVerticeB();
-			Vertice vB = new Vertice(vY.get_x(), vY.get_y());
+			Vertice verticeTerminal = arista.getVerticeB();
+			Vertice vB = new Vertice(verticeTerminal.get_x(), verticeTerminal.get_y());
 			
 			System.out.println("VERTICES : " + nuevoVertices);
-			System.out.println(nuevoArcos);
+			System.out.println("ARCOS : " + nuevoArcos);
 
 			System.out.println(vA + "<--- Vertice A");
 			System.out.println(vB + "<--- Vertice B");

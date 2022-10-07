@@ -117,6 +117,7 @@ public class Interfaz {
 	private void setupBtnKruskal() {
 		btnKruskal = new JButton("Aplicar Kruskal");
 		btnKruskal.setBounds(591, 133, 183, 23);
+		btnKruskal.setEnabled(false);
 		panelDeUsuario.add(btnKruskal);
 	}
 
@@ -192,6 +193,7 @@ public class Interfaz {
 			public void actionPerformed(ActionEvent e) {
 				dibujarGrafoCompleto();
 				activarBtnEliminarArco();
+				activarBtnKruskal();
 			}
 		});
 
@@ -241,7 +243,7 @@ public class Interfaz {
 			dibujarArco(c[0], c[1]);
 		}
 		
-		System.out.println(arcos.size());
+		System.out.println("cantidad de arcos: "+ arcos.size());
 	}
 
 	private void dibujarArco(Coordinate c1, Coordinate c2) {
@@ -272,5 +274,8 @@ public class Interfaz {
 
 	private void activarBtnEliminarArco() {
 		btnEliminarArco.setEnabled(true);
+	}
+	private void activarBtnKruskal() {
+		btnKruskal.setEnabled(true);
 	}
 }
