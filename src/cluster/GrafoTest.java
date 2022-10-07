@@ -11,12 +11,11 @@ public class GrafoTest {
 	@Before
 	public void setUp() {
 		g = new Grafo();
-		g.cargarGrafo("instancia6.txt");
-		g.completarGrafo();
 	}
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void cargarGrafoTest() {
+		g.cargarGrafo("instancia6.txt");
+		assertEquals(9, g.tamano());
 	}
 
 }
