@@ -19,21 +19,11 @@ public class VerticeTest {
 		vertice0 = new Vertice(0,0);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void agregarVecinoNegativoTest() {
-		vertice.agregarVecino(verticeNegativo);
-	}
-
 	@Test
-	public void agregarVecinoPositivoTest() {
-		vertice.agregarVecino(verticePositivo);
-		assertTrue(vertice.get_vecinos().contains(verticePositivo));
-	}
-
-	@Test
-	public void agregarVecinoCeroTest() {
-		vertice.agregarVecino(vertice0);
-		assertTrue(vertice.get_vecinos().contains(vertice0));
+	public void agregarVecinoTest() {
+		Vertice v1 = new Vertice(1, 1);
+		vertice.agregarVecino(v1);
+		assertTrue(vertice.get_vecinos().contains(v1));
 	}
 
 }

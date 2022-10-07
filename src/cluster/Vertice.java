@@ -4,19 +4,19 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Vertice {
-	private int _nombre;
 	private double _x, _y;
 	private Set<Vertice> _vecinos;
-	private static int cont=1;
 	
 	public Vertice(double x, double y) {
-		_nombre = cont++;
 		_x = x;
 		_y = y;
 		_vecinos = new HashSet<>();
 	}
 
 	public void agregarVecino(Vertice vecino) {
+		if (vecino == null) {
+			throw new IllegalArgumentException("No existe vecino");
+		}
 		_vecinos.add(vecino);
 	}
 
@@ -24,13 +24,15 @@ public class Vertice {
 		_vecinos.remove(vecino);
 	}
 	
-	public boolean sonVecinos(Vertice otroVertice) {
+	public boolean esVecino(Vertice otroVertice) {
 		return _vecinos.contains(otroVertice);
 	}
 	
-	public int get_nombre() {
-		return _nombre;
+	// puede ser redundante
+	public boolean ambosSonVecinos(Vertice otroVertice) {
+		return this.esVecino(otroVertice) && otroVertice.esVecino(this);
 	}
+	
 	public double get_x() {
 		return _x;
 	}
@@ -49,13 +51,13 @@ public class Vertice {
 		if (obj == null) return false;
 		if (getClass() != obj.getClass()) return false;
 		Vertice other = (Vertice) obj;
-		if (_x != other._x || _y != other._y || _vecinos.containsAll(other.get_vecinos()) || other.get_vecinos().containsAll(_vecinos))
+		if (_x != other._x || _y != other._y)
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "(" + _x + ", " + _y + ")\n";
+		return "(" + _x + ", " + _y + ") ";
 	}
 }
