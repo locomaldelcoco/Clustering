@@ -24,7 +24,7 @@ public class GestorArchivos {
 					coordX = Double.parseDouble(linea);
 				} else {
 					coordY = Double.parseDouble(linea);
-					marks.add(new Vertice(coordX, coordY, count));
+					marks.add(new Vertice(coordX, coordY));
 				}
 				count++;
 			}
