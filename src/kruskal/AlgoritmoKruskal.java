@@ -1,35 +1,54 @@
 package kruskal;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Collections;
+import java.util.HashSet;
 
 import cluster.Arco;
 import cluster.Grafo;
 import cluster.Vertice;
+import bfs.BFS;
 
 public class AlgoritmoKruskal{
 	
-	public Grafo Kruskal(Grafo grafo) {
+	public static Grafo Kruskal(Grafo g) {
+		Grafo agm = new Grafo();
+		ArrayList<Vertice> nuevoVertices = agm.getVertices();
+		ArrayList<Arco> nuevoArcos = agm.getArcos();
+
+		ArrayList<Arco> arcos = g.getArcos();
+		Collections.sort(arcos, Collections.reverseOrder());
 		
-		Grafo grafoMinimo = new Grafo();
-		ArrayList<Vertice> vertices = grafo.getVertices();
-		
-		for (int i = 0; i < vertices.size(); i++) {
-			grafoMinimo.completarGrafo();
+		while (nuevoArcos.size() != g.getVertices().size()-1) {
+			Arco arista = arcos.get(0);
+			Vertice vA = arista.getVerticeA();
+			Vertice vB = arista.getVerticeB();
+			
+			if (nuevoVertices.contains(vA) && nuevoVertices.contains(vB)) {
+				//BFS
+				HashSet<Vertice> alcanzables = (HashSet<Vertice>) BFS.alcanzables(vA);
+				if (!alcanzables.contains(vB)) {
+					arcos.add(arista);
+				}
+			}
+			else if (nuevoVertices.contains(vA)) {
+				nuevoVertices.add(vB);
+				nuevoArcos.add(arista);
+			}
+			else if (nuevoVertices.contains(vB)) {
+				nuevoVertices.add(vA);
+				nuevoArcos.add(arista);
+			}
+			else {
+				nuevoVertices.add(vA);
+				nuevoVertices.add(vB);
+				nuevoArcos.add(arista);
+			}
+			nuevoArcos.remove(0);
 		}
 		
-		ArrayList<Arco> L =(ArrayList<Arco>) grafo.getArcos().clone();
 		
-		Arco primerArco = L.get(0);
-		
-		return grafo;
+		return agm;
 	}
 	
-	public boolean hayCiclo(Grafo grafo, Arco arco, Vertice vertice) {
-		ArrayList<Integer> aux = (ArrayList<Integer>)vertice.get_vecinos();
-		if(aux.isEmpty())
-			return false;
-		return true;
-		
-	}
 }
