@@ -1,5 +1,6 @@
 package cluster;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
@@ -20,4 +21,16 @@ public class VerticeVecinosTest {
 		assertTrue(vertice.get_vecinos().contains(v1));
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void agregarVecinoNullTest() {
+		vertice.agregarVecino(null);
+	}
+	
+	@Test
+	public void eliminarVecinoTest() {
+		Vertice v1 = new Vertice(1, 1);
+		vertice.agregarVecino(v1);
+		vertice.eliminarVecino(v1);
+		assertFalse(vertice.esVecino(v1));
+	}
 }

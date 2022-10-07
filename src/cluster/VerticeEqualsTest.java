@@ -7,8 +7,6 @@ import org.junit.Test;
 public class VerticeEqualsTest {
 	Vertice verticeA;
 	Vertice verticeB;
-	Vertice verticeC;
-	Vertice verticeD;
 
 	@Test
 	public void mismoVerticetest() {
@@ -36,7 +34,7 @@ public class VerticeEqualsTest {
 		verticeB = new Vertice(10, 10);
 		assertTrue(verticeA.equals(verticeB));
 	}
-	
+
 	@SuppressWarnings("unlikely-arg-type")
 	public void distintoObjetoTest() {
 		verticeA = new Vertice(0, 0);
