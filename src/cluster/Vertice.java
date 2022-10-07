@@ -4,39 +4,38 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Vertice {
-	private int _nombre;
 	private double _x, _y;
-	private Set<Integer> _vecinos;
-	private static int cont=1;
+	private Set<Vertice> _vecinos;
 	
 	public Vertice(double x, double y) {
-		_nombre = cont++;
 		_x = x;
 		_y = y;
 		_vecinos = new HashSet<>();
 	}
 
-	public void agregarVecino(int vecino) {
-		if (vecino < 0) {
-			throw new IllegalArgumentException("No puede existir vecinos negativos");
+	public void agregarVecino(Vertice vecino) {
+		if (vecino == null) {
+			throw new IllegalArgumentException("No existe vecino");
 		}
 		_vecinos.add(vecino);
 	}
 
-	public void eliminarVecino(int vecino) {
-		if (vecino < 0) {
-			throw new IllegalArgumentException("No puede existir vecinos negativos");
+	public void eliminarVecino(Vertice vecino) {
+		if (vecino == null) {
+			throw new IllegalArgumentException("No existe vecino");
 		}
 		_vecinos.remove(vecino);
 	}
 	
-	public boolean sonVecinos(Vertice otroVertice) {
-		return _vecinos.contains(otroVertice.get_nombre()) && otroVertice.get_vecinos().contains(_nombre);
+	public boolean esVecino(Vertice otroVertice) {
+		return _vecinos.contains(otroVertice);
 	}
 	
-	public int get_nombre() {
-		return _nombre;
+	// puede ser redundante
+	public boolean ambosSonVecinos(Vertice otroVertice) {
+		return this.esVecino(otroVertice) && otroVertice.esVecino(this);
 	}
+	
 	public double get_x() {
 		return _x;
 	}
@@ -45,7 +44,7 @@ public class Vertice {
 		return _y;
 	}
 
-	public Set<Integer> get_vecinos() {
+	public Set<Vertice> get_vecinos() {
 		return _vecinos;
 	}
 	
