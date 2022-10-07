@@ -35,6 +35,7 @@ public class Interfaz {
 	private Mediator mediator;
 	private JComboBox menuSeleccionArchivo;
 	private JButton btnCargarArchivo;
+	private JButton btnAGM;
 	private JButton btnDibujarGrafoCompleto;
 	
 	/**
@@ -89,6 +90,7 @@ public class Interfaz {
 		setupMenuSeleccionArchivo();
 		setupBtnCargarArchivo();
 		setupBtnDibujarGrafoCompleto();
+		setupBtnAGM();
 		frame.getContentPane().add(panelDeUsuario);
 	}
 
@@ -105,6 +107,13 @@ public class Interfaz {
 		btnCargarArchivo.setBounds(591, 65, 183, 23);
 		btnCargarArchivo.setEnabled(false);
 		panelDeUsuario.add(btnCargarArchivo);
+	}
+	
+	private void setupBtnAGM() {
+		btnAGM = new JButton("Generar AGM");
+		btnAGM.setBounds(591, 165, 183, 23);
+		btnAGM.setEnabled(false);
+		panelDeUsuario.add(btnAGM);
 	}
 	
 	private void setupBtnDibujarGrafoCompleto(){
@@ -169,6 +178,14 @@ public class Interfaz {
 			}
 		});
 		
+		btnAGM.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnAGM.setEnabled(true);
+				activarBtnAGM();
+			}
+		});
+		
+		
 		menuSeleccionArchivo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -198,6 +215,15 @@ public class Interfaz {
 		mapa = new JMapViewer();
 		mapa.setBounds(0, 0, 571, 561);
 		mapContainer.add(mapa);
+		
+		JButton btnNewButton = new JButton("New button");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		btnNewButton.setBounds(233, 11, 89, 23);
+		mapa.add(btnNewButton);
 		frame.getContentPane().add(mapContainer);
 	}
 
@@ -255,5 +281,10 @@ public class Interfaz {
 	private void activarBtnEliminarArco() {
 		btnEliminarArco.setEnabled(true);
 	}
-	
+	private void activarBtnAGM() {
+		btnAGM.setEnabled(true);
+	}
+	private void desactivarBtnAGM() {
+		btnAGM.setEnabled(false);
+	}
 }

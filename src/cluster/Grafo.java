@@ -82,5 +82,13 @@ public class Grafo {
 	public ArrayList<Arco> getArcos() {
 		return _arcos;
 	}
+	
+	protected boolean contieneAlVertice(Vertice v) {
+		for (Vertice vertice : this._vertices) {
+			if (vertice.compareTo(v) == 0)
+				return true;
+		}
+		return false;
+	}
 
 }

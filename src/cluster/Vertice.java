@@ -3,7 +3,7 @@ package cluster;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Vertice {
+public class Vertice implements Comparable<Vertice> {
 
 	private double _x, _y;
 	private Set<Integer> _vecinos;
@@ -64,5 +64,13 @@ public class Vertice {
 	@Override
 	public String toString() {
 		return "(" + _x + ", " + _y + ")\n";
+	}
+
+	@Override
+	public int compareTo(Vertice o) {
+		if (this == null && o != null || this != null && o == null || this._id != o.getId()) {
+			return -1;
+		}
+		return 0;
 	}
 }
