@@ -1,6 +1,7 @@
 package mediator;
 import cluster.Grafo;
 import cluster.Vertice;
+import kruskal.AlgoritmoKruskal;
 import cluster.Arco;
 import cluster.GestorArchivos;
 
@@ -19,6 +20,9 @@ public class Mediator {
     }
     
     public void completarGrafo() {
+    	if (isCompleto)
+    		return;
+    	
     	_g.completarGrafo();   
     	isCompleto = true;
     }
@@ -61,6 +65,10 @@ public class Mediator {
 
 	public boolean isCompleto() {
 		return isCompleto;
+	}
+
+	public void aplicarKruskal() {
+		_g = AlgoritmoKruskal.kruskal(_g);
 	}
 
 }
