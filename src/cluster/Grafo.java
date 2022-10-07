@@ -34,7 +34,6 @@ public class Grafo {
 				}
 			}
 		}
-		ordenarArcos();
 	}
 	
 	public void agregarArco(Vertice vA, Vertice vB, double distancia) {
@@ -49,7 +48,7 @@ public class Grafo {
 	public void eliminarArcoMasPesado() {
 		if(!_arcos.isEmpty()) {
 			System.out.println("Se eliminó " + arcoMasPesado().getDistancia());
-			_arcos.remove(arcoMasPesado());
+			_arcos.remove( arcoMasPesado() );
 		}else{
 			throw new IndexOutOfBoundsException("No hay arcos para eliminar");
 		}
@@ -57,14 +56,12 @@ public class Grafo {
 	}
 	
 	private Arco arcoMasPesado() {
-		return _arcos.get(0);
-	}
-	
-	public void ordenarArcos() {
-		Collections.sort(_arcos, Collections.reverseOrder());
-		if (_arcos.isEmpty()) {
-			return;
-		}	
+		Arco pesado = _arcos.get(0);
+		for (Arco arco : _arcos) {
+			if(pesado.compareTo(arco) == 1) {
+				pesado = arco;
+			}
+		}return pesado;
 	}
 
 	private void agregarVecinos(Vertice vA, Vertice vB) {

@@ -275,6 +275,7 @@ public class Interfaz {
 	private void activarBtnEliminarArco() {
 		btnEliminarArco.setEnabled(true);
 	}
+	
 	private void activarBtnKruskal() {
 		btnKruskal.setEnabled(true);
 	}
