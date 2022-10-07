@@ -13,9 +13,9 @@ public class GestorArchivos {
 		double coordX = 0.0;
 		double coordY = 0.0;
 
-		File archivoRanking = new File("files\\" + file);
+		File archivoVertices = new File("files\\" + file);
 		try {
-			Scanner palabras = new Scanner(archivoRanking);
+			Scanner palabras = new Scanner(archivoVertices);
 
 			while (palabras.hasNext()) {
 				String linea = palabras.next().toString();
