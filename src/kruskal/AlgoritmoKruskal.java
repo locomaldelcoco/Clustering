@@ -14,20 +14,14 @@ public class AlgoritmoKruskal{
 	
 	public static Grafo kruskal(Grafo g) {
 		Grafo agm = new Grafo();
-		ArrayList<Arco> nuevoArcos = agm.getArcos();
-
 		ArrayList<Arco> arcos = g.getArcos();
 		Collections.sort(arcos, Collections.reverseOrder());
 		
-		while (nuevoArcos.size() != g.getVertices().size()-1) {
-			System.out.println(nuevoArcos.size() + " --- " + (g.getVertices().size()-1));
-
-			Arco aristax = arcos.get(0);
-			Arco arista = new Arco(aristax.getVerticeA(), aristax.getVerticeB(), aristax.getDistancia());
-			Vertice vX = arista.getVerticeA();
-			Vertice vA = new Vertice(vX.get_x(), vX.get_y());
-			Vertice vY = arista.getVerticeB();
-			Vertice vB = new Vertice(vY.get_x(), vY.get_y());
+		while (agm.getArcos().size() != g.getVertices().size()-1) {
+			Arco arista = new Arco(arcos.get(0).getVerticeA(), arcos.get(0).getVerticeB(), arcos.get(0).getDistancia());
+			Vertice vA = new Vertice(arista.getVerticeA().get_x(), arista.getVerticeA().get_y());
+			Vertice vB = new Vertice(arista.getVerticeB().get_x(), arista.getVerticeB().get_y());
+			
 			if (!agm.getVertices().contains(vA) && !agm.getVertices().contains(vB)) {
 				agm.agregarVertice(vB);
 				agm.agregarVertice(vA);
