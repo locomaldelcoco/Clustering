@@ -1,9 +1,11 @@
 package cluster;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -66,12 +68,11 @@ public class GestorArchivos {
 	}
 
 	public static Grafo cargarGrafo(String s) {
-		Grafo g = null;
+		Gson gson = new Gson();
+		Grafo g = new Grafo();;
 		try {
-			FileInputStream fis = new FileInputStream("files\\" + s);
-			ObjectInputStream in = new ObjectInputStream(fis);
-			g = (Grafo) in.readObject();
-			in.close();
+			BufferedReader br = new BufferedReader(new FileReader("files\\" + s));
+			g =  gson.fromJson(br, g.getClass());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
