@@ -36,7 +36,7 @@ public class Interfaz {
 	private JComboBox menuSeleccionArchivo;
 	private JButton btnCargarArchivo;
 	private JButton btnDibujarGrafoCompleto;
-	
+	private JButton btnKruskal; 
 	/**
 	 * Launch the application.
 	 */
@@ -83,12 +83,12 @@ public class Interfaz {
 
 	private void setupPanelDeUsuario() {
 		panelDeUsuario = new JPanel();
-		panelDeUsuario.setBounds(0, 0, 195, 550);
 		panelDeUsuario.setLayout(null);
 		setupBtnEliminarArco();
 		setupMenuSeleccionArchivo();
 		setupBtnCargarArchivo();
 		setupBtnDibujarGrafoCompleto();
+		setupBtnKruskal();
 		frame.getContentPane().add(panelDeUsuario);
 	}
 
@@ -112,6 +112,12 @@ public class Interfaz {
 		btnDibujarGrafoCompleto.setBounds(591, 99, 183, 23);
 		btnDibujarGrafoCompleto.setEnabled(false);
 		panelDeUsuario.add(btnDibujarGrafoCompleto);
+	}
+	
+	private void setupBtnKruskal() {
+		btnKruskal = new JButton("Aplicar Kruskal");
+		btnKruskal.setBounds(591, 133, 183, 23);
+		panelDeUsuario.add(btnKruskal);
 	}
 
 	private void cargarArchivo() {
@@ -188,7 +194,19 @@ public class Interfaz {
 				activarBtnEliminarArco();
 			}
 		});
-		
+
+		btnKruskal.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				aplicarKruskal();
+			}
+
+		});
+	}
+
+	private void aplicarKruskal() {
+		mediator.completarGrafo();
+		mediator.aplicarKruskal();
+		mostrarArcos();
 	}
 
 	private void setupMapContainer() {
@@ -255,5 +273,4 @@ public class Interfaz {
 	private void activarBtnEliminarArco() {
 		btnEliminarArco.setEnabled(true);
 	}
-	
 }

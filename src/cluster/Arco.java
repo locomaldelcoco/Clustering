@@ -4,7 +4,6 @@ import java.util.Set;
 import java.util.HashSet;
 
 public class Arco implements Comparable<Arco> {
-	
 	private Vertice _verticeA;
 	private Vertice _verticeB;
 	private double _distancia;
@@ -41,7 +40,8 @@ public class Arco implements Comparable<Arco> {
 		verticesOther.add(other._verticeA);
 		verticesOther.add(other._verticeB);
 
-		if (!verticesThis.contains(other._verticeA) || 
+		if (this._distancia != other._distancia ||
+				!verticesThis.contains(other._verticeA) || 
 				!verticesThis.contains(other._verticeB) || 
 				!verticesOther.contains(_verticeA) || 
 				!verticesOther.contains(_verticeB))
@@ -50,9 +50,12 @@ public class Arco implements Comparable<Arco> {
 		return true;
 	}
 
-	@Override
 	public int compareTo(Arco arco1) {
-		return getDistancia() > arco1.getDistancia() ? 1 : getDistancia() < arco1.getDistancia() ? -1 : 0;
+		return getDistancia() < arco1.getDistancia() ? 1 : getDistancia() > arco1.getDistancia() ? -1 : 0;
 	}
-
+	
+	@Override
+	public String toString() {
+		return "[" + _verticeA + "_" + _verticeB + "] ";
+	}
 }

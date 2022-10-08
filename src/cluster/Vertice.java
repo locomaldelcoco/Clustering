@@ -4,30 +4,31 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Vertice {
-
 	private double _x, _y;
-	private int _id;
-	private Set<Integer> _vecinos;
+	private Set<Vertice> _vecinos;
 
-	public Vertice(double x, double y, int id) {
+	public Vertice(double x, double y) {
 		_x = x;
 		_y = y;
-		_id = id;
 		_vecinos = new HashSet<>();
 	}
 
-	public void agregarVecino(int vecino) {
-		if (vecino < 0) {
-			throw new IllegalArgumentException("No puede existir vecinos negativos");
+	public void agregarVecino(Vertice vecino) {
+		if (vecino == null) {
+			throw new IllegalArgumentException("No existe vecino");
 		}
 		_vecinos.add(vecino);
 	}
 
-	public void eliminarVecino(int vecino) {
-		if (vecino < 0) {
-			throw new IllegalArgumentException("No puede existir vecinos negativos");
+	public void eliminarVecino(Vertice vecino) {
+		if (vecino == null) {
+			throw new IllegalArgumentException("No existe vecino");
 		}
 		_vecinos.remove(vecino);
+	}
+
+	public boolean esVecino(Vertice otroVertice) {
+		return _vecinos.contains(otroVertice);
 	}
 
 	public double get_x() {
@@ -38,26 +39,26 @@ public class Vertice {
 		return _y;
 	}
 
-	public Set<Integer> get_vecinos() {
+	public Set<Vertice> get_vecinos() {
 		return _vecinos;
 	}
-	public int getID() {
-		return _id;
-	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) return true;
-		if (obj == null) return false;
-		if (getClass() != obj.getClass()) return false;
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
 		Vertice other = (Vertice) obj;
-		if (_x != other._x || _y != other._y || _vecinos.containsAll(other.get_vecinos()) || other.get_vecinos().containsAll(_vecinos))
+		if (_x != other._x || _y != other._y)
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "(" + _x + ", " + _y + ")\n";
+		return "(" + _x + ", " + _y + ") ";
 	}
 }
