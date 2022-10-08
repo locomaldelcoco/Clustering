@@ -18,14 +18,14 @@ public class VerticeVecinosTest {
 	public void agregarVecinoTest() {
 		Vertice v1 = new Vertice(1, 1);
 		vertice.agregarVecino(v1);
-		assertTrue(vertice.get_vecinos().contains(v1));
+		assertTrue(vertice.esVecino(v1));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void agregarVecinoNullTest() {
 		vertice.agregarVecino(null);
 	}
-	
+
 	@Test
 	public void eliminarVecinoTest() {
 		Vertice v1 = new Vertice(1, 1);
@@ -33,4 +33,21 @@ public class VerticeVecinosTest {
 		vertice.eliminarVecino(v1);
 		assertFalse(vertice.esVecino(v1));
 	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void eliminarVecinoNullTest() {
+		vertice.eliminarVecino(null);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void eliminaVecinoInexistenteTest() {
+		Vertice v = new Vertice(10, 2);
+		vertice.eliminarVecino(v);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void esVecinoNullTest() {
+		vertice.esVecino(null);
+	}
+
 }

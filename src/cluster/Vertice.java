@@ -32,7 +32,7 @@ public class Vertice {
 
 	public boolean esVecino(Vertice otroVertice) {
 		if (otroVertice == null) {
-			
+			throw new IllegalArgumentException("El parametro no puede ser null");
 		}
 		return _vecinos.contains(otroVertice);
 	}
