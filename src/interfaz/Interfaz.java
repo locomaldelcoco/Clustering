@@ -39,7 +39,6 @@ public class Interfaz {
 	private JPanel panelDeUsuario;
 	private Mediator mediator;
 	private JComboBox menuSeleccionArchivo;
-	private JButton btnCargarArchivo;
 	private JButton btnDibujarGrafoCompleto;
 	private JButton btnKruskal; 
 	private	JButton btnAgregarVertice;
@@ -98,7 +97,6 @@ public class Interfaz {
 		panelDeUsuario.setLayout(null);
 		setupBtnEliminarArco();
 		setupMenuSeleccionArchivo();
-		setupBtnCargarArchivo();
 		setupBtnDibujarGrafoCompleto();
 		setupBtnKruskal();
 		setupBtnAgregarVertice();
@@ -123,14 +121,7 @@ public class Interfaz {
 	private void setupBtnCargarGrafo() {
 		frame.getContentPane().add(panelDeUsuario);
 			btnCargarGrafo = new JButton("Cargar Grafo");
-			btnCargarGrafo.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					mediator.cargarGrafo((String) menuSeleccionArchivo.getSelectedItem());
-					limpiarMapa();
-					showMapMarkers();
-					mostrarArcos();
-				}
-			});
+			btnCargarGrafo.setEnabled(false);
 			btnCargarGrafo.setBounds(591, 203, 183, 23);
 			panelDeUsuario.add(btnCargarGrafo);
 	}
@@ -161,13 +152,6 @@ public class Interfaz {
 		panelDeUsuario.add(btnEliminarArco);
 	}
 	
-	private void setupBtnCargarArchivo() {
-		btnCargarArchivo = new JButton("Cargar archivo");
-		btnCargarArchivo.setBounds(591, 65, 183, 23);
-		btnCargarArchivo.setEnabled(false);
-		panelDeUsuario.add(btnCargarArchivo);
-	}
-	
 	private void setupBtnDibujarGrafoCompleto(){
 		btnDibujarGrafoCompleto = new JButton("Completar Grafo");
 		btnDibujarGrafoCompleto.setBounds(591, 99, 183, 23);
@@ -181,11 +165,6 @@ public class Interfaz {
 		panelDeUsuario.add(btnKruskal);
 	}
 
-	private void cargarArchivo() {
-		mediator = new Mediator((String) menuSeleccionArchivo.getSelectedItem());
-		showMapMarkers();
-	}
-	
 	private void dibujarGrafoCompleto() {
 		if (!mediator.isCompleto())
 			mediator.completarGrafo();
@@ -238,23 +217,13 @@ public class Interfaz {
 			}
 		});
 
-		btnCargarArchivo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (mediator != null) {
-					limpiarMapa();
-				}
-				cargarArchivo();
-				activarBtnDibujarGrafoCompleto();
-			}
-		});
-		
 		menuSeleccionArchivo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (menuSeleccionArchivo.getSelectedIndex() == 0) {
-					desactivarBtnCargarArchivo();
+					desactivarBtnCargarGrafo();
 				} else {
-					activarBtnCargarArchivo();
+					activarBtnCargarGrafo();
 				}
 			}
 		});
@@ -290,6 +259,15 @@ public class Interfaz {
 				mediator.eliminarVertices();
 				mediator.eliminarArcos();
 				limpiarMapa();
+			}
+		});
+
+		btnCargarGrafo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mediator.cargarGrafo((String) menuSeleccionArchivo.getSelectedItem());
+				limpiarMapa();
+				showMapMarkers();
+				mostrarArcos();
 			}
 		});
 	}
@@ -341,12 +319,12 @@ public class Interfaz {
 		
 	}
 	
-	private void desactivarBtnCargarArchivo() {
-		btnCargarArchivo.setEnabled(false);
+	private void desactivarBtnCargarGrafo() {
+		btnCargarGrafo.setEnabled(false);
 	}
 
-	private void activarBtnCargarArchivo() {
-		btnCargarArchivo.setEnabled(true);
+	private void activarBtnCargarGrafo() {
+		btnCargarGrafo.setEnabled(true);
 	}
 	
 	private void desactivarBtnDibujarGrafoCompleto() {
