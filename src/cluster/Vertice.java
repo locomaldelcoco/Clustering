@@ -3,8 +3,14 @@ package cluster;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.Expose;
+
 public class Vertice {
+	@Expose
 	private double _x, _y;
+	
 	private Set<Vertice> _vecinos;
 	
 	public Vertice(double x, double y) {
@@ -56,6 +62,17 @@ public class Vertice {
 
 	@Override
 	public String toString() {
-		return "(" + _x + ", " + _y + ") ";
+		return "X=" + _x +  ", Y=" + _y ;
+	}
+	
+	public static void main(String[] args) {
+		Vertice v = new Vertice(1,2);
+		Vertice v2 = new Vertice(2,3);
+		v.agregarVecino(v2);
+		v2.agregarVecino(v);
+		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setPrettyPrinting().create();
+		String vJSON = gson.toJson(v);
+		System.out.println(vJSON);
+		
 	}
 }
