@@ -2,9 +2,17 @@ package cluster;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.Expose;
 
 public class Grafo {
+	@Expose
 	private ArrayList<Vertice> _vertices;
+	@Expose
 	private ArrayList<Arco> _arcos;
 
 	public Grafo() {
@@ -18,9 +26,11 @@ public class Grafo {
 			agregarVertice(v);
 	}
 
-	public void agregarVertice(Vertice v) {
-		if (!_vertices.contains(v))
-			_vertices.add(v);
+	public boolean agregarVertice(Vertice v) {
+		if (_vertices.contains(v))
+			return false;
+		_vertices.add(v);
+		return true;
 	}
 	
 	public void completarGrafo() {
@@ -92,5 +102,9 @@ public class Grafo {
 		}
 		throw new IllegalArgumentException("No existe vértice");
 	}
-
+	
+	@Override
+	public String toString() {
+		return "Vertices= " + _vertices + ", Arcos=" + _arcos;
+	}
 }

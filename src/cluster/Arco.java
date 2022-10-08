@@ -1,11 +1,17 @@
 package cluster;
 
 import java.util.Set;
+
+import com.google.gson.annotations.Expose;
+
 import java.util.HashSet;
 
 public class Arco implements Comparable<Arco> {
+	@Expose
 	private Vertice _verticeA;
+	@Expose
 	private Vertice _verticeB;
+	@Expose
 	private double _distancia;
 
 	public Arco(Vertice verticeA, Vertice verticeB, double distancia) {
@@ -50,12 +56,14 @@ public class Arco implements Comparable<Arco> {
 		return true;
 	}
 
+	@Override
 	public int compareTo(Arco arco1) {
 		return getDistancia() < arco1.getDistancia() ? 1 : getDistancia() > arco1.getDistancia() ? -1 : 0;
 	}
 	
 	@Override
 	public String toString() {
-		return "[" + _verticeA + "_" + _verticeB + "] ";
+		return "VerticeA=" + _verticeA + ", VerticeB=" + _verticeB + ", Distancia=" + _distancia;
 	}
+
 }

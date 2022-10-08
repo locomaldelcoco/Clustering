@@ -6,12 +6,18 @@ import cluster.Arco;
 import cluster.GestorArchivos;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 
 public class Mediator {
     Grafo _g;
     boolean isCompleto;
+    
+    public Mediator() {
+        _g = new Grafo();
+        isCompleto = false;
+    }
 
     public Mediator(String s){
         _g = new Grafo();
@@ -72,4 +78,37 @@ public class Mediator {
 		isCompleto = false;
 	}
 
+	public boolean agregarVertice(double lat, double lon) {
+		return _g.agregarVertice(new Vertice(lat, lon));
+	}
+
+	public void eliminarArcos() {
+		System.out.println(_g.getArcos());
+		_g.getArcos().clear();
+		System.out.println(_g.getArcos());
+	}
+
+	public void eliminarVertices() {
+		System.out.println(_g.getVertices());
+		_g.getVertices().clear();
+		System.out.println(_g.getVertices());
+	}
+	
+	public boolean guardarGrafo() {
+		return GestorArchivos.guardarGrafo(_g);
+	}
+
+	public void cargarGrafo(String s) {
+		_g = GestorArchivos.cargarGrafo(s);
+		for (Vertice v : _g.getVertices()) 
+			v.inicializarVecinos();
+		
+		ArrayList<Arco> arcos = (ArrayList<Arco>) _g.getArcos().clone();
+		eliminarArcos();
+		for(Arco a : arcos) {
+			Vertice vA = a.getVerticeA();
+			Vertice vB = a.getVerticeB();
+			_g.agregarArco(_g.getVertice(vA), _g.getVertice(vB), a.getDistancia());
+		}
+	}
 }
