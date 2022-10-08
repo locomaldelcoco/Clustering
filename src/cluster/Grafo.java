@@ -19,7 +19,8 @@ public class Grafo {
 	}
 
 	public void agregarVertice(Vertice v) {
-		_vertices.add(v);
+		if (!_vertices.contains(v))
+			_vertices.add(v);
 	}
 	
 	public void completarGrafo() {
