@@ -31,11 +31,6 @@ public class Vertice {
 		return _vecinos.contains(otroVertice);
 	}
 	
-	// puede ser redundante
-	public boolean ambosSonVecinos(Vertice otroVertice) {
-		return this.esVecino(otroVertice) && otroVertice.esVecino(this);
-	}
-	
 	public double get_x() {
 		return _x;
 	}

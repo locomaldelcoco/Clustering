@@ -40,7 +40,8 @@ public class Arco implements Comparable<Arco> {
 		verticesOther.add(other._verticeA);
 		verticesOther.add(other._verticeB);
 
-		if (!verticesThis.contains(other._verticeA) || 
+		if (this._distancia != other._distancia ||
+				!verticesThis.contains(other._verticeA) || 
 				!verticesThis.contains(other._verticeB) || 
 				!verticesOther.contains(_verticeA) || 
 				!verticesOther.contains(_verticeB))
