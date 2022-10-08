@@ -24,7 +24,7 @@ public class Vertice {
 		if (vecino == null) {
 			throw new IllegalArgumentException("El parametro no puede ser null");
 		}
-		if (!_vecinos.contains(vecino)) {
+		if (!esVecino(vecino)) {
 			throw new IllegalArgumentException("El vertice no contiene este vertice: " + vecino);
 		}
 		_vecinos.remove(vecino);
