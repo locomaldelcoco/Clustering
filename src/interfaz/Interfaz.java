@@ -70,7 +70,7 @@ public class Interfaz {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		mediator = null;
+		mediator = new Mediator();
 		setupFrame();
 		setupMapContainer();
 		addMapaEvents();
@@ -173,40 +173,14 @@ public class Interfaz {
 	
 	private void addMapaEvents() {
 		mapa.addMouseListener(new MouseAdapter() {
-
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Point point = e.getPoint();
 				Coordinate coord = (Coordinate) mapa.getPosition(point);
 				System.out.println(coord.getLat() + ", " + coord.getLon());
+				mediator.agregarVertice(coord.getLat(), coord.getLon());
 				mapa.addMapMarker(new MapMarkerDot(coord.getLat(), coord.getLon()));
-
 			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
 		});
 	}
 
