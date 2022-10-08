@@ -27,26 +27,37 @@ public class BFSTest {
 		g.agregarVertice(v2);
 		g.agregarVertice(v3);
 	}
-	
+
 	@Test
 	public void agregarArcoTest() {
 		g.agregarArco(v1, v2, 5);
 		assertEquals(new Arco(v1, v2, 5), g.getArcos().get(0));
 	}
-	
+
 	@Test
 	public void verticeAlcanzableTest() {
 		g.agregarArco(v1, v2, 5);
 		HashSet<Vertice> vAlcanzables = new HashSet<Vertice>();
 		vAlcanzables.add(v2);
-		assertEquals(vAlcanzables,BFS.alcanzables(g.getVertices().get(0)));
+		assertEquals(vAlcanzables, BFS.alcanzables(g.getVertices().get(0)));
 	}
 
 	@Test
 	public void verticeNoAlcanzableTest() {
 		HashSet<Vertice> vAlcanzables = new HashSet<Vertice>();
 		vAlcanzables.add(v2);
-		assertNotEquals(vAlcanzables,BFS.alcanzables(g.getVertices().get(0)));
+		assertNotEquals(vAlcanzables, BFS.alcanzables(g.getVertices().get(0)));
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void verticeAlcanzableNullTest() {
+		BFS.alcanzables(null);
+		
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void grafoNullTest() {
+		BFS.esConexo(null);
 	}
 
 }
