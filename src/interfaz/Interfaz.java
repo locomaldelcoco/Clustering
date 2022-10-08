@@ -2,8 +2,11 @@ package interfaz;
 
 import java.awt.EventQueue;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,6 +20,9 @@ import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 import org.openstreetmap.gui.jmapviewer.interfaces.MapPolygon;
 import mediator.Mediator;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -37,6 +43,7 @@ public class Interfaz {
 	private JButton btnCargarArchivo;
 	private JButton btnDibujarGrafoCompleto;
 	private JButton btnKruskal; 
+	private	JButton btnAgregarVertice;
 	/**
 	 * Launch the application.
 	 */
@@ -67,6 +74,7 @@ public class Interfaz {
 		mediator = null;
 		setupFrame();
 		setupMapContainer();
+		addMapaEvents();
 		setupPanelDeUsuario();
 		addPanelDeUsuarioEvents();
 	}
@@ -89,7 +97,14 @@ public class Interfaz {
 		setupBtnCargarArchivo();
 		setupBtnDibujarGrafoCompleto();
 		setupBtnKruskal();
+		setupBtnAgregarVertice();
 		frame.getContentPane().add(panelDeUsuario);
+	}
+
+	private void setupBtnAgregarVertice() {
+		btnAgregarVertice = new JButton("Agregar Vértice");
+		btnAgregarVertice.setBounds(591, 516, 108, 34);
+		panelDeUsuario.add(btnAgregarVertice);
 	}
 
 	private void setupBtnEliminarArco() {
@@ -155,6 +170,45 @@ public class Interfaz {
 		for (int i = 1; i < ret.length; i++)
 			ret[i] = files[i-1];
 		return ret;
+	}
+	
+	private void addMapaEvents() {
+		mapa.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Point point = e.getPoint();
+				Coordinate coord = (Coordinate) mapa.getPosition(point);
+				System.out.println(coord.getLat() + ", " + coord.getLon());
+				mapa.addMapMarker(new MapMarkerDot(coord.getLat(), coord.getLon()));
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 	}
 
 	private void addPanelDeUsuarioEvents() {
