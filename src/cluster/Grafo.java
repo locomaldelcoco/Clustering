@@ -17,14 +17,6 @@ public class Grafo {
 			agregarVertice(v);
 	}
 
-	public void agregarVertice(Vertice v) {
-		if (v == null) {
-			throw new IllegalArgumentException("El parametro no puede ser null");
-		}
-		if (!_vertices.contains(v))
-			_vertices.add(v);
-	}
-
 	public void completarGrafo() {
 		for (int i = 0; i < _vertices.size(); i++) {
 			/* j=i+1 */for (int j = i + 1; j < _vertices.size(); j++) {
@@ -37,6 +29,14 @@ public class Grafo {
 				}
 			}
 		}
+	}
+
+	public void agregarVertice(Vertice v) {
+		if (v == null) {
+			throw new IllegalArgumentException("El parametro no puede ser null");
+		}
+		if (!_vertices.contains(v))
+			_vertices.add(v);
 	}
 
 	public void agregarArco(Vertice vA, Vertice vB, double distancia) {
