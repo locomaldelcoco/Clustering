@@ -125,7 +125,10 @@ public class Interfaz {
 			btnCargarGrafo = new JButton("Cargar Grafo");
 			btnCargarGrafo.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					System.out.println(mediator.cargarGrafo((String) menuSeleccionArchivo.getSelectedItem()));
+					mediator.cargarGrafo((String) menuSeleccionArchivo.getSelectedItem());
+					limpiarMapa();
+					showMapMarkers();
+					mostrarArcos();
 				}
 			});
 			btnCargarGrafo.setBounds(591, 203, 183, 23);
