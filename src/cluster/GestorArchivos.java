@@ -1,9 +1,18 @@
 package cluster;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class GestorArchivos {
 
@@ -38,5 +47,34 @@ public class GestorArchivos {
 
 	public static String[] getArchivos() {
 		return new File("files\\").list();
+	}
+	
+	public static boolean guardarGrafo(Grafo g) {
+		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setPrettyPrinting().create();
+		String json = gson.toJson(g);
+		System.out.println(json);
+		try {
+			FileWriter writer = new FileWriter("files\\grafo.json");
+			writer.write(json);
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+		return true;
+	}
+
+	public static Grafo cargarGrafo(String s) {
+		Grafo g = null;
+		try {
+			FileInputStream fis = new FileInputStream("files\\" + s);
+			ObjectInputStream in = new ObjectInputStream(fis);
+			g = (Grafo) in.readObject();
+			in.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return g;
 	}
 }
