@@ -46,6 +46,8 @@ public class Interfaz {
 	private boolean modoAgregarVertice;
 	private JButton btnEliminarArcos;
 	private JButton btnEliminarVertices;
+	private JButton btnGuardarGrafo;
+	private JButton btnCargarGrafo;
 	/**
 	 * Launch the application.
 	 */
@@ -102,8 +104,33 @@ public class Interfaz {
 		setupBtnAgregarVertice();
 		setupBtnEliminarArcos();
 		setupBtnEliminarVertices();
-		frame.getContentPane().add(panelDeUsuario);
+		setupBtnGuardarGrafo();
+		setupBtnCargarGrafo();
 		}
+
+	private void setupBtnGuardarGrafo() {
+		frame.getContentPane().add(panelDeUsuario);
+			btnGuardarGrafo = new JButton("Guardar Grafo");
+			btnGuardarGrafo.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					System.out.println(mediator.guardarGrafo());
+				}
+			});
+			btnGuardarGrafo.setBounds(591, 237, 183, 23);
+			panelDeUsuario.add(btnGuardarGrafo);
+	}
+
+	private void setupBtnCargarGrafo() {
+		frame.getContentPane().add(panelDeUsuario);
+			btnCargarGrafo = new JButton("Cargar Grafo");
+			btnCargarGrafo.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					System.out.println(mediator.cargarGrafo((String) menuSeleccionArchivo.getSelectedItem()));
+				}
+			});
+			btnCargarGrafo.setBounds(591, 203, 183, 23);
+			panelDeUsuario.add(btnCargarGrafo);
+	}
 
 	private void setupBtnEliminarVertices() {
 		btnEliminarVertices = new JButton("Eliminar Vértices");
