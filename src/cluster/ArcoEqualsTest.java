@@ -43,13 +43,13 @@ public class ArcoEqualsTest {
 
 	@Test
 	public void arcosIgualesTest() {
-		Vertice verticeA = new Vertice(g.getArcos().get(0).getVerticeA().get_x(), g.getArcos().get(0).getVerticeA().get_y());
-		Vertice verticeB = new Vertice(g.getArcos().get(0).getVerticeB().get_x(), g.getArcos().get(0).getVerticeB().get_y());
-		double distancia = g.getArcos().get(0).getDistancia();
-		Arco arco = new Arco(verticeA, verticeB, distancia);
-		System.out.println(arco);
-		System.out.println(g.getArcos().get(0));
-		assertTrue(g.getArcos().get(0).equals(arco));
+		Vertice verticeA = new Vertice(10, 10);
+		Vertice verticeB = new Vertice(10, 20);
+		double distancia = 100;
+		//un arco es el mismo si empieza desde a <-> b o b <-> a
+		Arco arco = new Arco(verticeB, verticeA, distancia);
+		g.agregarArco(verticeA, verticeB, distancia);
+		assertTrue(g.getArcos().get(g.getArcos().size()-1).equals(arco));
 	}
 
 }
