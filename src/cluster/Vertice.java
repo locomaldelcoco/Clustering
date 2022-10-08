@@ -64,15 +64,4 @@ public class Vertice {
 	public String toString() {
 		return "X=" + _x +  ", Y=" + _y ;
 	}
-	
-	public static void main(String[] args) {
-		Vertice v = new Vertice(1,2);
-		Vertice v2 = new Vertice(2,3);
-		v.agregarVecino(v2);
-		v2.agregarVecino(v);
-		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setPrettyPrinting().create();
-		String vJSON = gson.toJson(v);
-		System.out.println(vJSON);
-		
-	}
 }
