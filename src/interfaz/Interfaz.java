@@ -178,8 +178,8 @@ public class Interfaz {
 				Point point = e.getPoint();
 				Coordinate coord = (Coordinate) mapa.getPosition(point);
 				System.out.println(coord.getLat() + ", " + coord.getLon());
-				mediator.agregarVertice(coord.getLat(), coord.getLon());
-				mapa.addMapMarker(new MapMarkerDot(coord.getLat(), coord.getLon()));
+				if (mediator.agregarVertice(coord.getLat(), coord.getLon()))
+					mapa.addMapMarker(new MapMarkerDot(coord.getLat(), coord.getLon()));
 			}
 		});
 	}

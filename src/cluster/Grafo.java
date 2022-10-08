@@ -18,9 +18,12 @@ public class Grafo {
 			agregarVertice(v);
 	}
 
-	public void agregarVertice(Vertice v) {
-		if (!_vertices.contains(v))
-			_vertices.add(v);
+	public boolean agregarVertice(Vertice v) {
+		if (_vertices.contains(v))
+			return false;
+		_vertices.add(v);
+		return true;
+			
 	}
 	
 	public void completarGrafo() {

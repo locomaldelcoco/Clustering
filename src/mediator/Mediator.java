@@ -77,8 +77,8 @@ public class Mediator {
 		isCompleto = false;
 	}
 
-	public void agregarVertice(double lat, double lon) {
-		_g.agregarVertice(new Vertice(lat, lon));
+	public boolean agregarVertice(double lat, double lon) {
+		return _g.agregarVertice(new Vertice(lat, lon));
 	}
 
 }

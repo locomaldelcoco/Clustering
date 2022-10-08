@@ -13,11 +13,11 @@ public class Vertice {
 		_vecinos = new HashSet<>();
 	}
 
-	public void agregarVecino(Vertice vecino) {
+	public boolean agregarVecino(Vertice vecino) {
 		if (vecino == null) {
 			throw new IllegalArgumentException("No existe vecino");
 		}
-		_vecinos.add(vecino);
+		return _vecinos.add(vecino);
 	}
 
 	public void eliminarVecino(Vertice vecino) {
