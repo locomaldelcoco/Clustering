@@ -16,7 +16,7 @@ public class Vertice {
 	public Vertice(double x, double y) {
 		_x = x;
 		_y = y;
-		_vecinos = new HashSet<>();
+		inicializarVecinos();
 	}
 
 	public boolean agregarVecino(Vertice vecino) {
@@ -63,5 +63,9 @@ public class Vertice {
 	@Override
 	public String toString() {
 		return "X=" + _x +  ", Y=" + _y ;
+	}
+
+	public void inicializarVecinos() {
+		_vecinos = new HashSet<>();
 	}
 }
