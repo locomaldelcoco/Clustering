@@ -12,6 +12,11 @@ import org.openstreetmap.gui.jmapviewer.Coordinate;
 public class Mediator {
     Grafo _g;
     boolean isCompleto;
+    
+    public Mediator() {
+        _g = new Grafo();
+        isCompleto = false;
+    }
 
     public Mediator(String s){
         _g = new Grafo();
@@ -70,6 +75,10 @@ public class Mediator {
 	public void aplicarKruskal() {
 		_g = AlgoritmoKruskal.kruskal(_g);
 		isCompleto = false;
+	}
+
+	public void agregarVertice(double lat, double lon) {
+		_g.agregarVertice(new Vertice(lat, lon));
 	}
 
 }
