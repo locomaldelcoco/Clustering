@@ -31,8 +31,7 @@ public class ArcoEqualsTest {
 	@SuppressWarnings("unlikely-arg-type")
 	@Test
 	public void distintoObjetoTest() {
-		Vertice vertice = new Vertice(0, 0);
-		assertFalse(g.getArcos().get(0).equals(vertice));
+		assertFalse(g.getArcos().get(0).equals("OBJECT"));
 	}
 
 	@Test
