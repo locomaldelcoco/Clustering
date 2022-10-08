@@ -43,6 +43,7 @@ public class Interfaz {
 	private JButton btnDibujarGrafoCompleto;
 	private JButton btnKruskal; 
 	private	JButton btnAgregarVertice;
+	private boolean modoAgregarVertice;
 	/**
 	 * Launch the application.
 	 */
@@ -102,7 +103,7 @@ public class Interfaz {
 
 	private void setupBtnAgregarVertice() {
 		btnAgregarVertice = new JButton("Agregar Vértice");
-		btnAgregarVertice.setBounds(591, 516, 108, 34);
+		btnAgregarVertice.setBounds(591, 516, 107, 34);
 		panelDeUsuario.add(btnAgregarVertice);
 	}
 
@@ -175,11 +176,10 @@ public class Interfaz {
 		mapa.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Point point = e.getPoint();
-				Coordinate coord = (Coordinate) mapa.getPosition(point);
-				System.out.println(coord.getLat() + ", " + coord.getLon());
-				if (mediator.agregarVertice(coord.getLat(), coord.getLon()))
+				Coordinate coord = (Coordinate) mapa.getPosition(e.getPoint());
+				if (modoAgregarVertice && mediator.agregarVertice(coord.getLat(), coord.getLon()))
 					mapa.addMapMarker(new MapMarkerDot(coord.getLat(), coord.getLon()));
+				modoAgregarVertice = false;
 			}
 		});
 	}
@@ -227,6 +227,12 @@ public class Interfaz {
 				aplicarKruskal();
 			}
 
+		});
+		
+		btnAgregarVertice.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				modoAgregarVertice = true;
+			}
 		});
 	}
 
