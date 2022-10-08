@@ -92,5 +92,12 @@ public class Mediator {
 		_g.getVertices().clear();
 		System.out.println(_g.getVertices());
 	}
+	
+	public boolean guardarGrafo() {
+		return GestorArchivos.guardarGrafo(_g);
+	}
 
+	public Grafo cargarGrafo(String s) {
+		return GestorArchivos.cargarGrafo(s);
+	}
 }
