@@ -1,6 +1,7 @@
 package cluster;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Grafo {
 	private ArrayList<Vertice> _vertices;
@@ -18,7 +19,8 @@ public class Grafo {
 	}
 
 	public void agregarVertice(Vertice v) {
-		_vertices.add(v);
+		if (!_vertices.contains(v))
+			_vertices.add(v);
 	}
 
 	public void completarGrafo() {
@@ -65,6 +67,13 @@ public class Grafo {
 
 	private Arco arcoMasPesado() {
 		return _arcos.get(0);
+	}
+
+	private void ordenarArcos() {
+		Collections.sort(_arcos, Collections.reverseOrder());
+		if (_arcos.isEmpty()) {
+			return;
+		}
 	}
 
 	private void agregarVecinos(Vertice vA, Vertice vB) {

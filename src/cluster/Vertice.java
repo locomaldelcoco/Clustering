@@ -6,7 +6,7 @@ import java.util.Set;
 public class Vertice {
 	private double _x, _y;
 	private Set<Vertice> _vecinos;
-	
+
 	public Vertice(double x, double y) {
 		_x = x;
 		_y = y;
@@ -26,16 +26,11 @@ public class Vertice {
 		}
 		_vecinos.remove(vecino);
 	}
-	
+
 	public boolean esVecino(Vertice otroVertice) {
 		return _vecinos.contains(otroVertice);
 	}
-	
-	// puede ser redundante
-	public boolean ambosSonVecinos(Vertice otroVertice) {
-		return this.esVecino(otroVertice) && otroVertice.esVecino(this);
-	}
-	
+
 	public double get_x() {
 		return _x;
 	}
@@ -47,12 +42,15 @@ public class Vertice {
 	public Set<Vertice> get_vecinos() {
 		return _vecinos;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) return true;
-		if (obj == null) return false;
-		if (getClass() != obj.getClass()) return false;
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
 		Vertice other = (Vertice) obj;
 		if (_x != other._x || _y != other._y)
 			return false;
