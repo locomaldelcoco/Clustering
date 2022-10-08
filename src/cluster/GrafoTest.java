@@ -36,6 +36,11 @@ public class GrafoTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
+	public void agregarVerticeNullTest() {
+		g.agregarVertice(null);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
 	public void agregarArcoTestNull() {
 		g.agregarArco(null, null, 10);
 	}

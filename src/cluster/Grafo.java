@@ -18,6 +18,9 @@ public class Grafo {
 	}
 
 	public void agregarVertice(Vertice v) {
+		if (v == null) {
+			throw new IllegalArgumentException("El parametro no puede ser null");
+		}
 		if (!_vertices.contains(v))
 			_vertices.add(v);
 	}
