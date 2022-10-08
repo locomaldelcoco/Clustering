@@ -13,6 +13,9 @@ import bfs.BFS;
 public class AlgoritmoKruskal{
 	
 	public static Grafo kruskal(Grafo g) {
+		if (g == null) {
+			throw new IllegalArgumentException("El grafo no puede ser null");
+		}
 		Grafo agm = new Grafo();
 		ArrayList<Arco> arcos = g.getArcos();
 		Collections.sort(arcos, Collections.reverseOrder());
