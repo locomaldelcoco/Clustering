@@ -44,6 +44,8 @@ public class Interfaz {
 	private JButton btnKruskal; 
 	private	JButton btnAgregarVertice;
 	private boolean modoAgregarVertice;
+	private JButton btnEliminarArcos;
+	private JButton btnEliminarVertices;
 	/**
 	 * Launch the application.
 	 */
@@ -98,7 +100,21 @@ public class Interfaz {
 		setupBtnDibujarGrafoCompleto();
 		setupBtnKruskal();
 		setupBtnAgregarVertice();
+		setupBtnEliminarArcos();
+		setupBtnEliminarVertices();
 		frame.getContentPane().add(panelDeUsuario);
+		}
+
+	private void setupBtnEliminarVertices() {
+		btnEliminarVertices = new JButton("Eliminar Vértices");
+		btnEliminarVertices.setBounds(591, 411, 183, 23);
+		panelDeUsuario.add(btnEliminarVertices);
+	}
+
+	private void setupBtnEliminarArcos() {
+		btnEliminarArcos = new JButton("Eliminar Arcos");
+		btnEliminarArcos.setBounds(591, 377, 183, 23);
+		panelDeUsuario.add(btnEliminarArcos);
 	}
 
 	private void setupBtnAgregarVertice() {
@@ -210,9 +226,7 @@ public class Interfaz {
 				} else {
 					activarBtnCargarArchivo();
 				}
-				
 			}
-			
 		});
 
 		btnDibujarGrafoCompleto.addActionListener(new ActionListener() {
@@ -226,12 +240,26 @@ public class Interfaz {
 			public void actionPerformed(ActionEvent e) {
 				aplicarKruskal();
 			}
-
 		});
 		
 		btnAgregarVertice.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				modoAgregarVertice = true;
+			}
+		});
+		
+		btnEliminarArcos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mediator.eliminarArcos();
+				mapa.removeAllMapPolygons();
+			}
+		});
+
+		btnEliminarVertices.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mediator.eliminarVertices();
+				mediator.eliminarArcos();
+				limpiarMapa();
 			}
 		});
 	}

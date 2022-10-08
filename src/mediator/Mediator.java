@@ -81,4 +81,16 @@ public class Mediator {
 		return _g.agregarVertice(new Vertice(lat, lon));
 	}
 
+	public void eliminarArcos() {
+		System.out.println(_g.getArcos());
+		_g.getArcos().clear();
+		System.out.println(_g.getArcos());
+	}
+
+	public void eliminarVertices() {
+		System.out.println(_g.getVertices());
+		_g.getVertices().clear();
+		System.out.println(_g.getVertices());
+	}
+
 }
