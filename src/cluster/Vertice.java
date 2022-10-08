@@ -15,19 +15,25 @@ public class Vertice {
 
 	public void agregarVecino(Vertice vecino) {
 		if (vecino == null) {
-			throw new IllegalArgumentException("No existe vecino");
+			throw new IllegalArgumentException("El parametro no puede ser null");
 		}
 		_vecinos.add(vecino);
 	}
 
 	public void eliminarVecino(Vertice vecino) {
 		if (vecino == null) {
-			throw new IllegalArgumentException("No existe vecino");
+			throw new IllegalArgumentException("El parametro no puede ser null");
+		}
+		if (!_vecinos.contains(vecino)) {
+			throw new IllegalArgumentException("El vertice no contiene este vertice: " + vecino);
 		}
 		_vecinos.remove(vecino);
 	}
 
 	public boolean esVecino(Vertice otroVertice) {
+		if (otroVertice == null) {
+			
+		}
 		return _vecinos.contains(otroVertice);
 	}
 
