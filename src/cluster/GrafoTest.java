@@ -1,7 +1,6 @@
 package cluster;
 
 import static org.junit.Assert.*;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -73,4 +72,23 @@ public class GrafoTest {
 		assertEquals((g.tamano() * (g.tamano() - 1) / 2) - 1, g.getArcos().size());
 	}
 
+	@Test(expected = IndexOutOfBoundsException.class)
+	public void eliminarArcoMasPesadoVacioTest() {
+		g.eliminarArcoMasPesado();
+	}
+
+	@Test
+	public void eliminarArcoMasPesadoTest() {
+		Arco arcoMasPesado = null;
+		double distanciaMasGrande = Double.MIN_VALUE;
+		g.completarGrafo();
+		for (int i = 0; i < g.getArcos().size(); i++) {
+			if (g.getArcos().get(i).getDistancia() > distanciaMasGrande) {
+				distanciaMasGrande = g.getArcos().get(i).getDistancia();
+				arcoMasPesado = g.getArcos().get(i);
+			}
+		}
+		g.eliminarArcoMasPesado();
+		assertFalse(g.getArcos().contains(arcoMasPesado));
+	}
 }

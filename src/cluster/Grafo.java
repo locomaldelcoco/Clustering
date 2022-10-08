@@ -68,6 +68,7 @@ public class Grafo {
 	}
 
 	private Arco arcoMasPesado() {
+		//obtiene el primero porque esta ordenado de mayor a menor
 		return _arcos.get(0);
 	}
 
