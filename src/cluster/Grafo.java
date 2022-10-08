@@ -6,10 +6,12 @@ import java.util.Collections;
 public class Grafo {
 	private ArrayList<Vertice> _vertices;
 	private ArrayList<Arco> _arcos;
+	private int _CantidadDeClusters;
 
 	public Grafo() {
 		_vertices = new ArrayList<>();
 		_arcos = new ArrayList<>();
+		_CantidadDeClusters = 1;
 	}
 
 	public void cargarGrafo(String s) {
@@ -34,9 +36,14 @@ public class Grafo {
 					agregarArco(vA, vB, distancia);
 				}
 			}
-		}
+		}reiniciarCantidadDeClusters();
 	}
 	
+	
+	private void reiniciarCantidadDeClusters() {
+		_CantidadDeClusters = 0;
+	}
+
 	public void agregarArco(Vertice vA, Vertice vB, double distancia) {
 		_arcos.add(new Arco(vA, vB, distancia));
 		agregarVecinos(vA, vB);
@@ -48,12 +55,10 @@ public class Grafo {
 	
 	public void eliminarArcoMasPesado() {
 		if(!_arcos.isEmpty()) {
-			System.out.println("Se eliminó " + arcoMasPesado().getDistancia());
 			_arcos.remove( arcoMasPesado() );
 		}else{
 			throw new IndexOutOfBoundsException("No hay arcos para eliminar");
 		}
-		
 	}
 	
 	private Arco arcoMasPesado() {
