@@ -6,6 +6,7 @@ import cluster.Arco;
 import cluster.GestorArchivos;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 
@@ -97,7 +98,17 @@ public class Mediator {
 		return GestorArchivos.guardarGrafo(_g);
 	}
 
-	public Grafo cargarGrafo(String s) {
-		return GestorArchivos.cargarGrafo(s);
+	public void cargarGrafo(String s) {
+		_g = GestorArchivos.cargarGrafo(s);
+		for (Vertice v : _g.getVertices()) 
+			v.inicializarVecinos();
+		
+		ArrayList<Arco> arcos = (ArrayList<Arco>) _g.getArcos().clone();
+		eliminarArcos();
+		for(Arco a : arcos) {
+			Vertice vA = a.getVerticeA();
+			Vertice vB = a.getVerticeB();
+			_g.agregarArco(_g.getVertice(vA), _g.getVertice(vB), a.getDistancia());
+		}
 	}
 }
