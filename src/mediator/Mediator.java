@@ -121,6 +121,7 @@ public class Mediator {
 
 	public void eliminarVertice(Coordinate c) {
 		Vertice v = new Vertice(c.getLat(), c.getLon());
-		_g.eliminarVertice(_g.getVertice(v));
+		_g.eliminarArcosDeVertice(_g.getVertice(v));
+		_g.eliminarVertice(v);
 	}
 }
