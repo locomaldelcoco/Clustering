@@ -106,11 +106,6 @@ public class Interfaz {
 	private void setupBtnGuardarGrafo() {
 		frame.getContentPane().add(panelDeUsuario);
 			btnGuardarGrafo = new JButton("Guardar Grafo");
-			btnGuardarGrafo.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					System.out.println(mediator.guardarGrafo());
-				}
-			});
 			btnGuardarGrafo.setBounds(591, 237, 183, 23);
 			panelDeUsuario.add(btnGuardarGrafo);
 	}
@@ -256,6 +251,12 @@ public class Interfaz {
 				mediator.eliminarVertices();
 				mediator.eliminarArcos();
 				limpiarMapa();
+			}
+		});
+
+		btnGuardarGrafo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println(mediator.guardarGrafo());
 			}
 		});
 
