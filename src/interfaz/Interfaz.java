@@ -151,74 +151,6 @@ public class Interfaz {
 		mapa.removeAllMapPolygons();
 	}
 
-	private void addMapaEvents() {
-		mapa.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				//agregar vertice
-				Coordinate coord = (Coordinate) mapa.getPosition(e.getPoint());
-				if (modoAgregarVertice && mediator.agregarVertice(coord.getLat(), coord.getLon()))
-					mapa.addMapMarker(new MapMarkerDot(coord.getLat(), coord.getLon()));
-
-				//agregar arco
-				MapMarker marker = masCercano(e.getPoint());
-			    Coordinate cercano = marker != null ? marker.getCoordinate() : null;
-				if (modoAgregarArco && cercano != null && mediator.existeCoordenada(cercano)) {
-					lblBarraDeEstado.setText("Seleccione el vértice " + (arcoEnConstruccion[0] == null ? "destino" : "origen"));
-					for (int i = 0; i < arcoEnConstruccion.length; i++) {
-						if (cercano != null && arcoEnConstruccion[i] == null) {
-							arcoEnConstruccion[i] = cercano;
-							break;
-						}
-					}
-					if(arcoEnConstruccion[1] != null) {
-						if(arcoEnConstruccion[0] != arcoEnConstruccion[1] && mediator.agregarArco(arcoEnConstruccion))
-							mostrarArcos();
-						resetearArcoEnConstruccion();
-					}
-				}
-					
-				if (modoEliminarVertice && cercano != null && mediator.existeCoordenada(cercano)) {
-						mediator.eliminarVertice(masCercano(e.getPoint()).getCoordinate());
-						limpiarMapa();
-						showMapMarkers();
-						mostrarArcos();
-			}
-
-			mapa.addMouseMotionListener(new MouseMotionAdapter() {
-				@Override
-				public void mouseMoved(MouseEvent e) {
-					if((modoEliminarVertice || modoAgregarArco) && masCercano(e.getPoint()) != null) 
-						mapContainer.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-					 else 
-					mapContainer.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-				}
-			});
-		}
-	});
-	}
-
-	private MapMarker masCercano(Point punto) {
-		MapMarker ret = null;
-			for (MapMarker marker : mapa.getMapMarkerList()) {
-				Point p = mapa.getMapPosition(marker.getLat(), marker.getLon(), true);
-				if (p != null) {
-					int r = mapa.getRadius(marker, p);
-					Rectangle rect = new Rectangle(p.x - r, p.y - r, r + r, r + r);
-					if (rect.contains(punto)) {
-						ret = marker;
-						break;
-					}
-				}
-			}
-		return ret;
-	}
-	
-	private void resetearArcoEnConstruccion() {
-		arcoEnConstruccion[0] = null;
-		arcoEnConstruccion[1] = null;
-	}
-
 	private void addPanelDeUsuarioEvents() {
 		btnEliminarArco.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -306,6 +238,74 @@ public class Interfaz {
 				lblBarraDeEstado.setText("Modo eliminar vértice " + (modoEliminarVertice ? "ON" : "OFF"));
 			}
 		});
+	}
+
+	private void addMapaEvents() {
+		mapa.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				//agregar vertice
+				Coordinate coord = (Coordinate) mapa.getPosition(e.getPoint());
+				if (modoAgregarVertice && mediator.agregarVertice(coord.getLat(), coord.getLon()))
+					mapa.addMapMarker(new MapMarkerDot(coord.getLat(), coord.getLon()));
+
+				//agregar arco
+				MapMarker marker = masCercano(e.getPoint());
+			    Coordinate cercano = marker != null ? marker.getCoordinate() : null;
+				if (modoAgregarArco && cercano != null && mediator.existeCoordenada(cercano)) {
+					lblBarraDeEstado.setText("Seleccione el vértice " + (arcoEnConstruccion[0] == null ? "destino" : "origen"));
+					for (int i = 0; i < arcoEnConstruccion.length; i++) {
+						if (cercano != null && arcoEnConstruccion[i] == null) {
+							arcoEnConstruccion[i] = cercano;
+							break;
+						}
+					}
+					if(arcoEnConstruccion[1] != null) {
+						if(arcoEnConstruccion[0] != arcoEnConstruccion[1] && mediator.agregarArco(arcoEnConstruccion))
+							mostrarArcos();
+						resetearArcoEnConstruccion();
+					}
+				}
+					
+				if (modoEliminarVertice && cercano != null && mediator.existeCoordenada(cercano)) {
+						mediator.eliminarVertice(masCercano(e.getPoint()).getCoordinate());
+						limpiarMapa();
+						showMapMarkers();
+						mostrarArcos();
+			}
+
+			mapa.addMouseMotionListener(new MouseMotionAdapter() {
+				@Override
+				public void mouseMoved(MouseEvent e) {
+					if((modoEliminarVertice || modoAgregarArco) && masCercano(e.getPoint()) != null) 
+						mapContainer.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+					 else 
+					mapContainer.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+				}
+			});
+		}
+	});
+	}
+
+	private MapMarker masCercano(Point punto) {
+		MapMarker ret = null;
+			for (MapMarker marker : mapa.getMapMarkerList()) {
+				Point p = mapa.getMapPosition(marker.getLat(), marker.getLon(), true);
+				if (p != null) {
+					int r = mapa.getRadius(marker, p);
+					Rectangle rect = new Rectangle(p.x - r, p.y - r, r + r, r + r);
+					if (rect.contains(punto)) {
+						ret = marker;
+						break;
+					}
+				}
+			}
+		return ret;
+	}
+	
+	private void resetearArcoEnConstruccion() {
+		arcoEnConstruccion[0] = null;
+		arcoEnConstruccion[1] = null;
 	}
 
 	private void aplicarKruskal() {
