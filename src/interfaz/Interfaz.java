@@ -143,10 +143,6 @@ public class Interfaz {
 		arcoEnConstruccion = new Coordinate[2];
 		panelDeUsuario.add(btnAgregarArco);
 		
-		btnAgregarVertice = new JButton("");
-		btnAgregarVertice.setIcon(new ImageIcon(Interfaz.class.getResource("/vertice.png")));
-		btnAgregarVertice.setBounds(591, 517, 33, 33);
-		panelDeUsuario.add(btnAgregarVertice);
 	}
 
 	private void setupBtnEliminarVertices() {
@@ -162,7 +158,13 @@ public class Interfaz {
 	}
 
 	private void setupBtnAgregarVertice() {
-
+		btnAgregarVertice = new JButton("");
+		btnAgregarVertice.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnAgregarVertice.setIcon(new ImageIcon(Interfaz.class.getResource("/vertice.png")));
+		btnAgregarVertice.setToolTipText("Agregar vértice");
+		btnAgregarVertice.setBorder(new EmptyBorder(2, 2, 2, 2));
+		btnAgregarVertice.setBounds(591, 517, 33, 33);
+		panelDeUsuario.add(btnAgregarVertice);
 	}
 
 	private void setupBtnEliminarArco() {
