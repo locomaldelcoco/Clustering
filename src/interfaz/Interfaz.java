@@ -2,11 +2,14 @@ package interfaz;
 
 import java.awt.EventQueue;
 import java.awt.Image;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
@@ -41,12 +44,18 @@ public class Interfaz {
 	private JComboBox menuSeleccionArchivo;
 	private JButton btnDibujarGrafoCompleto;
 	private JButton btnKruskal; 
-	private	JButton btnAgregarVertice;
-	private boolean modoAgregarVertice;
 	private JButton btnEliminarArcos;
 	private JButton btnEliminarVertices;
 	private JButton btnGuardarGrafo;
 	private JButton btnCargarGrafo;
+	private	JButton btnAgregarVertice;
+	private JButton btnAgregarArco;
+
+	private boolean modoAgregarVertice;
+	private boolean modoAgregarArco;
+	
+	private Coordinate[] arcoEnConstruccion;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -104,6 +113,7 @@ public class Interfaz {
 		setupBtnEliminarVertices();
 		setupBtnGuardarGrafo();
 		setupBtnCargarGrafo();
+		setupBtnAgregarArco();
 	}
 
 	private void setupBtnGuardarGrafo() {
@@ -119,6 +129,20 @@ public class Interfaz {
 			btnCargarGrafo.setEnabled(false);
 			btnCargarGrafo.setBounds(591, 203, 183, 23);
 			panelDeUsuario.add(btnCargarGrafo);
+			
+	}
+
+	private void setupBtnAgregarArco() {
+		btnAgregarArco = new JButton("");
+		btnAgregarArco.setIcon(new ImageIcon(Interfaz.class.getResource("/arco.png")));
+		btnAgregarArco.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnAgregarArco.setOpaque(true);
+		btnAgregarArco.setToolTipText("Agregar arco");
+		btnAgregarVertice.setIcon(new ImageIcon("img\\arco.png"));
+		btnAgregarArco.setBorder(new EmptyBorder(2, 2, 2, 2));
+		btnAgregarArco.setBounds(634, 517, 33, 33);
+		arcoEnConstruccion = new Coordinate[2];
+		panelDeUsuario.add(btnAgregarArco);
 	}
 
 	private void setupBtnEliminarVertices() {
@@ -135,10 +159,11 @@ public class Interfaz {
 
 	private void setupBtnAgregarVertice() {
 		btnAgregarVertice = new JButton("");
+		btnAgregarVertice.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnAgregarVertice.setOpaque(true);
 		btnAgregarVertice.setBorder(new EmptyBorder(2, 2, 2, 2));
 		btnAgregarVertice.setToolTipText("Agregar vértice");
-		btnAgregarVertice.setOpaque(false);
-		btnAgregarVertice.setIcon(new ImageIcon("img\\vertice.png"));
+		btnAgregarVertice.setIcon(new ImageIcon(Interfaz.class.getResource("/vertice.png")));
 		btnAgregarVertice.setBounds(591, 517, 33, 33);
 		panelDeUsuario.add(btnAgregarVertice);
 	}
@@ -200,11 +225,50 @@ public class Interfaz {
 		mapa.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				//agregar vertice
 				Coordinate coord = (Coordinate) mapa.getPosition(e.getPoint());
 				if (modoAgregarVertice && mediator.agregarVertice(coord.getLat(), coord.getLon()))
 					mapa.addMapMarker(new MapMarkerDot(coord.getLat(), coord.getLon()));
+
+				//agregar arco
+				MapMarker marker = masCercano(e.getPoint());
+			    Coordinate cercano = marker != null ? marker.getCoordinate() : null;
+				if (modoAgregarArco && cercano !=null && mediator.existeCoordenada(cercano)) {
+					for (int i = 0; i < arcoEnConstruccion.length; i++) {
+						if (cercano != null && arcoEnConstruccion[i] == null) {
+							arcoEnConstruccion[i] = cercano;
+							break;
+						}
+					}
+					if(arcoEnConstruccion[1] != null) {
+						if(mediator.agregarArco(arcoEnConstruccion))
+							mostrarArcos();
+						resetearArcoEnConstruccion();
+					}
 			}
+		}
 		});
+	}
+	
+	private MapMarker masCercano(Point punto) {
+		MapMarker ret = null;
+			for (MapMarker marker : mapa.getMapMarkerList()) {
+				Point p = mapa.getMapPosition(marker.getLat(), marker.getLon(), true);
+				if (p != null) {
+					int r = mapa.getRadius(marker, p);
+					Rectangle rect = new Rectangle(p.x - r, p.y - r, r + r, r + r);
+					if (rect.contains(punto)) {
+						ret = marker;
+						break;
+					}
+				}
+			}
+		return ret;
+	}
+	
+	private void resetearArcoEnConstruccion() {
+		arcoEnConstruccion[0] = null;
+		arcoEnConstruccion[1] = null;
 	}
 
 	private void addPanelDeUsuarioEvents() {
@@ -241,6 +305,7 @@ public class Interfaz {
 		btnAgregarVertice.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				modoAgregarVertice = modoAgregarVertice ? false : true;
+				System.out.println("MODO AGREGAR VERTICE:" + modoAgregarVertice);
 			}
 		});
 		
@@ -271,6 +336,13 @@ public class Interfaz {
 				limpiarMapa();
 				showMapMarkers();
 				mostrarArcos();
+			}
+		});
+		
+		btnAgregarArco.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				modoAgregarArco = modoAgregarArco ? false : true;
+				System.out.println("MODO AGREGAR ARCO:" + modoAgregarArco);
 			}
 		});
 	}
