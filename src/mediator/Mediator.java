@@ -6,7 +6,6 @@ import cluster.Arco;
 import cluster.GestorArchivos;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 

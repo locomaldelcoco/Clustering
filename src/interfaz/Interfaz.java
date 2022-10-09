@@ -2,11 +2,8 @@ package interfaz;
 
 import java.awt.EventQueue;
 import java.awt.Image;
-import java.awt.Point;
 import java.awt.Toolkit;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
