@@ -31,7 +31,7 @@ public class Arco implements Comparable<Arco> {
 	public double getDistancia() {
 		return _distancia;
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

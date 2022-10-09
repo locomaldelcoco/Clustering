@@ -330,6 +330,7 @@ public class Interfaz {
 			public void actionPerformed(ActionEvent e) {
 				dibujarGrafoCompleto();
 				activarBtnEliminarArco();
+				activarBtnKruskal();
 			}
 		});
 
@@ -481,7 +482,11 @@ public class Interfaz {
 	private void activarBtnEliminarArco() {
 		btnEliminarArco.setEnabled(true);
 	}
-
+	
+	private void activarBtnKruskal() {
+		btnKruskal.setEnabled(true);
+	}
+	
 	private void updateFrame() {
 		SwingUtilities.updateComponentTreeUI(panelDeUsuario);
 		frame.setVisible(true);

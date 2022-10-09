@@ -11,12 +11,12 @@ public class Grafo {
 	private ArrayList<Vertice> _vertices;
 	@Expose
 	private ArrayList<Arco> _arcos;
-	private int _CantidadDeClusters;
+	private int _cantidadDeClusters;
 
 	public Grafo() {
 		_vertices = new ArrayList<>();
 		_arcos = new ArrayList<>();
-		_CantidadDeClusters = 1;
+		_cantidadDeClusters = 1;
 	}
 
 	public void cargarGrafo(String s) {
@@ -73,6 +73,10 @@ public class Grafo {
 		}
 	}
 	
+	private boolean esBorde(Arco arco) {
+		return arco.getVerticeA() == null || arco.getVerticeB() == null;
+	}
+	
 	private Arco arcoMasPesado() {
 		Arco pesado = _arcos.get(0);
 		for (Arco arco : _arcos) {
@@ -94,7 +98,11 @@ public class Grafo {
 	public ArrayList<Arco> getArcos() {
 		return _arcos;
 	}
-
+	
+	public void sumarClusters() {
+		_cantidadDeClusters++;
+	}
+	
 	public int tamano() {
 		return _vertices.size();
 	}
@@ -123,5 +131,10 @@ public class Grafo {
 	@Override
 	public String toString() {
 		return "Vertices= " + _vertices + ", Arcos=" + _arcos;
+	}
+	
+
+	public int getCantidadDeClusters() {
+		return _cantidadDeClusters;
 	}
 }
