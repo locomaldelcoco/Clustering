@@ -48,8 +48,8 @@ public class Interfaz {
 	private JButton btnEliminarVertices;
 	private JButton btnGuardarGrafo;
 	private JButton btnCargarGrafo;
-	private	JButton btnAgregarVertice;
 	private JButton btnAgregarArco;
+	private JButton btnAgregarVertice;
 
 	private boolean modoAgregarVertice;
 	private boolean modoAgregarArco;
@@ -138,11 +138,15 @@ public class Interfaz {
 		btnAgregarArco.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnAgregarArco.setOpaque(true);
 		btnAgregarArco.setToolTipText("Agregar arco");
-		btnAgregarVertice.setIcon(new ImageIcon("img\\arco.png"));
 		btnAgregarArco.setBorder(new EmptyBorder(2, 2, 2, 2));
 		btnAgregarArco.setBounds(634, 517, 33, 33);
 		arcoEnConstruccion = new Coordinate[2];
 		panelDeUsuario.add(btnAgregarArco);
+		
+		btnAgregarVertice = new JButton("");
+		btnAgregarVertice.setIcon(new ImageIcon(Interfaz.class.getResource("/vertice.png")));
+		btnAgregarVertice.setBounds(591, 517, 33, 33);
+		panelDeUsuario.add(btnAgregarVertice);
 	}
 
 	private void setupBtnEliminarVertices() {
@@ -158,14 +162,7 @@ public class Interfaz {
 	}
 
 	private void setupBtnAgregarVertice() {
-		btnAgregarVertice = new JButton("");
-		btnAgregarVertice.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnAgregarVertice.setOpaque(true);
-		btnAgregarVertice.setBorder(new EmptyBorder(2, 2, 2, 2));
-		btnAgregarVertice.setToolTipText("Agregar vértice");
-		btnAgregarVertice.setIcon(new ImageIcon(Interfaz.class.getResource("/vertice.png")));
-		btnAgregarVertice.setBounds(591, 517, 33, 33);
-		panelDeUsuario.add(btnAgregarVertice);
+
 	}
 
 	private void setupBtnEliminarArco() {
@@ -302,13 +299,6 @@ public class Interfaz {
 			}
 		});
 		
-		btnAgregarVertice.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				modoAgregarVertice = modoAgregarVertice ? false : true;
-				System.out.println("MODO AGREGAR VERTICE:" + modoAgregarVertice);
-			}
-		});
-		
 		btnEliminarArcos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mediator.eliminarArcos();
@@ -339,6 +329,13 @@ public class Interfaz {
 			}
 		});
 		
+		btnAgregarVertice.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				modoAgregarVertice = modoAgregarVertice? false : true;
+				System.out.println("MODO AGREGAR VERTICE:" + modoAgregarVertice);
+			}
+		});
+
 		btnAgregarArco.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				modoAgregarArco = modoAgregarArco ? false : true;
