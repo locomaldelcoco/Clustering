@@ -183,7 +183,7 @@ public class Interfaz {
 	private void setupBtnDibujarGrafoCompleto(){
 		btnDibujarGrafoCompleto = new JButton("Completar Grafo");
 		btnDibujarGrafoCompleto.setBounds(650, 99, 124, 23);
-		btnDibujarGrafoCompleto.setEnabled(false);
+		btnDibujarGrafoCompleto.setEnabled(true);
 		panelDeUsuario.add(btnDibujarGrafoCompleto);
 	}
 	
