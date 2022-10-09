@@ -320,6 +320,7 @@ public class Interfaz {
 		mapContainer.add(mapa);
 		lblBarraDeEstado = Recurso.setupLblBarraDeEstado();
 		mapa.add(lblBarraDeEstado);
+		frame.getContentPane().add(mapContainer);
 	}
 
 	private void setupFrame() {
