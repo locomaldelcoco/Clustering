@@ -16,6 +16,9 @@ public class AlgoritmoKruskal{
 		Grafo agm = new Grafo();
 		ArrayList<Arco> arcos = g.getArcos();
 		Collections.sort(arcos, Collections.reverseOrder());
+		if (arcos.size() == 0) {
+			return g;
+		}
 		
 		while (agm.getArcos().size() != g.getVertices().size()-1) {
 			Arco arista = new Arco(arcos.get(0).getVerticeA(), arcos.get(0).getVerticeB(), arcos.get(0).getDistancia());
