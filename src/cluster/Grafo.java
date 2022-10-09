@@ -50,9 +50,13 @@ public class Grafo {
 		ordenarArcos();
 	}
 	
-	public void agregarArco(Vertice vA, Vertice vB, double distancia) {
-		_arcos.add(new Arco(vA, vB, distancia));
+	public boolean agregarArco(Vertice vA, Vertice vB, double distancia) {
+		Arco a = new Arco(vA, vB, distancia);
+		if (_arcos.contains(a))
+			return false;
+		_arcos.add(a);
 		agregarVecinos(vA, vB);
+		return true;
 	}
 	
 	public void eliminarArco(Arco arco) {			
@@ -102,7 +106,7 @@ public class Grafo {
 			if (v.equals(vA))
 				return v;
 		}
-		throw new IllegalArgumentException("No existe vértice");
+		return null;
 	}
 	
 	@Override
