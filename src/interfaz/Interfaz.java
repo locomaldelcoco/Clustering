@@ -276,7 +276,7 @@ public class Interfaz {
 			mapa.addMouseMotionListener(new MouseMotionAdapter() {
 				@Override
 				public void mouseMoved(MouseEvent e) {
-					if(modoEliminarVertice && masCercano(e.getPoint()) != null) 
+					if((modoEliminarVertice || modoAgregarArco) && masCercano(e.getPoint()) != null) 
 						mapContainer.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 					 else 
 					mapContainer.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
