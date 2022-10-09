@@ -1,10 +1,8 @@
 package interfaz;
 
 import java.awt.EventQueue;
-import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.Toolkit;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -13,7 +11,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
@@ -27,12 +24,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
 import java.awt.Cursor;
-import javax.swing.ImageIcon;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.EmptyBorder;
-import java.awt.Font;
 import java.awt.event.MouseMotionAdapter;
 
 @SuppressWarnings("rawtypes")
