@@ -21,9 +21,15 @@ public class Grafo {
 	}
 
 	public void cargarGrafo(String s) {
-		ArrayList<Vertice> coords = GestorArchivos.getCoordenadas(s);
-		for (Vertice v : coords)
-			agregarVertice(v);
+		Grafo g = GestorArchivos.cargarGrafo(s);
+		_vertices = g.getVertices();
+		_arcos = g._arcos;
+		inicializarVecinos();
+	}
+
+	public void inicializarVecinos() {
+		for (Vertice v : _vertices)
+			v.inicializarVecinos();
 	}
 
 	public boolean agregarVertice(Vertice v) {
