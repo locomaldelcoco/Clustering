@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -57,6 +58,7 @@ public class Interfaz {
 	private boolean modoAgregarArco;
 	
 	private Coordinate[] arcoEnConstruccion;
+	private JLabel lblBarraDeEstado;
 	
 	/**
 	 * Launch the application.
@@ -91,6 +93,7 @@ public class Interfaz {
 		addMapaEvents();
 		setupPanelDeUsuario();
 		addPanelDeUsuarioEvents();
+		updateFrame();
 	}
 
 	private void showMapMarkers() {
@@ -105,7 +108,6 @@ public class Interfaz {
 
 	private void setupPanelDeUsuario() {
 		panelDeUsuario = new JPanel();
-		panelDeUsuario.setLayout(null);
 		setupBtnEliminarArco();
 		setupMenuSeleccionArchivo();
 		setupBtnDibujarGrafoCompleto();
@@ -121,72 +123,72 @@ public class Interfaz {
 	private void setupBtnGuardarGrafo() {
 		frame.getContentPane().add(panelDeUsuario);
 			btnGuardarGrafo = new JButton("Guardar Grafo");
-			btnGuardarGrafo.setBounds(591, 237, 183, 23);
+			btnGuardarGrafo.setBounds(650, 237, 124, 23);
 			panelDeUsuario.add(btnGuardarGrafo);
 	}
 
 	private void setupBtnCargarGrafo() {
 		frame.getContentPane().add(panelDeUsuario);
 			btnCargarGrafo = new JButton("Cargar Grafo");
+			btnCargarGrafo.setBounds(650, 203, 124, 23);
 			btnCargarGrafo.setEnabled(false);
-			btnCargarGrafo.setBounds(591, 203, 183, 23);
 			panelDeUsuario.add(btnCargarGrafo);
 			
 	}
 
 	private void setupBtnAgregarArco() {
 		btnAgregarArco = new JButton("");
+		btnAgregarArco.setBounds(741, 517, 33, 33);
 		btnAgregarArco.setIcon(new ImageIcon(Interfaz.class.getResource("/arco.png")));
 		btnAgregarArco.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnAgregarArco.setOpaque(true);
 		btnAgregarArco.setToolTipText("Agregar arco");
 		btnAgregarArco.setBorder(new EmptyBorder(2, 2, 2, 2));
-		btnAgregarArco.setBounds(634, 517, 33, 33);
 		arcoEnConstruccion = new Coordinate[2];
 		panelDeUsuario.add(btnAgregarArco);
-		
 	}
 
 	private void setupBtnEliminarVertices() {
 		btnEliminarVertices = new JButton("Eliminar Vértices");
-		btnEliminarVertices.setBounds(591, 411, 183, 23);
+		btnEliminarVertices.setBounds(650, 411, 124, 23);
 		panelDeUsuario.add(btnEliminarVertices);
 	}
 
 	private void setupBtnEliminarArcos() {
 		btnEliminarArcos = new JButton("Eliminar Arcos");
-		btnEliminarArcos.setBounds(591, 377, 183, 23);
+		btnEliminarArcos.setBounds(650, 377, 124, 23);
 		panelDeUsuario.add(btnEliminarArcos);
 	}
 
 	private void setupBtnAgregarVertice() {
 		btnAgregarVertice = new JButton("");
+		btnAgregarVertice.setBounds(650, 517, 33, 33);
 		btnAgregarVertice.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnAgregarVertice.setIcon(new ImageIcon(Interfaz.class.getResource("/vertice.png")));
 		btnAgregarVertice.setToolTipText("Agregar vértice");
 		btnAgregarVertice.setBorder(new EmptyBorder(2, 2, 2, 2));
-		btnAgregarVertice.setBounds(591, 517, 33, 33);
 		panelDeUsuario.add(btnAgregarVertice);
 	}
 
 	private void setupBtnEliminarArco() {
+		panelDeUsuario.setLayout(null);
 		btnEliminarArco = new JButton("Eliminar Arista Pesada");
+		btnEliminarArco.setBounds(650, 269, 124, 22);
 		btnEliminarArco.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnEliminarArco.setBounds(591, 269, 183, 22);
 		btnEliminarArco.setEnabled(false);
 		panelDeUsuario.add(btnEliminarArco);
 	}
 	
 	private void setupBtnDibujarGrafoCompleto(){
 		btnDibujarGrafoCompleto = new JButton("Completar Grafo");
-		btnDibujarGrafoCompleto.setBounds(591, 99, 183, 23);
+		btnDibujarGrafoCompleto.setBounds(650, 99, 124, 23);
 		btnDibujarGrafoCompleto.setEnabled(false);
 		panelDeUsuario.add(btnDibujarGrafoCompleto);
 	}
 	
 	private void setupBtnKruskal() {
 		btnKruskal = new JButton("Aplicar Kruskal");
-		btnKruskal.setBounds(591, 133, 183, 23);
+		btnKruskal.setBounds(650, 133, 124, 23);
 		panelDeUsuario.add(btnKruskal);
 	}
 
@@ -203,13 +205,13 @@ public class Interfaz {
 
 	private void setupMenuSeleccionArchivo() {
 		menuSeleccionArchivo = new JComboBox();
+		menuSeleccionArchivo.setBounds(650, 32, 124, 22);
 		menuSeleccionArchivo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		menuSeleccionArchivo.setToolTipText("Lista de archivos");
 		String[] archivos = setupModelMenuArchivo();
 		DefaultComboBoxModel model = new DefaultComboBoxModel(archivos);
 		menuSeleccionArchivo.setModel(model);
 		menuSeleccionArchivo.setSelectedIndex(0);
-		menuSeleccionArchivo.setBounds(591, 32, 183, 22);
 		panelDeUsuario.add(menuSeleccionArchivo);
 	}
 
@@ -234,7 +236,8 @@ public class Interfaz {
 				//agregar arco
 				MapMarker marker = masCercano(e.getPoint());
 			    Coordinate cercano = marker != null ? marker.getCoordinate() : null;
-				if (modoAgregarArco && cercano !=null && mediator.existeCoordenada(cercano)) {
+				if (modoAgregarArco && cercano != null && mediator.existeCoordenada(cercano)) {
+					lblBarraDeEstado.setText("Seleccione el vértice " + (arcoEnConstruccion[0] == null ? "destino" : "origen"));
 					for (int i = 0; i < arcoEnConstruccion.length; i++) {
 						if (cercano != null && arcoEnConstruccion[i] == null) {
 							arcoEnConstruccion[i] = cercano;
@@ -335,15 +338,17 @@ public class Interfaz {
 		
 		btnAgregarVertice.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				modoAgregarArco = false;
 				modoAgregarVertice = modoAgregarVertice? false : true;
-				System.out.println("MODO AGREGAR VERTICE:" + modoAgregarVertice);
+				lblBarraDeEstado.setText("Modo agregar vértice " + (modoAgregarVertice ? "ON" : "OFF"));
 			}
 		});
 
 		btnAgregarArco.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				modoAgregarVertice = false;
 				modoAgregarArco = modoAgregarArco ? false : true;
-				System.out.println("MODO AGREGAR ARCO:" + modoAgregarArco);
+				lblBarraDeEstado.setText("Modo agregar arco " + (modoAgregarArco ? "ON - Seleccione vértice origen" : "OFF"));
 			}
 		});
 	}
@@ -356,11 +361,18 @@ public class Interfaz {
 
 	private void setupMapContainer() {
 		mapContainer = new JPanel();
-		mapContainer.setBounds(0, 0, 571, 561);
+		mapContainer.setBounds(0, 0, 641, 561);
 		mapContainer.setLayout(null);
 		mapa = new JMapViewer();
-		mapa.setBounds(0, 0, 571, 561);
+		mapa.setBounds(0, 0, 641, 561);
 		mapContainer.add(mapa);
+		setupLblBarraDeEstado();
+	}
+
+	private void setupLblBarraDeEstado() {
+		lblBarraDeEstado = new JLabel("Barra de estado");
+		lblBarraDeEstado.setBounds(10, 536, 621, 14);
+		mapa.add(lblBarraDeEstado);
 		frame.getContentPane().add(mapContainer);
 	}
 
@@ -423,5 +435,12 @@ public class Interfaz {
 
 	private void activarBtnEliminarArco() {
 		btnEliminarArco.setEnabled(true);
+	}
+
+	private void updateFrame() {
+		SwingUtilities.updateComponentTreeUI(panelDeUsuario);
+		frame.setVisible(true);
+		frame.toFront();
+		frame.requestFocus();
 	}
 }
