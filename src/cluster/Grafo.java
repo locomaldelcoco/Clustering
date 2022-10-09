@@ -2,6 +2,7 @@ package cluster;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 
 import com.google.gson.annotations.Expose;
 
@@ -111,6 +112,15 @@ public class Grafo {
 	
 	public void eliminarVertice(Vertice v) {
 		_vertices.remove(v);
+	}
+
+	public void eliminarArcosDeVertice(Vertice v) {	
+		Iterator<Arco> it = _arcos.iterator();
+		while (it.hasNext()) {
+			Arco a = it.next();
+			if (a.contiene(v)) 
+				it.remove();
+		}
 	}
 
 	@Override
