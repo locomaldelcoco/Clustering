@@ -143,7 +143,7 @@ public class Interfaz {
 
 	private void setupBtnAgregarArco() {
 		btnAgregarArco = new JButton("");
-		btnAgregarArco.setBounds(741, 517, 33, 33);
+		btnAgregarArco.setBounds(698, 517, 33, 33);
 		btnAgregarArco.setIcon(new ImageIcon(Interfaz.class.getResource("/arco.png")));
 		btnAgregarArco.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnAgregarArco.setOpaque(true);
@@ -159,7 +159,7 @@ public class Interfaz {
 		btnEliminarVertice.setIcon(new ImageIcon(Interfaz.class.getResource("/verticeX.png")));
 		btnEliminarVertice.setToolTipText("Eliminar vértice");
 		btnEliminarVertice.setBorder(new EmptyBorder(2, 2, 2, 2));
-		btnEliminarVertice.setBounds(650, 517, 33, 33);
+		btnEliminarVertice.setBounds(741, 517, 33, 33);
 		panelDeUsuario.add(btnEliminarVertice);
 	}
 
@@ -177,7 +177,7 @@ public class Interfaz {
 
 	private void setupBtnAgregarVertice() {
 		btnAgregarVertice = new JButton("");
-		btnAgregarVertice.setBounds(650, 477, 33, 33);
+		btnAgregarVertice.setBounds(655, 517, 33, 33);
 		btnAgregarVertice.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnAgregarVertice.setIcon(new ImageIcon(Interfaz.class.getResource("/vertice.png")));
 		btnAgregarVertice.setToolTipText("Agregar vértice");
