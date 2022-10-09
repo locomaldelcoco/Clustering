@@ -33,6 +33,7 @@ import javax.swing.ImageIcon;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import java.awt.Font;
+import java.awt.event.MouseMotionAdapter;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class Interfaz {
@@ -57,9 +58,11 @@ public class Interfaz {
 
 	private boolean modoAgregarVertice;
 	private boolean modoAgregarArco;
+	protected boolean modoEliminarVertice;
 	
 	private Coordinate[] arcoEnConstruccion;
 	private JLabel lblBarraDeEstado;
+	private JButton btnEliminarVertice;
 	
 	/**
 	 * Launch the application.
@@ -114,6 +117,7 @@ public class Interfaz {
 		setupBtnDibujarGrafoCompleto();
 		setupBtnKruskal();
 		setupBtnAgregarVertice();
+		setupBtnEliminarVertice();
 		setupBtnEliminarArcos();
 		setupBtnEliminarVertices();
 		setupBtnGuardarGrafo();
@@ -124,14 +128,14 @@ public class Interfaz {
 	private void setupBtnGuardarGrafo() {
 		frame.getContentPane().add(panelDeUsuario);
 			btnGuardarGrafo = new JButton("Guardar Grafo");
-			btnGuardarGrafo.setBounds(650, 237, 124, 23);
+			btnGuardarGrafo.setBounds(650, 99, 124, 23);
 			panelDeUsuario.add(btnGuardarGrafo);
 	}
 
 	private void setupBtnCargarGrafo() {
 		frame.getContentPane().add(panelDeUsuario);
 			btnCargarGrafo = new JButton("Cargar Grafo");
-			btnCargarGrafo.setBounds(650, 203, 124, 23);
+			btnCargarGrafo.setBounds(650, 65, 124, 23);
 			btnCargarGrafo.setEnabled(false);
 			panelDeUsuario.add(btnCargarGrafo);
 			
@@ -147,23 +151,33 @@ public class Interfaz {
 		btnAgregarArco.setBorder(new EmptyBorder(2, 2, 2, 2));
 		arcoEnConstruccion = new Coordinate[2];
 		panelDeUsuario.add(btnAgregarArco);
+		
+	}
+
+	private void setupBtnEliminarVertice() {
+		btnEliminarVertice = new JButton("");
+		btnEliminarVertice.setIcon(new ImageIcon(Interfaz.class.getResource("/verticeX.png")));
+		btnEliminarVertice.setToolTipText("Eliminar vértice");
+		btnEliminarVertice.setBorder(new EmptyBorder(2, 2, 2, 2));
+		btnEliminarVertice.setBounds(650, 517, 33, 33);
+		panelDeUsuario.add(btnEliminarVertice);
 	}
 
 	private void setupBtnEliminarVertices() {
 		btnEliminarVertices = new JButton("Eliminar Vértices");
-		btnEliminarVertices.setBounds(650, 411, 124, 23);
+		btnEliminarVertices.setBounds(650, 443, 124, 23);
 		panelDeUsuario.add(btnEliminarVertices);
 	}
 
 	private void setupBtnEliminarArcos() {
 		btnEliminarArcos = new JButton("Eliminar Arcos");
-		btnEliminarArcos.setBounds(650, 377, 124, 23);
+		btnEliminarArcos.setBounds(650, 409, 124, 23);
 		panelDeUsuario.add(btnEliminarArcos);
 	}
 
 	private void setupBtnAgregarVertice() {
 		btnAgregarVertice = new JButton("");
-		btnAgregarVertice.setBounds(650, 517, 33, 33);
+		btnAgregarVertice.setBounds(650, 477, 33, 33);
 		btnAgregarVertice.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnAgregarVertice.setIcon(new ImageIcon(Interfaz.class.getResource("/vertice.png")));
 		btnAgregarVertice.setToolTipText("Agregar vértice");
@@ -174,7 +188,7 @@ public class Interfaz {
 	private void setupBtnEliminarArco() {
 		panelDeUsuario.setLayout(null);
 		btnEliminarArco = new JButton("Eliminar Arista Pesada");
-		btnEliminarArco.setBounds(650, 269, 124, 22);
+		btnEliminarArco.setBounds(650, 265, 124, 22);
 		btnEliminarArco.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnEliminarArco.setEnabled(false);
 		panelDeUsuario.add(btnEliminarArco);
@@ -182,14 +196,14 @@ public class Interfaz {
 	
 	private void setupBtnDibujarGrafoCompleto(){
 		btnDibujarGrafoCompleto = new JButton("Completar Grafo");
-		btnDibujarGrafoCompleto.setBounds(650, 99, 124, 23);
+		btnDibujarGrafoCompleto.setBounds(650, 151, 124, 23);
 		btnDibujarGrafoCompleto.setEnabled(true);
 		panelDeUsuario.add(btnDibujarGrafoCompleto);
 	}
 	
 	private void setupBtnKruskal() {
 		btnKruskal = new JButton("Aplicar Kruskal");
-		btnKruskal.setBounds(650, 133, 124, 23);
+		btnKruskal.setBounds(650, 185, 124, 23);
 		panelDeUsuario.add(btnKruskal);
 	}
 
@@ -250,11 +264,26 @@ public class Interfaz {
 							mostrarArcos();
 						resetearArcoEnConstruccion();
 					}
+				}
+					
+				if (modoEliminarVertice && cercano != null && mediator.existeCoordenada(cercano)) {
+						mediator.eliminarVertice(masCercano(e.getPoint()).getCoordinate());
+						limpiarMapa();
+						showMapMarkers();
 			}
+
+			mapa.addMouseMotionListener(new MouseMotionAdapter() {
+				@Override
+				public void mouseMoved(MouseEvent e) {
+					if(modoEliminarVertice && masCercano(e.getPoint()) != null) 
+						mapContainer.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+					 else 
+					mapContainer.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+				}
+			});
 		}
-		});
+	});
 	}
-	
 	private MapMarker masCercano(Point punto) {
 		MapMarker ret = null;
 			for (MapMarker marker : mapa.getMapMarkerList()) {
@@ -340,6 +369,7 @@ public class Interfaz {
 		btnAgregarVertice.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				modoAgregarArco = false;
+				modoEliminarVertice = false;
 				modoAgregarVertice = modoAgregarVertice? false : true;
 				lblBarraDeEstado.setText("Modo agregar vértice " + (modoAgregarVertice ? "ON" : "OFF"));
 			}
@@ -348,8 +378,18 @@ public class Interfaz {
 		btnAgregarArco.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				modoAgregarVertice = false;
+				modoEliminarVertice = false;
 				modoAgregarArco = modoAgregarArco ? false : true;
 				lblBarraDeEstado.setText("Modo agregar arco " + (modoAgregarArco ? "ON - Seleccione vértice origen" : "OFF"));
+			}
+		});
+		
+		btnEliminarVertice.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				modoAgregarVertice = false;
+				modoAgregarArco = false;
+				modoEliminarVertice = modoEliminarVertice ? false : true;
+				lblBarraDeEstado.setText("Modo eliminar vértice " + (modoEliminarVertice ? "ON" : "OFF"));
 			}
 		});
 	}
