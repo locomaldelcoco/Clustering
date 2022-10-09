@@ -103,7 +103,7 @@ public class Interfaz {
 	private void showMapMarkers() {
 		ArrayList<Coordinate> coords = mediator.getCoordenadas();
 		for(Coordinate c : coords) {
-			mapa.setDisplayPosition(c, 12);
+			mapa.setDisplayPosition(c, mapa.getZoom());
 			MapMarker m = new MapMarkerDot(c);
 			mapa.addMapMarker(m);
 		}
@@ -270,6 +270,7 @@ public class Interfaz {
 						mediator.eliminarVertice(masCercano(e.getPoint()).getCoordinate());
 						limpiarMapa();
 						showMapMarkers();
+						mostrarArcos();
 			}
 
 			mapa.addMouseMotionListener(new MouseMotionAdapter() {
@@ -284,6 +285,7 @@ public class Interfaz {
 		}
 	});
 	}
+
 	private MapMarker masCercano(Point punto) {
 		MapMarker ret = null;
 			for (MapMarker marker : mapa.getMapMarkerList()) {
