@@ -23,6 +23,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.Cursor;
+import javax.swing.ImageIcon;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.EmptyBorder;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class Interfaz {
@@ -131,8 +134,12 @@ public class Interfaz {
 	}
 
 	private void setupBtnAgregarVertice() {
-		btnAgregarVertice = new JButton("Agregar Vértice");
-		btnAgregarVertice.setBounds(591, 516, 107, 34);
+		btnAgregarVertice = new JButton("");
+		btnAgregarVertice.setBorder(new EmptyBorder(2, 2, 2, 2));
+		btnAgregarVertice.setToolTipText("Agregar vértice");
+		btnAgregarVertice.setOpaque(false);
+		btnAgregarVertice.setIcon(new ImageIcon("img\\vertice.png"));
+		btnAgregarVertice.setBounds(591, 517, 33, 33);
 		panelDeUsuario.add(btnAgregarVertice);
 	}
 
