@@ -104,7 +104,7 @@ public class Interfaz {
 		setupBtnEliminarVertices();
 		setupBtnGuardarGrafo();
 		setupBtnCargarGrafo();
-		}
+	}
 
 	private void setupBtnGuardarGrafo() {
 		frame.getContentPane().add(panelDeUsuario);
@@ -203,7 +203,6 @@ public class Interfaz {
 				Coordinate coord = (Coordinate) mapa.getPosition(e.getPoint());
 				if (modoAgregarVertice && mediator.agregarVertice(coord.getLat(), coord.getLon()))
 					mapa.addMapMarker(new MapMarkerDot(coord.getLat(), coord.getLon()));
-				modoAgregarVertice = false;
 			}
 		});
 	}
@@ -217,7 +216,6 @@ public class Interfaz {
 		});
 
 		menuSeleccionArchivo.addActionListener(new ActionListener() {
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (menuSeleccionArchivo.getSelectedIndex() == 0) {
 					desactivarBtnCargarGrafo();
@@ -242,7 +240,7 @@ public class Interfaz {
 		
 		btnAgregarVertice.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				modoAgregarVertice = true;
+				modoAgregarVertice = modoAgregarVertice ? false : true;
 			}
 		});
 		
