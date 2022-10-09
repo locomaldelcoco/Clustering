@@ -109,6 +109,10 @@ public class Grafo {
 		return null;
 	}
 	
+	public void eliminarVertice(Vertice v) {
+		_vertices.remove(v);
+	}
+
 	@Override
 	public String toString() {
 		return "Vertices= " + _vertices + ", Arcos=" + _arcos;
