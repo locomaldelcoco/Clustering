@@ -3,6 +3,7 @@ import cluster.Grafo;
 import cluster.Vertice;
 import kruskal.AlgoritmoKruskal;
 import cluster.Arco;
+import cluster.DistanciaEuclidea;
 import cluster.GestorArchivos;
 
 import java.util.ArrayList;
@@ -102,5 +103,16 @@ public class Mediator {
 			Vertice vB = a.getVerticeB();
 			_g.agregarArco(_g.getVertice(vA), _g.getVertice(vB), a.getDistancia());
 		}
+	}
+
+	public boolean existeCoordenada(Coordinate coord) {	
+		Vertice v = new Vertice(coord.getLat(), coord.getLon());
+		return _g.getVertice(v) != null;
+	}
+
+	public boolean agregarArco(Coordinate[] c) {
+		Vertice vA = new Vertice(c[0].getLat(), c[0].getLon());
+		Vertice vB = new Vertice(c[1].getLat(), c[1].getLon());
+		return _g.agregarArco(vA, vB, DistanciaEuclidea.distancia(vA, vB));
 	}
 }
