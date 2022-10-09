@@ -66,4 +66,8 @@ public class Arco implements Comparable<Arco> {
 		return "VerticeA=" + _verticeA + ", VerticeB=" + _verticeB + ", Distancia=" + _distancia;
 	}
 
+	public boolean contiene(Vertice v) {
+		return _verticeA == v || _verticeB == v;
+	}
+
 }
