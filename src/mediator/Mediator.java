@@ -118,4 +118,9 @@ public class Mediator {
 		Vertice vB = new Vertice(c[1].getLat(), c[1].getLon());
 		return _g.agregarArco(vA, vB, DistanciaEuclidea.distancia(vA, vB));
 	}
+
+	public void eliminarVertice(Coordinate c) {
+		Vertice v = new Vertice(c.getLat(), c.getLon());
+		_g.eliminarVertice(_g.getVertice(v));
+	}
 }
