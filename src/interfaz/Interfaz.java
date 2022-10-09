@@ -260,7 +260,7 @@ public class Interfaz {
 						}
 					}
 					if(arcoEnConstruccion[1] != null) {
-						if(mediator.agregarArco(arcoEnConstruccion))
+						if(arcoEnConstruccion[0] != arcoEnConstruccion[1] && mediator.agregarArco(arcoEnConstruccion))
 							mostrarArcos();
 						resetearArcoEnConstruccion();
 					}
