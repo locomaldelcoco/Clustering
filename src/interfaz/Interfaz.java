@@ -32,6 +32,7 @@ import java.awt.Cursor;
 import javax.swing.ImageIcon;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
+import java.awt.Font;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class Interfaz {
@@ -371,6 +372,7 @@ public class Interfaz {
 
 	private void setupLblBarraDeEstado() {
 		lblBarraDeEstado = new JLabel("Barra de estado");
+		lblBarraDeEstado.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblBarraDeEstado.setBounds(10, 536, 621, 14);
 		mapa.add(lblBarraDeEstado);
 		frame.getContentPane().add(mapContainer);
