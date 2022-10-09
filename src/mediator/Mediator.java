@@ -19,12 +19,6 @@ public class Mediator {
         isCompleto = false;
     }
 
-    public Mediator(String s){
-        _g = new Grafo();
-        _g.cargarGrafo(s);
-        isCompleto = false;
-    }
-    
     public void completarGrafo() {
     	if (isCompleto)
     		return;
@@ -100,8 +94,7 @@ public class Mediator {
 
 	public void cargarGrafo(String s) {
 		_g = GestorArchivos.cargarGrafo(s);
-		for (Vertice v : _g.getVertices()) 
-			v.inicializarVecinos();
+		_g.inicializarVecinos();
 		
 		ArrayList<Arco> arcos = (ArrayList<Arco>) _g.getArcos().clone();
 		eliminarArcos();
