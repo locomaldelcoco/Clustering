@@ -53,22 +53,22 @@ public class AlgoritmoKruskal{
 	
 	public static void calcularClusters(Grafo agm) {
 		Arco pesado = agm.arcoMasPesado();
+		boolean optimizar = false;
 		System.out.println("vecinos B "+pesado.getVerticeB().get_vecinos().toString());
-		System.out.println("vecinos A "+pesado.getVerticeA().get_vecinos().toString());
+		System.out.println("vecinos A "+pesado.getVerticeA().get_vecinos().toString());	
+		if( (pesado.getVerticeA().get_vecinos().size() == 0 || pesado.getVerticeA().get_vecinos().size() == 1) 
+														||
+			(pesado.getVerticeB().get_vecinos().size() == 0 || pesado.getVerticeB().get_vecinos().size() == 1) ) {
 			
-		if( (pesado.getVerticeA().get_vecinos().size() == 0 && pesado.getVerticeB().get_vecinos().size() >= 1) || 
-			(pesado.getVerticeA().get_vecinos().size() >= 1 && pesado.getVerticeB().get_vecinos().size() == 0) ||
-			 pesado.getVerticeA().get_vecinos().size() > 1 && pesado.getVerticeB().get_vecinos().size() == 0 ||
-			 pesado.getVerticeA().get_vecinos().size() == 0 && pesado.getVerticeB().get_vecinos().size() > 1) {
+			optimizar= false;
 			System.out.println("ES HOJA");
 		}
-		if(pesado.getVerticeA().get_vecinos().size() > 1 && pesado.getVerticeB().get_vecinos().size() > 1 ||
-			pesado.getVerticeA().get_vecinos().size() >= 1 && pesado.getVerticeB().get_vecinos().size() > 1 ||
-			pesado.getVerticeB().get_vecinos().size() >= 1 && pesado.getVerticeA().get_vecinos().size() > 1 ||
-			pesado.getVerticeA().get_vecinos().size() == 1 && pesado.getVerticeB().get_vecinos().size() == 1) {
+		if(pesado.getVerticeA().get_vecinos().size() > 1 && pesado.getVerticeB().get_vecinos().size() > 1 ) {
+			optimizar = true;
 			System.out.println("no es hoja");
 			agm.sumarCluster();
 		}
+		optimizar = true;
 		System.out.println("CANTIDAD DE CLUSTERS: "+ agm.getCantidadDeClusters());
 	}
 	

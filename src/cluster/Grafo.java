@@ -71,12 +71,13 @@ public class Grafo {
 	
 	public void eliminarArcoMasPesado() {
 		if(!_arcos.isEmpty()) {
-			_arcos.remove( arcoMasPesado() );
 			eliminarVecinos(arcoMasPesado().getVerticeA(), arcoMasPesado().getVerticeB());
+			_arcos.remove( arcoMasPesado() );
 		}else{
 			throw new IndexOutOfBoundsException("No hay arcos para eliminar");
 		}
 	}
+	
 	
 	public Arco arcoMasPesado() {
 		Arco pesado = _arcos.get(0);

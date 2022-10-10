@@ -154,7 +154,7 @@ public class Interfaz {
 	private void addPanelDeUsuarioEvents() {
 		btnEliminarArco.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mediator.eliminarArcoMasPesado();;
+				mediator.eliminarArcoMasPesado();
 				mostrarArcos();
 			}
 		});
