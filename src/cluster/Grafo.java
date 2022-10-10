@@ -2,6 +2,7 @@ package cluster;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import com.google.gson.annotations.Expose;
@@ -11,12 +12,14 @@ public class Grafo {
 	private ArrayList<Vertice> _vertices;
 	@Expose
 	private ArrayList<Arco> _arcos;
-	private int _cantidadDeClusters;
+	private HashMap<Integer,ArrayList<Vertice>> _Clusters;
+	private int _CantidadDeClusters;
 
 	public Grafo() {
 		_vertices = new ArrayList<>();
 		_arcos = new ArrayList<>();
-		_cantidadDeClusters = 1;
+		_Clusters = new HashMap<>();
+		_CantidadDeClusters=1;
 	}
 
 	public void cargarGrafo(String s) {
@@ -63,18 +66,19 @@ public class Grafo {
 	
 	public void eliminarArco(Arco arco) {			
 		_arcos.remove(arco);
+		eliminarVecinos(arco.getVerticeA(), arco.getVerticeB());
 	}
 	
 	public void eliminarArcoMasPesado() {
 		if(!_arcos.isEmpty()) {
-			sumarClusters();
 			_arcos.remove( arcoMasPesado() );
+			eliminarVecinos(arcoMasPesado().getVerticeA(), arcoMasPesado().getVerticeB());
 		}else{
 			throw new IndexOutOfBoundsException("No hay arcos para eliminar");
 		}
 	}
 	
-	private Arco arcoMasPesado() {
+	public Arco arcoMasPesado() {
 		Arco pesado = _arcos.get(0);
 		for (Arco arco : _arcos) {
 			if(pesado.compareTo(arco) == 1) {
@@ -86,7 +90,12 @@ public class Grafo {
 	private void agregarVecinos(Vertice vA, Vertice vB) {
 		vA.agregarVecino(vB);
 		vB.agregarVecino(vA);
-	}	
+	}
+	
+	private void eliminarVecinos(Vertice vA, Vertice vB) {
+		vA.eliminarVecino(vB);
+		vB.eliminarVecino(vA);
+	}
 	
 	public ArrayList<Vertice> getVertices() {
 		return _vertices;
@@ -96,13 +105,18 @@ public class Grafo {
 		return _arcos;
 	}
 	
-	public void sumarClusters() {
-		_cantidadDeClusters++;
-	}
 	public int tamano() {
 		return _vertices.size();
 	}
-
+	
+	public int sumarCluster() {
+		return _CantidadDeClusters++;
+	}
+	
+	public int getCantidadDeClusters() {
+		return _CantidadDeClusters;
+	}
+	
 	public Vertice getVertice(Vertice vA) throws IllegalArgumentException {
 		for (Vertice v : _vertices) {
 			if (v.equals(vA))
@@ -129,8 +143,4 @@ public class Grafo {
 		return "Vertices= " + _vertices + ", Arcos=" + _arcos;
 	}
 	
-
-	public int getCantidadDeClusters() {
-		return _cantidadDeClusters;
-	}
 }

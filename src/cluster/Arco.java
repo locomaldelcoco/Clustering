@@ -58,11 +58,11 @@ public class Arco implements Comparable<Arco> {
 
 	@Override
 	public String toString() {
-		return "VerticeA=" + _verticeA + ", VerticeB=" + _verticeB + ", Distancia=" + _distancia;
+		return "VerticeA = " + _verticeA + ", VerticeB = " + _verticeB + ", Distancia = " + _distancia;
 	}
 
 	public boolean contiene(Vertice v) {
-		return _verticeA == v || _verticeB == v;
+		return _verticeA.equals(v) || _verticeB.equals(v);
 	}
 
 }

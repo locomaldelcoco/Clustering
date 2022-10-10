@@ -3,6 +3,7 @@ package kruskal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 
 import cluster.Arco;
 import cluster.DistanciaEuclidea;
@@ -48,6 +49,27 @@ public class AlgoritmoKruskal{
 			arcos.remove(0);
 		}
 		return agm;
+	}
+	
+	public static void calcularClusters(Grafo agm) {
+		Arco pesado = agm.arcoMasPesado();
+		System.out.println("vecinos B "+pesado.getVerticeB().get_vecinos().toString());
+		System.out.println("vecinos A "+pesado.getVerticeA().get_vecinos().toString());
+			
+		if( (pesado.getVerticeA().get_vecinos().size() == 0 && pesado.getVerticeB().get_vecinos().size() >= 1) || 
+			(pesado.getVerticeA().get_vecinos().size() >= 1 && pesado.getVerticeB().get_vecinos().size() == 0) ||
+			 pesado.getVerticeA().get_vecinos().size() > 1 && pesado.getVerticeB().get_vecinos().size() == 0 ||
+			 pesado.getVerticeA().get_vecinos().size() == 0 && pesado.getVerticeB().get_vecinos().size() > 1) {
+			System.out.println("ES HOJA");
+		}
+		if(pesado.getVerticeA().get_vecinos().size() > 1 && pesado.getVerticeB().get_vecinos().size() > 1 ||
+			pesado.getVerticeA().get_vecinos().size() >= 1 && pesado.getVerticeB().get_vecinos().size() > 1 ||
+			pesado.getVerticeB().get_vecinos().size() >= 1 && pesado.getVerticeA().get_vecinos().size() > 1 ||
+			pesado.getVerticeA().get_vecinos().size() == 1 && pesado.getVerticeB().get_vecinos().size() == 1) {
+			System.out.println("no es hoja");
+			agm.sumarCluster();
+		}
+		System.out.println("CANTIDAD DE CLUSTERS: "+ agm.getCantidadDeClusters());
 	}
 	
 }
