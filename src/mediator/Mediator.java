@@ -1,4 +1,5 @@
 package mediator;
+
 import cluster.Grafo;
 import cluster.Vertice;
 import interfaz.Interfaz;
@@ -12,58 +13,60 @@ import java.util.concurrent.ExecutionException;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 
+import bfs.BFS;
+
 public class Mediator {
 	private Interfaz _interfaz;
-    private Grafo _g;
-    protected boolean _isCompleto;
-    
-    public Mediator(Interfaz interfaz) {
-    	_interfaz = interfaz;
-        _g = new Grafo();
-        _isCompleto = false;
-    }
+	private Grafo _g;
+	protected boolean _isCompleto;
 
-    public boolean completarGrafo() {
-    	if (_isCompleto)
-    		return true;
-    	MediatorCompletarGrafo thread = new MediatorCompletarGrafo(this, _g);
-    	thread.execute();
-    	return true;
-    }
+	public Mediator(Interfaz interfaz) {
+		_interfaz = interfaz;
+		_g = new Grafo();
+		_isCompleto = false;
+	}
 
-    public ArrayList<Coordinate> getCoordenadas() {
-        ArrayList<Coordinate> ret = new ArrayList<Coordinate>();
-        ArrayList<Vertice> vertices = _g.getVertices();
+	public boolean completarGrafo() {
+		if (_isCompleto)
+			return true;
+		MediatorCompletarGrafo thread = new MediatorCompletarGrafo(this, _g);
+		thread.execute();
+		return true;
+	}
 
-        for (Vertice v : vertices) {
-            Coordinate c = new Coordinate(v.get_x(), v.get_y());
-            ret.add(c);
-        }
+	public ArrayList<Coordinate> getCoordenadas() {
+		ArrayList<Coordinate> ret = new ArrayList<Coordinate>();
+		ArrayList<Vertice> vertices = _g.getVertices();
 
-        return ret;
-    }
+		for (Vertice v : vertices) {
+			Coordinate c = new Coordinate(v.get_x(), v.get_y());
+			ret.add(c);
+		}
 
-    public ArrayList<Coordinate[]> getCoordArcos() {
-        ArrayList<Coordinate[]> ret = new ArrayList<Coordinate[]>();
-        ArrayList<Arco> arcos = _g.getArcos();
+		return ret;
+	}
 
-        for (Arco a : arcos) {
-            Coordinate[] c = new Coordinate[2];
-            Vertice vA = a.getVerticeA();
-            Vertice vB = a.getVerticeB();
-            c[0] = new Coordinate(vA.get_x(), vA.get_y());
-            c[1] = new Coordinate(vB.get_x(), vB.get_y());
-            ret.add(c);
-        }
-        return ret;
-    }
-    
-    public void eliminarArcoMasPesado() {
-    	_g.eliminarArcoMasPesado();
-    }
+	public ArrayList<Coordinate[]> getCoordArcos() {
+		ArrayList<Coordinate[]> ret = new ArrayList<Coordinate[]>();
+		ArrayList<Arco> arcos = _g.getArcos();
+
+		for (Arco a : arcos) {
+			Coordinate[] c = new Coordinate[2];
+			Vertice vA = a.getVerticeA();
+			Vertice vB = a.getVerticeB();
+			c[0] = new Coordinate(vA.get_x(), vA.get_y());
+			c[1] = new Coordinate(vB.get_x(), vB.get_y());
+			ret.add(c);
+		}
+		return ret;
+	}
+
+	public void eliminarArcoMasPesado() {
+		_g.eliminarArcoMasPesado();
+	}
 
 	public static String[] getArchivos() {
-		String[] files = GestorArchivos.getArchivos(); 
+		String[] files = GestorArchivos.getArchivos();
 		return files;
 	}
 
@@ -72,12 +75,17 @@ public class Mediator {
 	}
 
 	public void aplicarKruskal() throws InterruptedException, ExecutionException {
+		if (_g.getArcos().size() < _g.tamano()-1) {
+			_interfaz.updateFrame();
+			System.out.println("NO ES CONEXO");
+			return;
+		}
 		_isCompleto = false;
 		if (_g.getVertices().size() < 1)
 			return;
-    	MediatorAplicarKruskal thread = new MediatorAplicarKruskal(this, _g);
-    	thread.execute();
-    	_g = thread.get();
+		MediatorAplicarKruskal thread = new MediatorAplicarKruskal(this, _g);
+		thread.execute();
+		_g = thread.get();
 	}
 
 	public boolean agregarVertice(double lat, double lon) {
@@ -95,7 +103,7 @@ public class Mediator {
 		_g.getVertices().clear();
 		System.out.println(_g.getVertices());
 	}
-	
+
 	public boolean guardarGrafo() {
 		return GestorArchivos.guardarGrafo(_g);
 	}
@@ -103,17 +111,17 @@ public class Mediator {
 	public void cargarGrafo(String s) {
 		_g = GestorArchivos.cargarGrafo(s);
 		_g.inicializarVecinos();
-		
+
 		ArrayList<Arco> arcos = (ArrayList<Arco>) _g.getArcos().clone();
 		eliminarArcos();
-		for(Arco a : arcos) {
+		for (Arco a : arcos) {
 			Vertice vA = a.getVerticeA();
 			Vertice vB = a.getVerticeB();
 			_g.agregarArco(_g.getVertice(vA), _g.getVertice(vB), a.getDistancia());
 		}
 	}
 
-	public boolean existeCoordenada(Coordinate coord) {	
+	public boolean existeCoordenada(Coordinate coord) {
 		Vertice v = new Vertice(coord.getLat(), coord.getLon());
 		return _g.getVertice(v) != null;
 	}
