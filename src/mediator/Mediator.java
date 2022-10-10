@@ -8,6 +8,7 @@ import cluster.DistanciaEuclidea;
 import cluster.GestorArchivos;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 
@@ -70,11 +71,13 @@ public class Mediator {
 		return _isCompleto;
 	}
 
-	public void aplicarKruskal() {
+	public void aplicarKruskal() throws InterruptedException, ExecutionException {
 		_isCompleto = false;
 		if (_g.getVertices().size() < 1)
 			return;
-		_g = AlgoritmoKruskal.kruskal(_g);
+    	MediatorAplicarKruskal thread = new MediatorAplicarKruskal(this, _g);
+    	thread.execute();
+    	_g = thread.get();
 	}
 
 	public boolean agregarVertice(double lat, double lon) {

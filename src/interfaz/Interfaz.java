@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -168,7 +169,11 @@ public class Interfaz {
 
 		btnKruskal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				aplicarKruskal();
+				try {
+					aplicarKruskal();
+				} catch (InterruptedException | ExecutionException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 		
@@ -298,10 +303,8 @@ public class Interfaz {
 		arcoEnConstruccion[1] = null;
 	}
 
-	private void aplicarKruskal() {
-		mediator.completarGrafo();
+	private void aplicarKruskal() throws InterruptedException, ExecutionException {
 		mediator.aplicarKruskal();
-		mostrarArcos();
 	}
 
 	private void setupMapContainer() {
@@ -365,6 +368,8 @@ public class Interfaz {
 	}
 
 	public void updateFrame() {
+		limpiarMapa();
+		showMapMarkers();
 		mostrarArcos();
 		SwingUtilities.updateComponentTreeUI(frame);
 		frame.setVisible(true);
