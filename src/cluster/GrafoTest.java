@@ -114,14 +114,16 @@ public class GrafoTest {
 
 	@Test
 	public void eliminarArcoDeVerticeTest() {
-		g.completarGrafo();
-		System.out.println(g.getArcos().size());
-		AlgoritmoKruskal.kruskal(g);
-		int cantidadArcos = g.getArcos().size();
-		System.out.println(cantidadArcos);
-		g.eliminarArcosDeVertice(g.getVertices().get(0));
-		System.out.println(g.getArcos().size());
-		assertEquals(cantidadArcos - 1, g.getArcos().size());
+		Vertice v1 = new Vertice(10, 10);
+		Vertice v2 = new Vertice(20, 20);
+		Vertice v3 = new Vertice(30, 30);
+		g.agregarVertice(v1);
+		g.agregarVertice(v2);
+		g.agregarVertice(v3);
+		g.agregarArco(v1,v2,10);
+		g.agregarArco(v2,v3,10);
+		g.eliminarArcosDeVertice(v2);
+		assertTrue(g.getArcos().size() == 0);
 	}
 
 	@Test
