@@ -16,6 +16,13 @@ public class Arco implements Comparable<Arco> {
 		_distancia = distancia;
 	}
 
+	public boolean contiene(Vertice v) {
+		if (v == null) {
+			throw new IllegalArgumentException("Se paso un parametro null: " + v);
+		}
+		return _verticeA.equals(v) || _verticeB.equals(v);
+	}
+
 	public Vertice getVerticeA() {
 		return _verticeA;
 	}
@@ -54,10 +61,6 @@ public class Arco implements Comparable<Arco> {
 	@Override
 	public String toString() {
 		return "VerticeA=" + _verticeA + ", VerticeB=" + _verticeB + ", Distancia=" + _distancia;
-	}
-
-	public boolean contiene(Vertice v) {
-		return _verticeA.equals(v) || _verticeB.equals(v);
 	}
 
 }
