@@ -2,9 +2,14 @@ package cluster;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
+
+import com.google.gson.annotations.Expose;
 
 public class Grafo {
+	@Expose
 	private ArrayList<Vertice> _vertices;
+	@Expose
 	private ArrayList<Arco> _arcos;
 
 	public Grafo() {
@@ -13,14 +18,23 @@ public class Grafo {
 	}
 
 	public void cargarGrafo(String s) {
-		ArrayList<Vertice> coords = GestorArchivos.getCoordenadas(s);
-		for (Vertice v : coords)
-			agregarVertice(v);
+		Grafo g = GestorArchivos.cargarGrafo(s);
+		_vertices = g.getVertices();
+		_arcos = g._arcos;
+		inicializarVecinos();
 	}
 
-	public void agregarVertice(Vertice v) {
-		if (!_vertices.contains(v))
-			_vertices.add(v);
+	public void inicializarVecinos() {
+		for (Vertice v : _vertices)
+			v.inicializarVecinos();
+	}
+
+	public boolean agregarVertice(Vertice v) {
+		if (_vertices.contains(v))
+			return false;
+		_vertices.add(v);
+		return true;
+
 	}
 
 	public void completarGrafo() {
@@ -38,9 +52,13 @@ public class Grafo {
 		ordenarArcos();
 	}
 
-	public void agregarArco(Vertice vA, Vertice vB, double distancia) {
-		_arcos.add(new Arco(vA, vB, distancia));
+	public boolean agregarArco(Vertice vA, Vertice vB, double distancia) {
+		Arco a = new Arco(vA, vB, distancia);
+		if (_arcos.contains(a))
+			return false;
+		_arcos.add(a);
 		agregarVecinos(vA, vB);
+		return true;
 	}
 
 	public void eliminarArco(Arco arco) {
@@ -90,6 +108,24 @@ public class Grafo {
 			if (v.equals(vA))
 				return v;
 		}
-		throw new IllegalArgumentException("No existe vértice");
+		return null;
+	}
+
+	public void eliminarVertice(Vertice v) {
+		_vertices.remove(v);
+	}
+
+	public void eliminarArcosDeVertice(Vertice v) {
+		Iterator<Arco> it = _arcos.iterator();
+		while (it.hasNext()) {
+			Arco a = it.next();
+			if (a.contiene(v))
+				it.remove();
+		}
+	}
+
+	@Override
+	public String toString() {
+		return "Vertices= " + _vertices + ", Arcos=" + _arcos;
 	}
 }
