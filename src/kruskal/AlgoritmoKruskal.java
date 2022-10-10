@@ -53,23 +53,29 @@ public class AlgoritmoKruskal{
 	
 	public static void calcularClusters(Grafo agm) {
 		Arco pesado = agm.arcoMasPesado();
-		boolean optimizar = false;
+		boolean algunaNoEsHoja = false;
+		boolean contarClusters= true;
 		System.out.println("vecinos B "+pesado.getVerticeB().get_vecinos().toString());
 		System.out.println("vecinos A "+pesado.getVerticeA().get_vecinos().toString());	
 		if( (pesado.getVerticeA().get_vecinos().size() == 0 || pesado.getVerticeA().get_vecinos().size() == 1) 
 														||
 			(pesado.getVerticeB().get_vecinos().size() == 0 || pesado.getVerticeB().get_vecinos().size() == 1) ) {
 			
-			optimizar= false;
+			algunaNoEsHoja= false;
 			System.out.println("ES HOJA");
+			System.out.println("CANTIDAD DE CLUSTERS: "+ agm.getCantidadDeClusters());
 		}
 		if(pesado.getVerticeA().get_vecinos().size() > 1 && pesado.getVerticeB().get_vecinos().size() > 1 ) {
-			optimizar = true;
+			algunaNoEsHoja = true;
 			System.out.println("no es hoja");
-			agm.sumarCluster();
+			agm.sumarCluster(algunaNoEsHoja);
+			System.out.println("CANTIDAD DE CLUSTERS: "+ agm.getCantidadDeClusters());
 		}
-		optimizar = true;
-		System.out.println("CANTIDAD DE CLUSTERS: "+ agm.getCantidadDeClusters());
+		contarClusters = algunaNoEsHoja && contarClusters;
+		if(!contarClusters) {
+			System.out.println("----------NUMERO OPTIMO DE CLUSTERS----------");
+			System.out.println("CANTIDAD DE CLUSTERS: "+ agm.getCantidadDeClusters());
+		}
 	}
 	
 }

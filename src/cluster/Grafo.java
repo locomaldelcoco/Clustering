@@ -110,10 +110,6 @@ public class Grafo {
 		return _vertices.size();
 	}
 	
-	public int sumarCluster() {
-		return _CantidadDeClusters++;
-	}
-	
 	public int getCantidadDeClusters() {
 		return _CantidadDeClusters;
 	}
@@ -142,6 +138,13 @@ public class Grafo {
 	@Override
 	public String toString() {
 		return "Vertices= " + _vertices + ", Arcos=" + _arcos;
+	}
+	
+
+	public void sumarCluster(boolean algunaNoEsHoja) {
+		if(algunaNoEsHoja) {
+			_CantidadDeClusters++;
+		}
 	}
 	
 }
