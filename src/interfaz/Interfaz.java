@@ -187,8 +187,8 @@ public class Interfaz {
 
 		btnEliminarAllVertices.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mediator.eliminarVertices();
 				mediator.eliminarArcos();
+				mediator.eliminarVertices();
 				limpiarMapa();
 			}
 		});
