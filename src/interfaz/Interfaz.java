@@ -260,10 +260,10 @@ public class Interfaz {
 				}
 					
 				if (modoEliminarVertice && cercano != null && mediator.existeCoordenada(cercano)) {
-						mediator.eliminarVertice(masCercano(e.getPoint()).getCoordinate());
-						limpiarMapa();
-						showMapMarkers();
-						mostrarArcos();
+					mediator.eliminarVertice(cercano);
+					limpiarMapa();
+					showMapMarkers();
+					mostrarArcos();
 			}
 
 			mapa.addMouseMotionListener(new MouseMotionAdapter() {
