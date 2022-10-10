@@ -11,10 +11,10 @@ import com.google.gson.GsonBuilder;
 
 public class GestorArchivos {
 
-	public static String[] getArchivos() {
-		return new File("files\\").list();
-	}
 	public static boolean guardarGrafo(Grafo g) {
+		if (g == null) {
+			throw new IllegalArgumentException("El parametro pasado no puede ser null");
+		}
 		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setPrettyPrinting().create();
 		String json = gson.toJson(g);
 		System.out.println(json);
@@ -26,19 +26,22 @@ public class GestorArchivos {
 			e.printStackTrace();
 			return false;
 		}
-		
 		return true;
 	}
 
 	public static Grafo cargarGrafo(String s) {
 		Gson gson = new Gson();
-		Grafo g = new Grafo();;
+		Grafo g = new Grafo();
 		try {
 			BufferedReader br = new BufferedReader(new FileReader("files\\" + s));
-			g =  gson.fromJson(br, g.getClass());
+			g = gson.fromJson(br, g.getClass());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return g;
+	}
+
+	public static String[] getArchivos() {
+		return new File("files\\").list();
 	}
 }
