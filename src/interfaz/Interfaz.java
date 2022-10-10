@@ -88,7 +88,6 @@ public class Interfaz {
 		addMapaEvents();
 		setupPanelDeUsuario();
 		addPanelDeUsuarioEvents();
-		updateFrame();
 		arcoEnConstruccion = new Coordinate[2];
 	}
 
@@ -134,6 +133,7 @@ public class Interfaz {
 	}
 	
 	private void dibujarGrafoCompleto() {
+		desactivarInteracciones();
 		mediator.completarGrafo();
 	}
 
@@ -162,14 +162,15 @@ public class Interfaz {
 
 		btnDibujarGrafoCompleto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				lblBarraDeEstado.setText("Completando grafo...");
 				dibujarGrafoCompleto();
-				activarBtnEliminarArco();
 			}
 		});
 
 		btnKruskal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					lblBarraDeEstado.setText("Obteniendo AGM mediante Kruskal...");
 					aplicarKruskal();
 				} catch (InterruptedException | ExecutionException e1) {
 					e1.printStackTrace();
@@ -304,6 +305,7 @@ public class Interfaz {
 	}
 
 	private void aplicarKruskal() throws InterruptedException, ExecutionException {
+		desactivarInteracciones();
 		mediator.aplicarKruskal();
 	}
 
@@ -346,31 +348,49 @@ public class Interfaz {
 	private void desactivarBtnCargarGrafo() {
 		btnCargarGrafo.setEnabled(false);
 	}
-
 	private void activarBtnCargarGrafo() {
 		btnCargarGrafo.setEnabled(true);
-	}
-	
-	private void desactivarBtnDibujarGrafoCompleto() {
-		btnDibujarGrafoCompleto.setEnabled(false);
-	}
-
-	private void activarBtnDibujarGrafoCompleto() {
-		btnDibujarGrafoCompleto.setEnabled(true);
-	}
-
-	private void desactivarBtnEliminarArco() {
-		btnEliminarArco.setEnabled(false);
 	}
 
 	private void activarBtnEliminarArco() {
 		btnEliminarArco.setEnabled(true);
 	}
+	
+	private void desactivarInteracciones() {
+		menuSeleccionArchivo.setEnabled(false);
+		desactivarBtnCargarGrafo();
+		btnGuardarGrafo.setEnabled(false);
+		btnDibujarGrafoCompleto.setEnabled(false);
+		btnKruskal.setEnabled(false);
+		btnEliminarArco.setEnabled(false);
+		btnEliminarAllArcos.setEnabled(false);
+		btnEliminarAllVertices.setEnabled(false);
+		btnAgregarVertice.setEnabled(false);
+		btnAgregarArco.setEnabled(false);
+		btnEliminarVertice.setEnabled(false);
+	}
+
+	private void activarInteracciones() {
+		if (menuSeleccionArchivo.getSelectedIndex() != 0)
+			activarBtnCargarGrafo();
+		menuSeleccionArchivo.setEnabled(true);
+		btnGuardarGrafo.setEnabled(true);
+		btnDibujarGrafoCompleto.setEnabled(true);
+		btnKruskal.setEnabled(true);
+		btnEliminarArco.setEnabled(true);
+		btnEliminarAllArcos.setEnabled(true);
+		btnEliminarAllVertices.setEnabled(true);
+		btnAgregarVertice.setEnabled(true);
+		btnAgregarArco.setEnabled(true);
+		btnEliminarVertice.setEnabled(true);
+	}
 
 	public void updateFrame() {
+		lblBarraDeEstado.setText("Realizado!");
 		limpiarMapa();
 		showMapMarkers();
 		mostrarArcos();
+		activarInteracciones();
 		SwingUtilities.updateComponentTreeUI(frame);
 		frame.setVisible(true);
 		frame.toFront();
