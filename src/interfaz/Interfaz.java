@@ -357,6 +357,9 @@ public class Interfaz {
 	}
 	
 	private void desactivarInteracciones() {
+		modoAgregarArco = false;
+		modoAgregarVertice = false;
+		modoEliminarVertice = false;
 		menuSeleccionArchivo.setEnabled(false);
 		desactivarBtnCargarGrafo();
 		btnGuardarGrafo.setEnabled(false);
