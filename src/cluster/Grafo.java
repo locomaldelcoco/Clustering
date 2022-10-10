@@ -110,8 +110,13 @@ public class Grafo {
 	}
 
 	private Arco arcoMasPesado() {
-		// obtiene el primero porque esta ordenado de mayor a menor
-		return _arcos.get(0);
+		Arco pesado = _arcos.get(0);
+		for (Arco arco : _arcos) {
+			if (pesado.compareTo(arco) == 1) {
+				pesado = arco;
+			}
+		}
+		return pesado;
 	}
 
 	private void agregarVecinos(Vertice vA, Vertice vB) {
