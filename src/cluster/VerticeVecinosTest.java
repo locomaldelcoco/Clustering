@@ -50,4 +50,17 @@ public class VerticeVecinosTest {
 		vertice.esVecino(null);
 	}
 
+	@Test
+	public void esVecinoTest() {
+		Vertice v = new Vertice(100, 200);
+		vertice.agregarVecino(v);
+		assertTrue(vertice.esVecino(v));
+	}
+
+	@Test
+	public void noEsVecinoTest() {
+		Vertice v = new Vertice(100, 200);
+		assertFalse(vertice.esVecino(v));
+	}
+
 }

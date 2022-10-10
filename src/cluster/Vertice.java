@@ -8,7 +8,7 @@ import com.google.gson.annotations.Expose;
 public class Vertice {
 	@Expose
 	private double _x, _y;
-	
+
 	private Set<Vertice> _vecinos;
 
 	public Vertice(double x, double y) {
@@ -41,6 +41,10 @@ public class Vertice {
 		return _vecinos.contains(otroVertice);
 	}
 
+	public void inicializarVecinos() {
+		_vecinos = new HashSet<>();
+	}
+
 	public double get_x() {
 		return _x;
 	}
@@ -69,10 +73,7 @@ public class Vertice {
 
 	@Override
 	public String toString() {
-		return "X=" + _x +  ", Y=" + _y ;
+		return "X=" + _x + ", Y=" + _y;
 	}
 
-	public void inicializarVecinos() {
-		_vecinos = new HashSet<>();
-	}
 }
