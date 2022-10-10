@@ -1,6 +1,7 @@
 package mediator;
 import cluster.Grafo;
 import cluster.Vertice;
+import interfaz.Interfaz;
 import kruskal.AlgoritmoKruskal;
 import cluster.Arco;
 import cluster.DistanciaEuclidea;
@@ -11,20 +12,22 @@ import java.util.ArrayList;
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 
 public class Mediator {
-    Grafo _g;
-    boolean isCompleto;
+	private Interfaz _interfaz;
+    private Grafo _g;
+    protected boolean _isCompleto;
     
-    public Mediator() {
+    public Mediator(Interfaz interfaz) {
+    	_interfaz = interfaz;
         _g = new Grafo();
-        isCompleto = false;
+        _isCompleto = false;
     }
 
-    public void completarGrafo() {
-    	if (isCompleto)
-    		return;
-    	
-    	_g.completarGrafo();   
-    	isCompleto = true;
+    public boolean completarGrafo() {
+    	if (_isCompleto)
+    		return true;
+    	MediatorCompletarGrafo thread = new MediatorCompletarGrafo(this, _g);
+    	thread.execute();
+    	return true;
     }
 
     public ArrayList<Coordinate> getCoordenadas() {
@@ -64,11 +67,11 @@ public class Mediator {
 	}
 
 	public boolean isCompleto() {
-		return isCompleto;
+		return _isCompleto;
 	}
 
 	public void aplicarKruskal() {
-		isCompleto = false;
+		_isCompleto = false;
 		if (_g.getVertices().size() < 1)
 			return;
 		_g = AlgoritmoKruskal.kruskal(_g);
@@ -122,5 +125,9 @@ public class Mediator {
 		Vertice v = new Vertice(c.getLat(), c.getLon());
 		_g.eliminarArcosDeVertice(_g.getVertice(v));
 		_g.eliminarVertice(v);
+	}
+
+	public void mostrarArcos() {
+		_interfaz.updateFrame();
 	}
 }

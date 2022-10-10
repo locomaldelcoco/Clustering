@@ -81,7 +81,7 @@ public class Interfaz {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		mediator = new Mediator();
+		mediator = new Mediator(this);
 		setupFrame();
 		setupMapContainer();
 		addMapaEvents();
@@ -131,11 +131,9 @@ public class Interfaz {
 		panelDeUsuario.add(btnEliminarVertice);
 		frame.getContentPane().add(panelDeUsuario);
 	}
-
+	
 	private void dibujarGrafoCompleto() {
-		if (!mediator.isCompleto())
-			mediator.completarGrafo();
-		mostrarArcos();
+		mediator.completarGrafo();
 	}
 
 	private void limpiarMapa() {
@@ -366,8 +364,9 @@ public class Interfaz {
 		btnEliminarArco.setEnabled(true);
 	}
 
-	private void updateFrame() {
-		SwingUtilities.updateComponentTreeUI(panelDeUsuario);
+	public void updateFrame() {
+		mostrarArcos();
+		SwingUtilities.updateComponentTreeUI(frame);
 		frame.setVisible(true);
 		frame.toFront();
 		frame.requestFocus();
