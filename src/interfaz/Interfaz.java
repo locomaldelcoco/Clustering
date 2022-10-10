@@ -35,22 +35,20 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Font;
 import java.awt.event.MouseMotionAdapter;
 
-@SuppressWarnings({ "unchecked", "rawtypes" })
+@SuppressWarnings("rawtypes")
 public class Interfaz {
 
 	private JFrame frame;
 	private JPanel mapContainer;
 	private JMapViewer mapa;
-	private Toolkit miPantalla;
-	private Image miIcono;
 	private JButton btnEliminarArco;
 	private JPanel panelDeUsuario;
 	private Mediator mediator;
 	private JComboBox menuSeleccionArchivo;
 	private JButton btnDibujarGrafoCompleto;
 	private JButton btnKruskal; 
-	private JButton btnEliminarArcos;
-	private JButton btnEliminarVertices;
+	private JButton btnEliminarAllArcos;
+	private JButton btnEliminarAllVertices;
 	private JButton btnGuardarGrafo;
 	private JButton btnCargarGrafo;
 	private JButton btnAgregarArco;
@@ -98,6 +96,7 @@ public class Interfaz {
 		setupPanelDeUsuario();
 		addPanelDeUsuarioEvents();
 		updateFrame();
+		arcoEnConstruccion = new Coordinate[2];
 	}
 
 	private void showMapMarkers() {
@@ -111,101 +110,34 @@ public class Interfaz {
 	}
 
 	private void setupPanelDeUsuario() {
+		//setBounds panelDeUsuario ToDo
 		panelDeUsuario = new JPanel();
-		setupBtnEliminarArco();
-		setupMenuSeleccionArchivo();
-		setupBtnDibujarGrafoCompleto();
-		setupBtnKruskal();
-		setupBtnAgregarVertice();
-		setupBtnEliminarVertice();
-		setupBtnEliminarArcos();
-		setupBtnEliminarVertices();
-		setupBtnGuardarGrafo();
-		setupBtnCargarGrafo();
-		setupBtnAgregarArco();
-	}
-
-	private void setupBtnGuardarGrafo() {
-		frame.getContentPane().add(panelDeUsuario);
-			btnGuardarGrafo = new JButton("Guardar Grafo");
-			btnGuardarGrafo.setBounds(650, 99, 124, 23);
-			panelDeUsuario.add(btnGuardarGrafo);
-	}
-
-	private void setupBtnCargarGrafo() {
-		frame.getContentPane().add(panelDeUsuario);
-			btnCargarGrafo = new JButton("Cargar Grafo");
-			btnCargarGrafo.setBounds(650, 65, 124, 23);
-			btnCargarGrafo.setEnabled(false);
-			panelDeUsuario.add(btnCargarGrafo);
-			
-	}
-
-	private void setupBtnAgregarArco() {
-		btnAgregarArco = new JButton("");
-		btnAgregarArco.setBounds(698, 517, 33, 33);
-		btnAgregarArco.setIcon(new ImageIcon(Interfaz.class.getResource("/arco.png")));
-		btnAgregarArco.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnAgregarArco.setOpaque(true);
-		btnAgregarArco.setToolTipText("Agregar arco");
-		btnAgregarArco.setBorder(new EmptyBorder(2, 2, 2, 2));
-		arcoEnConstruccion = new Coordinate[2];
-		panelDeUsuario.add(btnAgregarArco);
-		
-	}
-
-	private void setupBtnEliminarVertice() {
-		btnEliminarVertice = new JButton("");
-		btnEliminarVertice.setIcon(new ImageIcon(Interfaz.class.getResource("/verticeX.png")));
-		btnEliminarVertice.setToolTipText("Eliminar vértice");
-		btnEliminarVertice.setBorder(new EmptyBorder(2, 2, 2, 2));
-		btnEliminarVertice.setBounds(741, 517, 33, 33);
-		panelDeUsuario.add(btnEliminarVertice);
-	}
-
-	private void setupBtnEliminarVertices() {
-		btnEliminarVertices = new JButton("Eliminar Vértices");
-		btnEliminarVertices.setBounds(650, 443, 124, 23);
-		panelDeUsuario.add(btnEliminarVertices);
-	}
-
-	private void setupBtnEliminarArcos() {
-		btnEliminarArcos = new JButton("Eliminar Arcos");
-		btnEliminarArcos.setBounds(650, 409, 124, 23);
-		panelDeUsuario.add(btnEliminarArcos);
-	}
-
-	private void setupBtnAgregarVertice() {
-		btnAgregarVertice = new JButton("");
-		btnAgregarVertice.setBounds(655, 517, 33, 33);
-		btnAgregarVertice.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnAgregarVertice.setIcon(new ImageIcon(Interfaz.class.getResource("/vertice.png")));
-		btnAgregarVertice.setToolTipText("Agregar vértice");
-		btnAgregarVertice.setBorder(new EmptyBorder(2, 2, 2, 2));
-		panelDeUsuario.add(btnAgregarVertice);
-	}
-
-	private void setupBtnEliminarArco() {
 		panelDeUsuario.setLayout(null);
-		btnEliminarArco = new JButton("Eliminar Arista Pesada");
-		btnEliminarArco.setBounds(650, 265, 124, 22);
-		btnEliminarArco.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnEliminarArco.setEnabled(false);
-		panelDeUsuario.add(btnEliminarArco);
-	}
-	
-	private void setupBtnDibujarGrafoCompleto(){
-		btnDibujarGrafoCompleto = new JButton("Completar Grafo");
-		btnDibujarGrafoCompleto.setBounds(650, 151, 124, 23);
-		btnDibujarGrafoCompleto.setEnabled(true);
+
+		menuSeleccionArchivo = Recurso.setupMenuSeleccionArchivo();
+		btnCargarGrafo = Recurso.setupBtnCargarGrafo();
+		btnGuardarGrafo = Recurso.setupBtnGuardarGrafo();
+		btnDibujarGrafoCompleto = Recurso.setupBtnDibujarGrafoCompleto();
+		btnKruskal = Recurso.setupBtnKruskal(); 
+		btnEliminarArco = Recurso.setupBtnEliminarArco();
+		btnEliminarAllArcos = Recurso.setupBtnEliminarAllArcos();
+		btnEliminarAllVertices = Recurso.setupBtnEliminarAllVertices();
+		btnAgregarVertice = Recurso.setupBtnAgregarVertice();
+		btnAgregarArco = Recurso.setupBtnAgregarArco(); 
+		btnEliminarVertice = Recurso.setupBtnEliminarVertice();
+
+		panelDeUsuario.add(menuSeleccionArchivo);
+		panelDeUsuario.add(btnCargarGrafo);
+		panelDeUsuario.add(btnGuardarGrafo);
 		panelDeUsuario.add(btnDibujarGrafoCompleto);
-	}
-	
-	private void setupBtnKruskal() {
-		btnKruskal = new JButton("Aplicar Kruskal");
-		btnKruskal.setEnabled(false);
-		btnKruskal.setBounds(650, 185, 124, 23);
 		panelDeUsuario.add(btnKruskal);
+		panelDeUsuario.add(btnEliminarArco);
+		panelDeUsuario.add(btnEliminarAllArcos);
+		panelDeUsuario.add(btnEliminarAllVertices);
+		panelDeUsuario.add(btnAgregarVertice);
+		panelDeUsuario.add(btnAgregarArco);
+		panelDeUsuario.add(btnEliminarVertice);
+		frame.getContentPane().add(panelDeUsuario);
 	}
 
 	private void dibujarGrafoCompleto() {
@@ -217,95 +149,6 @@ public class Interfaz {
 	private void limpiarMapa() {
 		mapa.removeAllMapMarkers();
 		mapa.removeAllMapPolygons();
-	}
-
-	private void setupMenuSeleccionArchivo() {
-		menuSeleccionArchivo = new JComboBox();
-		menuSeleccionArchivo.setBounds(650, 32, 124, 22);
-		menuSeleccionArchivo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		menuSeleccionArchivo.setToolTipText("Lista de archivos");
-		String[] archivos = setupModelMenuArchivo();
-		DefaultComboBoxModel model = new DefaultComboBoxModel(archivos);
-		menuSeleccionArchivo.setModel(model);
-		menuSeleccionArchivo.setSelectedIndex(0);
-		panelDeUsuario.add(menuSeleccionArchivo);
-	}
-
-	private String[] setupModelMenuArchivo() {
-		String[] files = Mediator.getArchivos();
-		String[] ret = new String[files.length+1];
-		ret[0] = "Seleccione un archivo...";
-		for (int i = 1; i < ret.length; i++)
-			ret[i] = files[i-1];
-		return ret;
-	}
-	
-	private void addMapaEvents() {
-		mapa.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				//agregar vertice
-				Coordinate coord = (Coordinate) mapa.getPosition(e.getPoint());
-				if (modoAgregarVertice && mediator.agregarVertice(coord.getLat(), coord.getLon()))
-					mapa.addMapMarker(new MapMarkerDot(coord.getLat(), coord.getLon()));
-
-				//agregar arco
-				MapMarker marker = masCercano(e.getPoint());
-			    Coordinate cercano = marker != null ? marker.getCoordinate() : null;
-				if (modoAgregarArco && cercano != null && mediator.existeCoordenada(cercano)) {
-					lblBarraDeEstado.setText("Seleccione el vértice " + (arcoEnConstruccion[0] == null ? "destino" : "origen"));
-					for (int i = 0; i < arcoEnConstruccion.length; i++) {
-						if (cercano != null && arcoEnConstruccion[i] == null) {
-							arcoEnConstruccion[i] = cercano;
-							break;
-						}
-					}
-					if(arcoEnConstruccion[1] != null) {
-						if(arcoEnConstruccion[0] != arcoEnConstruccion[1] && mediator.agregarArco(arcoEnConstruccion))
-							mostrarArcos();
-						resetearArcoEnConstruccion();
-					}
-				}
-					
-				if (modoEliminarVertice && cercano != null && mediator.existeCoordenada(cercano)) {
-						mediator.eliminarVertice(masCercano(e.getPoint()).getCoordinate());
-						limpiarMapa();
-						showMapMarkers();
-						mostrarArcos();
-			}
-
-			mapa.addMouseMotionListener(new MouseMotionAdapter() {
-				@Override
-				public void mouseMoved(MouseEvent e) {
-					if(modoEliminarVertice && masCercano(e.getPoint()) != null) 
-						mapContainer.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-					 else 
-					mapContainer.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-				}
-			});
-		}
-	});
-	}
-
-	private MapMarker masCercano(Point punto) {
-		MapMarker ret = null;
-			for (MapMarker marker : mapa.getMapMarkerList()) {
-				Point p = mapa.getMapPosition(marker.getLat(), marker.getLon(), true);
-				if (p != null) {
-					int r = mapa.getRadius(marker, p);
-					Rectangle rect = new Rectangle(p.x - r, p.y - r, r + r, r + r);
-					if (rect.contains(punto)) {
-						ret = marker;
-						break;
-					}
-				}
-			}
-		return ret;
-	}
-	
-	private void resetearArcoEnConstruccion() {
-		arcoEnConstruccion[0] = null;
-		arcoEnConstruccion[1] = null;
 	}
 
 	private void addPanelDeUsuarioEvents() {
@@ -340,14 +183,14 @@ public class Interfaz {
 			}
 		});
 		
-		btnEliminarArcos.addActionListener(new ActionListener() {
+		btnEliminarAllArcos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mediator.eliminarArcos();
 				mapa.removeAllMapPolygons();
 			}
 		});
 
-		btnEliminarVertices.addActionListener(new ActionListener() {
+		btnEliminarAllVertices.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mediator.eliminarVertices();
 				mediator.eliminarArcos();
@@ -398,6 +241,74 @@ public class Interfaz {
 		});
 	}
 
+	private void addMapaEvents() {
+		mapa.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				//agregar vertice
+				Coordinate coord = (Coordinate) mapa.getPosition(e.getPoint());
+				if (modoAgregarVertice && mediator.agregarVertice(coord.getLat(), coord.getLon()))
+					mapa.addMapMarker(new MapMarkerDot(coord.getLat(), coord.getLon()));
+
+				//agregar arco
+				MapMarker marker = masCercano(e.getPoint());
+			    Coordinate cercano = marker != null ? marker.getCoordinate() : null;
+				if (modoAgregarArco && cercano != null && mediator.existeCoordenada(cercano)) {
+					lblBarraDeEstado.setText("Seleccione el vértice " + (arcoEnConstruccion[0] == null ? "destino" : "origen"));
+					for (int i = 0; i < arcoEnConstruccion.length; i++) {
+						if (cercano != null && arcoEnConstruccion[i] == null) {
+							arcoEnConstruccion[i] = cercano;
+							break;
+						}
+					}
+					if(arcoEnConstruccion[1] != null) {
+						if(arcoEnConstruccion[0] != arcoEnConstruccion[1] && mediator.agregarArco(arcoEnConstruccion))
+							mostrarArcos();
+						resetearArcoEnConstruccion();
+					}
+				}
+					
+				if (modoEliminarVertice && cercano != null && mediator.existeCoordenada(cercano)) {
+						mediator.eliminarVertice(masCercano(e.getPoint()).getCoordinate());
+						limpiarMapa();
+						showMapMarkers();
+						mostrarArcos();
+			}
+
+			mapa.addMouseMotionListener(new MouseMotionAdapter() {
+				@Override
+				public void mouseMoved(MouseEvent e) {
+					if((modoEliminarVertice || modoAgregarArco) && masCercano(e.getPoint()) != null) 
+						mapContainer.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+					 else 
+					mapContainer.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+				}
+			});
+		}
+	});
+	}
+
+	private MapMarker masCercano(Point punto) {
+		MapMarker ret = null;
+			for (MapMarker marker : mapa.getMapMarkerList()) {
+				Point p = mapa.getMapPosition(marker.getLat(), marker.getLon(), true);
+				if (p != null) {
+					int r = mapa.getRadius(marker, p);
+					Rectangle rect = new Rectangle(p.x - r, p.y - r, r + r, r + r);
+					if (rect.contains(punto)) {
+						ret = marker;
+						break;
+					}
+				}
+			}
+		return ret;
+	}
+	
+	private void resetearArcoEnConstruccion() {
+		arcoEnConstruccion[0] = null;
+		arcoEnConstruccion[1] = null;
+	}
+
 	private void aplicarKruskal() {
 		mediator.completarGrafo();
 		mediator.aplicarKruskal();
@@ -405,35 +316,16 @@ public class Interfaz {
 	}
 
 	private void setupMapContainer() {
-		mapContainer = new JPanel();
-		mapContainer.setBounds(0, 0, 641, 561);
-		mapContainer.setLayout(null);
-		mapa = new JMapViewer();
-		mapa.setBounds(0, 0, 641, 561);
+		mapContainer = Recurso.setupMapContainer();
+		mapa = Recurso.setupMapa();
 		mapContainer.add(mapa);
-		setupLblBarraDeEstado();
-	}
-
-	private void setupLblBarraDeEstado() {
-		lblBarraDeEstado = new JLabel("Barra de estado");
-		lblBarraDeEstado.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblBarraDeEstado.setBounds(10, 536, 621, 14);
+		lblBarraDeEstado = Recurso.setupLblBarraDeEstado();
 		mapa.add(lblBarraDeEstado);
 		frame.getContentPane().add(mapContainer);
 	}
 
 	private void setupFrame() {
-		miPantalla = Toolkit.getDefaultToolkit();
-		miIcono = miPantalla.getImage("src/icono.png");
-
-		frame = new JFrame();
-		frame.setResizable(false);
-		frame.setTitle("Clustering con AGM");
-
-		frame.setIconImage(miIcono);
-		frame.setBounds(0, 0, 800, 600);
-		frame.setLocationRelativeTo(null);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame = Recurso.setupFrame();
 
 		try {
 			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");

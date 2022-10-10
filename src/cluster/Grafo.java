@@ -67,14 +67,11 @@ public class Grafo {
 	
 	public void eliminarArcoMasPesado() {
 		if(!_arcos.isEmpty()) {
+			sumarClusters();
 			_arcos.remove( arcoMasPesado() );
 		}else{
 			throw new IndexOutOfBoundsException("No hay arcos para eliminar");
 		}
-	}
-	
-	private boolean esBorde(Arco arco) {
-		return arco.getVerticeA() == null || arco.getVerticeB() == null;
 	}
 	
 	private Arco arcoMasPesado() {
@@ -102,7 +99,6 @@ public class Grafo {
 	public void sumarClusters() {
 		_cantidadDeClusters++;
 	}
-	
 	public int tamano() {
 		return _vertices.size();
 	}
