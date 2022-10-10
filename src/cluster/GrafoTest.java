@@ -4,13 +4,15 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import kruskal.AlgoritmoKruskal;
+
 public class GrafoTest {
 	private Grafo g;
 
 	@Before
 	public void setUp() {
 		g = new Grafo();
-		g.cargarGrafo("instancia6.txt");
+		g.cargarGrafo("instancia6.json");
 	}
 
 	@Test
@@ -90,5 +92,45 @@ public class GrafoTest {
 		}
 		g.eliminarArcoMasPesado();
 		assertFalse(g.getArcos().contains(arcoMasPesado));
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void eliminarVerticeNullTest() {
+		g.eliminarVertice(null);
+	}
+
+	@Test
+	public void eliminarVerticeTest() {
+		g.completarGrafo();
+		int tamanoGrafo = g.tamano();
+		g.eliminarVertice(g.getVertices().get(0));
+		assertEquals(tamanoGrafo - 1, g.tamano());
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void eliminarArcoDeVerticeNullTest() {
+		g.eliminarArcosDeVertice(null);
+	}
+
+	@Test
+	public void eliminarArcoDeVerticeTest() {
+		g.completarGrafo();
+		System.out.println(g.getArcos().size());
+		AlgoritmoKruskal.kruskal(g);
+		int cantidadArcos = g.getArcos().size();
+		System.out.println(cantidadArcos);
+		g.eliminarArcosDeVertice(g.getVertices().get(0));
+		System.out.println(g.getArcos().size());
+		assertEquals(cantidadArcos - 1, g.getArcos().size());
+	}
+
+	@Test
+	public void eliminarArcoDeVerticeSinArcoTest() {
+		g.completarGrafo();
+		int cantidadArcos = g.getArcos().size();
+		Vertice v = new Vertice(1, 2);
+		g.agregarVertice(v);
+		g.eliminarArcosDeVertice(v);
+		assertEquals(cantidadArcos, g.getArcos().size());
 	}
 }

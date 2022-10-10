@@ -87,10 +87,16 @@ public class Grafo {
 	}
 
 	public void eliminarVertice(Vertice v) {
+		if (v == null) {
+			throw new IllegalArgumentException("El parametro no puede ser null");
+		}
 		_vertices.remove(v);
 	}
 
 	public void eliminarArcosDeVertice(Vertice v) {
+		if (v == null) {
+			throw new IllegalArgumentException("El parametro no puede ser null");
+		}
 		Iterator<Arco> it = _arcos.iterator();
 		while (it.hasNext()) {
 			Arco a = it.next();
