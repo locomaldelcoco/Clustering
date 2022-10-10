@@ -162,7 +162,7 @@ public class Interfaz {
 
 		btnDibujarGrafoCompleto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				lblBarraDeEstado.setText("Completando grafo...");
+				cambiarTextoEstado("Completando grafo...");
 				dibujarGrafoCompleto();
 			}
 		});
@@ -170,7 +170,7 @@ public class Interfaz {
 		btnKruskal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					lblBarraDeEstado.setText("Obteniendo AGM mediante Kruskal...");
+					cambiarTextoEstado("Obteniendo AGM mediante Kruskal...");
 					aplicarKruskal();
 				} catch (InterruptedException | ExecutionException e1) {
 					e1.printStackTrace();
@@ -195,7 +195,8 @@ public class Interfaz {
 
 		btnGuardarGrafo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println(mediator.guardarGrafo());
+				if(mediator.guardarGrafo())
+					cambiarTextoEstado("Grafo guardado!");;
 			}
 		});
 
@@ -214,6 +215,7 @@ public class Interfaz {
 				modoEliminarVertice = false;
 				modoAgregarVertice = modoAgregarVertice? false : true;
 				lblBarraDeEstado.setText("Modo agregar vértice " + (modoAgregarVertice ? "ON" : "OFF"));
+				cambiarTextoEstado("Modo agregar vértice " + (modoAgregarVertice ? "ON" : "OFF"));
 			}
 		});
 
@@ -222,7 +224,7 @@ public class Interfaz {
 				modoAgregarVertice = false;
 				modoEliminarVertice = false;
 				modoAgregarArco = modoAgregarArco ? false : true;
-				lblBarraDeEstado.setText("Modo agregar arco " + (modoAgregarArco ? "ON - Seleccione vértice origen" : "OFF"));
+				cambiarTextoEstado("Modo agregar arco " + (modoAgregarArco ? "ON" : "OFF"));
 			}
 		});
 		
@@ -231,7 +233,7 @@ public class Interfaz {
 				modoAgregarVertice = false;
 				modoAgregarArco = false;
 				modoEliminarVertice = modoEliminarVertice ? false : true;
-				lblBarraDeEstado.setText("Modo eliminar vértice " + (modoEliminarVertice ? "ON" : "OFF"));
+				cambiarTextoEstado("Modo eliminar vértice " + (modoEliminarVertice ? "ON" : "OFF"));
 			}
 		});
 	}
@@ -249,7 +251,7 @@ public class Interfaz {
 				MapMarker marker = masCercano(e.getPoint());
 			    Coordinate cercano = marker != null ? marker.getCoordinate() : null;
 				if (modoAgregarArco && cercano != null && mediator.existeCoordenada(cercano)) {
-					lblBarraDeEstado.setText("Seleccione el vértice " + (arcoEnConstruccion[0] == null ? "destino" : "origen"));
+					cambiarTextoEstado("Seleccione el vértice " + (arcoEnConstruccion[0] == null ? "destino" : "origen"));
 					for (int i = 0; i < arcoEnConstruccion.length; i++) {
 						if (cercano != null && arcoEnConstruccion[i] == null) {
 							arcoEnConstruccion[i] = cercano;
@@ -389,7 +391,6 @@ public class Interfaz {
 	}
 
 	public void updateFrame() {
-		lblBarraDeEstado.setText("Realizado!");
 		limpiarMapa();
 		showMapMarkers();
 		mostrarArcos();
@@ -398,5 +399,9 @@ public class Interfaz {
 		frame.setVisible(true);
 		frame.toFront();
 		frame.requestFocus();
+	}
+	
+	public void cambiarTextoEstado(String s) {
+		lblBarraDeEstado.setText(s);
 	}
 }
