@@ -22,6 +22,8 @@ public class MediatorCompletarGrafo extends SwingWorker<Boolean, Long>{
 	public void done() {
 			try {
 				if (!this.isCancelled()) {
+					_m.cambiarTextoEstado("Grafo completado");
+					_m.setIsCompleto(true);
 					_m.mostrarArcos();
 				}
 			} catch (Exception e) {

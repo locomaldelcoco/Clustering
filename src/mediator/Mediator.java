@@ -30,7 +30,6 @@ public class Mediator {
 		}
 		MediatorCompletarGrafo thread = new MediatorCompletarGrafo(this, _g);
 		thread.execute();
-		_interfaz.cambiarTextoEstado("Grafo completo");
 	}
 
 	public ArrayList<Coordinate> getCoordenadas() {
@@ -70,10 +69,6 @@ public class Mediator {
 		return files;
 	}
 
-	public boolean isCompleto() {
-		return _isCompleto;
-	}
-
 	public void aplicarKruskal() throws InterruptedException, ExecutionException {
 		if (_g.getArcos().size() < _g.tamano()-1) {
 			_interfaz.cambiarTextoEstado("No se puede aplicar - Grafo no conexo");
@@ -86,7 +81,6 @@ public class Mediator {
 		MediatorAplicarKruskal thread = new MediatorAplicarKruskal(this, _g);
 		thread.execute();
 		_g = thread.get();
-		_interfaz.cambiarTextoEstado("Kruskal aplicado!");
 	}
 
 	public boolean agregarVertice(double lat, double lon) {
@@ -143,5 +137,13 @@ public class Mediator {
 
 	public void mostrarArcos() {
 		_interfaz.updateFrame();
+	}
+	
+	public void cambiarTextoEstado(String s) {
+		_interfaz.cambiarTextoEstado(s);
+	}
+	
+	public void setIsCompleto(Boolean value) {
+		_isCompleto = value;
 	}
 }
