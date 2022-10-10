@@ -86,6 +86,23 @@ public class Grafo {
 
 	}
 
+	public void eliminarVertice(Vertice v) {
+		_vertices.remove(v);
+	}
+
+	public void eliminarArcosDeVertice(Vertice v) {
+		Iterator<Arco> it = _arcos.iterator();
+		while (it.hasNext()) {
+			Arco a = it.next();
+			if (a.contiene(v))
+				it.remove();
+		}
+	}
+
+	public int tamano() {
+		return _vertices.size();
+	}
+
 	private Arco arcoMasPesado() {
 		// obtiene el primero porque esta ordenado de mayor a menor
 		return _arcos.get(0);
@@ -104,29 +121,12 @@ public class Grafo {
 		return _arcos;
 	}
 
-	public int tamano() {
-		return _vertices.size();
-	}
-
 	public Vertice getVertice(Vertice vA) throws IllegalArgumentException {
 		for (Vertice v : _vertices) {
 			if (v.equals(vA))
 				return v;
 		}
 		return null;
-	}
-
-	public void eliminarVertice(Vertice v) {
-		_vertices.remove(v);
-	}
-
-	public void eliminarArcosDeVertice(Vertice v) {
-		Iterator<Arco> it = _arcos.iterator();
-		while (it.hasNext()) {
-			Arco a = it.next();
-			if (a.contiene(v))
-				it.remove();
-		}
 	}
 
 	@Override
