@@ -68,11 +68,10 @@ public class Mediator {
 	}
 
 	public void aplicarKruskal() {
-		System.out.println(_g.getVertices().size());
+		isCompleto = false;
 		if (_g.getVertices().size() < 1)
 			return;
 		_g = AlgoritmoKruskal.kruskal(_g);
-		isCompleto = false;
 	}
 
 	public boolean agregarVertice(double lat, double lon) {
