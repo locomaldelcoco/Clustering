@@ -3,21 +3,25 @@ package cluster;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.google.gson.annotations.Expose;
+
 public class Vertice {
+	@Expose
 	private double _x, _y;
+	
 	private Set<Vertice> _vecinos;
 
 	public Vertice(double x, double y) {
 		_x = x;
 		_y = y;
-		_vecinos = new HashSet<>();
+		inicializarVecinos();
 	}
 
-	public void agregarVecino(Vertice vecino) {
+	public boolean agregarVecino(Vertice vecino) {
 		if (vecino == null) {
 			throw new IllegalArgumentException("El parametro no puede ser null");
 		}
-		_vecinos.add(vecino);
+		return _vecinos.add(vecino);
 	}
 
 	public void eliminarVecino(Vertice vecino) {
@@ -65,6 +69,10 @@ public class Vertice {
 
 	@Override
 	public String toString() {
-		return "(" + _x + ", " + _y + ") ";
+		return "X=" + _x +  ", Y=" + _y ;
+	}
+
+	public void inicializarVecinos() {
+		_vecinos = new HashSet<>();
 	}
 }
