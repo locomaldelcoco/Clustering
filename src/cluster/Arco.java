@@ -62,7 +62,7 @@ public class Arco implements Comparable<Arco> {
 	}
 
 	public boolean contiene(Vertice v) {
-		return _verticeA == v || _verticeB == v;
+		return _verticeA.equals(v) || _verticeB.equals(v);
 	}
 
 }
