@@ -22,6 +22,9 @@ public class BFS {
 	}
 
 	public static HashSet<Vertice> alcanzables(Vertice origen) {
+		if (origen == null) {
+			throw new IllegalArgumentException("No puede ser null el parametro");
+		}
 		HashSet<Vertice> ret = new HashSet<Vertice>();
 		inicializarBusqueda(origen);
 		
