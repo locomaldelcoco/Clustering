@@ -21,12 +21,14 @@ public class Mediator {
 	public Mediator(Interfaz interfaz) {
 		_interfaz = interfaz;
 		_g = new Grafo();
-		_isCompleto = false;
+		_isCompleto = _g.getIsCompleto();
 	}
 
 	public void completarGrafo() {
 		if (_isCompleto) {
 			_interfaz.cambiarTextoEstado("Grafo ya es completo");
+			_interfaz.updateFrame();
+			return;
 		}
 		MediatorCompletarGrafo thread = new MediatorCompletarGrafo(this, _g);
 		thread.execute();
@@ -89,13 +91,16 @@ public class Mediator {
 	}
 
 	public void eliminarArcos() {
+		_isCompleto = false;
 		_interfaz.cambiarTextoEstado("ARCOS ELIMINADOS!");
-		_g.getArcos().clear();
+		_g.eliminarAllArcos();
 	}
 
 	public void eliminarVertices() {
+		_isCompleto = false;
 		_interfaz.cambiarTextoEstado("VÉRTICES ELIMINADOS!");
-		_g.getVertices().clear();
+		_g.eliminarAllVertices();
+
 	}
 
 	public boolean guardarGrafo() {
@@ -113,6 +118,7 @@ public class Mediator {
 			Vertice vB = a.getVerticeB();
 			_g.agregarArco(_g.getVertice(vA), _g.getVertice(vB), a.getDistancia());
 		}
+		_isCompleto = _g.getIsCompleto();
 		_interfaz.cambiarTextoEstado("Archivo " + s + " - Cargado");
 	}
 
@@ -132,6 +138,7 @@ public class Mediator {
 		Vertice v = new Vertice(c.getLat(), c.getLon());
 		_g.eliminarArcosDeVertice(_g.getVertice(v));
 		_g.eliminarVertice(v);
+		_isCompleto = false;
 		_interfaz.cambiarTextoEstado("Coordenada " + c + " - Eliminada");
 	}
 

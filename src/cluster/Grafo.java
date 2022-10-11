@@ -10,10 +10,13 @@ public class Grafo {
 	private ArrayList<Vertice> _vertices;
 	@Expose
 	private ArrayList<Arco> _arcos;
+	@Expose
+	private boolean _isCompleto;
 
 	public Grafo() {
 		_vertices = new ArrayList<>();
 		_arcos = new ArrayList<>();
+		_isCompleto = false;
 	}
 
 	public void cargarGrafo(String s) {
@@ -34,9 +37,9 @@ public class Grafo {
 		}
 		if (_vertices.contains(v))
 			return false;
+		_isCompleto = false;
 		_vertices.add(v);
 		return true;
-
 	}
 
 	public void completarGrafo() {
@@ -51,6 +54,7 @@ public class Grafo {
 				}
 			}
 		}
+		_isCompleto = true;
 	}
 
 	public boolean agregarArco(Vertice vA, Vertice vB, double distancia) {
@@ -74,12 +78,13 @@ public class Grafo {
 			throw new IllegalArgumentException("El parametro no puede ser null");
 		}
 		_arcos.remove(arco);
+		_isCompleto = false;
 	}
 
 	public void eliminarArcoMasPesado() {
 		if (!_arcos.isEmpty()) {
 			System.out.println("Se eliminó " + arcoMasPesado().getDistancia());
-			_arcos.remove(arcoMasPesado());
+			eliminarArco(arcoMasPesado());
 		} else {
 			throw new IndexOutOfBoundsException("No hay arcos para eliminar");
 		}
@@ -91,6 +96,7 @@ public class Grafo {
 			throw new IllegalArgumentException("El parametro no puede ser null");
 		}
 		_vertices.remove(v);
+		_isCompleto = false;
 	}
 
 	public void eliminarArcosDeVertice(Vertice v) {
@@ -103,6 +109,7 @@ public class Grafo {
 			if (a.contiene(v))
 				it.remove();
 		}
+		_isCompleto = false;
 	}
 
 	public int tamano() {
@@ -132,6 +139,16 @@ public class Grafo {
 		return _arcos;
 	}
 
+	public void eliminarAllArcos() {
+		_isCompleto = false;
+		_arcos.clear();
+	}
+	
+	public void eliminarAllVertices() {
+		_isCompleto = false;
+		_vertices.clear();
+	}
+
 	public Vertice getVertice(Vertice vA) throws IllegalArgumentException {
 		for (Vertice v : _vertices) {
 			if (v.equals(vA))
@@ -144,4 +161,9 @@ public class Grafo {
 	public String toString() {
 		return "Vertices= " + _vertices + ", Arcos=" + _arcos;
 	}
+
+	public boolean getIsCompleto() {
+		return _isCompleto;
+	}
+
 }
