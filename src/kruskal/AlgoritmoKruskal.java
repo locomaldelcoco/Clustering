@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 
+import javax.swing.JOptionPane;
+
 import cluster.Arco;
 import cluster.DistanciaEuclidea;
 import cluster.Grafo;
@@ -50,32 +52,31 @@ public class AlgoritmoKruskal{
 		}
 		return agm;
 	}
-	
+	static boolean numeroOptimo;
 	public static void calcularClusters(Grafo agm) {
 		Arco pesado = agm.arcoMasPesado();
-		boolean algunaNoEsHoja = false;
-		boolean contarClusters= true;
-		System.out.println("vecinos B "+pesado.getVerticeB().get_vecinos().toString());
-		System.out.println("vecinos A "+pesado.getVerticeA().get_vecinos().toString());	
+		boolean esHoja = true;
 		if( (pesado.getVerticeA().get_vecinos().size() == 0 || pesado.getVerticeA().get_vecinos().size() == 1) 
 														||
 			(pesado.getVerticeB().get_vecinos().size() == 0 || pesado.getVerticeB().get_vecinos().size() == 1) ) {
 			
-			algunaNoEsHoja= false;
-			System.out.println("ES HOJA");
-			System.out.println("CANTIDAD DE CLUSTERS: "+ agm.getCantidadDeClusters());
+			esHoja = true;
+			
+			if(esHoja && numeroOptimo){
+				System.out.println("----------NUMERO OPTIMO DE CLUSTERS----------"+ agm.getCantidadDeClusters());
+				System.out.println("Hay: "+ agm.getCantidadDeClusters() + " Clusters");
+				JOptionPane.showMessageDialog(null, "NUMERO OPTIMO DE CLUSTERS\n"+ agm.getCantidadDeClusters());
+				numeroOptimo=false;
+			}
+			System.out.println("ES HOJA Y Hay: "+ agm.getCantidadDeClusters() + " Clusters");
 		}
 		if(pesado.getVerticeA().get_vecinos().size() > 1 && pesado.getVerticeB().get_vecinos().size() > 1 ) {
-			algunaNoEsHoja = true;
-			System.out.println("no es hoja");
-			agm.sumarCluster(algunaNoEsHoja);
-			System.out.println("CANTIDAD DE CLUSTERS: "+ agm.getCantidadDeClusters());
+			esHoja = false;
+			numeroOptimo = true;
+			agm.sumarCluster(!esHoja);
+			System.out.println("NO ES HOJA Y Hay: "+ agm.getCantidadDeClusters() + " Clusters");
 		}
-		contarClusters = algunaNoEsHoja && contarClusters;
-		if(!contarClusters) {
-			System.out.println("----------NUMERO OPTIMO DE CLUSTERS----------");
-			System.out.println("CANTIDAD DE CLUSTERS: "+ agm.getCantidadDeClusters());
-		}
+		
 	}
 	
 }
