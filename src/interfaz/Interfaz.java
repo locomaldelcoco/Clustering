@@ -54,6 +54,7 @@ public class Interfaz {
 	private Coordinate[] arcoEnConstruccion;
 	private JLabel lblBarraDeEstado;
 	private JButton btnEliminarVertice;
+	private JLabel lblCoordenadaMouse;
 	
 	/**
 	 * Launch the application.
@@ -275,6 +276,9 @@ public class Interfaz {
 			mapa.addMouseMotionListener(new MouseMotionAdapter() {
 				@Override
 				public void mouseMoved(MouseEvent e) {
+					Coordinate c = (Coordinate) mapa.getPosition(e.getPoint());
+					lblCoordenadaMouse.setText("X = " + c.getLat() + "  Y = " + c.getLon());
+					
 					if(modoAgregarVertice || (modoEliminarVertice || modoAgregarArco) && masCercano(e.getPoint()) != null) 
 						mapContainer.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 					 else 
@@ -314,9 +318,11 @@ public class Interfaz {
 	private void setupMapContainer() {
 		mapContainer = Recurso.setupMapContainer();
 		mapa = Recurso.setupMapa();
-		mapContainer.add(mapa);
 		lblBarraDeEstado = Recurso.setupLblBarraDeEstado();
-		mapa.add(lblBarraDeEstado);
+		lblCoordenadaMouse = Recurso.setupLblCoordenadaMouse();
+		mapContainer.add(lblCoordenadaMouse);
+		mapContainer.add(lblBarraDeEstado);
+		mapContainer.add(mapa);
 		frame.getContentPane().add(mapContainer);
 	}
 

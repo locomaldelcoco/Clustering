@@ -152,5 +152,12 @@ public class Recurso {
 		btnEliminarVertice.setBounds(741, 517, 33, 33);
 		return btnEliminarVertice;
 	}
+	
+	public static JLabel setupLblCoordenadaMouse() {
+		JLabel lblCoordenadaMouse = new JLabel("X = ...   Y = ...");
+		lblCoordenadaMouse.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblCoordenadaMouse.setBounds(380, 10, 621, 14);
+		return lblCoordenadaMouse;
+	}
 }
 
