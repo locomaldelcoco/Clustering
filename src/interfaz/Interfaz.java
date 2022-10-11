@@ -277,7 +277,7 @@ public class Interfaz {
 				@Override
 				public void mouseMoved(MouseEvent e) {
 					Coordinate c = (Coordinate) mapa.getPosition(e.getPoint());
-					lblCoordenadaMouse.setText("X = " + c.getLat() + "  Y = " + c.getLon());
+					lblCoordenadaMouse.setText("Lat = " + c.getLat() + "  Lon = " + c.getLon());
 					
 					if(modoAgregarVertice || (modoEliminarVertice || modoAgregarArco) && masCercano(e.getPoint()) != null) 
 						mapContainer.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
