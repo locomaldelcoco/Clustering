@@ -59,6 +59,8 @@ public class AlgoritmoKruskal{
 	public static void calcularClusters(Grafo agm) {
 		Arco pesado = agm.arcoMasPesado();
 		boolean esHoja = true;
+		System.out.println("VECINOS B"+ pesado.getVerticeB().get_vecinos().toString() + "   "+ pesado.getVerticeA());
+		System.out.println("VECINOS A"+ pesado.getVerticeA().get_vecinos().toString() + "   "+ pesado.getVerticeB());
 		
 		if( pesado.esHoja()) {
 			esHoja = true;
@@ -74,6 +76,9 @@ public class AlgoritmoKruskal{
 			numeroOptimo = true;
 			agm.sumarCluster();
 			System.out.println("NO ES HOJA Y Hay: "+ agm.getCantidadDeClusters() + " Clusters");
+		}
+		if( pesado.esHoja() && pesado.esHojaSuelta()) {
+			agm.restarCluster();
 		}
 		
 	}

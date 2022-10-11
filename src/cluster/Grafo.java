@@ -174,11 +174,14 @@ public class Grafo {
 
 	public void sumarCluster() {
 		_CantidadDeClusters++;
-		
 	}
 	
 	public boolean getIsCompleto() {
 		return _isCompleto;
+	}
+
+	public void restarCluster() {
+		_CantidadDeClusters--;
 	}
 
 }
