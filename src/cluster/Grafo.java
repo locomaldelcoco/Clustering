@@ -172,10 +172,9 @@ public class Grafo {
 		return "Vertices= " + _vertices + ", Arcos=" + _arcos;
 	}	
 
-	public void sumarCluster(boolean algunaNoEsHoja) {
-		if(algunaNoEsHoja) {
-			_CantidadDeClusters++;
-		}
+	public void sumarCluster() {
+		_CantidadDeClusters++;
+		
 	}
 	
 	public boolean getIsCompleto() {

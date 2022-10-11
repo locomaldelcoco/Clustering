@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import kruskal.AlgoritmoKruskal;
 
 public class GrafoTest {
 	private Grafo g;
