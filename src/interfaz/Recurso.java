@@ -156,7 +156,7 @@ public class Recurso {
 	public static JLabel setupLblCoordenadaMouse() {
 		JLabel lblCoordenadaMouse = new JLabel("X = ...   Y = ...");
 		lblCoordenadaMouse.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblCoordenadaMouse.setBounds(380, 10, 621, 14);
+		lblCoordenadaMouse.setBounds(40, 10, 621, 14);
 		return lblCoordenadaMouse;
 	}
 }

@@ -86,6 +86,7 @@ public class Mediator {
 	}
 
 	public boolean agregarVertice(double lat, double lon) {
+		_isCompleto = false;
 		_interfaz.cambiarTextoEstado("Coordenada (" + lat + ", " + lon + ") - Agregada");
 		return _g.agregarVertice(new Vertice(lat, lon));
 	}
