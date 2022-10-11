@@ -3,7 +3,6 @@ package kruskal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
 
 import javax.swing.JOptionPane;
 
@@ -16,6 +15,9 @@ import bfs.BFS;
 public class AlgoritmoKruskal{
 	
 	public static Grafo kruskal(Grafo g) {
+		if (g == null) {
+			throw new IllegalArgumentException("El grafo no puede ser null");
+		}
 		Grafo agm = new Grafo();
 		ArrayList<Arco> arcos = g.getArcos();
 		Collections.sort(arcos, Collections.reverseOrder());
@@ -52,12 +54,15 @@ public class AlgoritmoKruskal{
 		}
 		return agm;
 	}
+	
 	static boolean numeroOptimo;
 	public static void calcularClusters(Grafo agm) {
 		Arco pesado = agm.arcoMasPesado();
 		boolean esHoja = true;
-		if( (pesado.getVerticeA().get_vecinos().size() == 0 || pesado.getVerticeA().get_vecinos().size() == 1) 
-														||
+		System.out.println("VECINOS DE B: "+pesado.getVerticeB().get_vecinos().toString());
+		System.out.println("VECINOS DE A: "+pesado.getVerticeA().get_vecinos().toString());
+		if( (pesado.getVerticeA().get_vecinos().size() == 0 || pesado.getVerticeA().get_vecinos().size() == 1 ) 
+								||
 			(pesado.getVerticeB().get_vecinos().size() == 0 || pesado.getVerticeB().get_vecinos().size() == 1) ) {
 			
 			esHoja = true;

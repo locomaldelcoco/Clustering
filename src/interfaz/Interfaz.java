@@ -1,11 +1,10 @@
 package interfaz;
 
 import java.awt.EventQueue;
-import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.Toolkit;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -13,7 +12,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
@@ -27,12 +25,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
 import java.awt.Cursor;
-import javax.swing.ImageIcon;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.EmptyBorder;
-import java.awt.Font;
 import java.awt.event.MouseMotionAdapter;
 
 @SuppressWarnings("rawtypes")
@@ -61,6 +54,7 @@ public class Interfaz {
 	private Coordinate[] arcoEnConstruccion;
 	private JLabel lblBarraDeEstado;
 	private JButton btnEliminarVertice;
+	private JLabel lblCoordenadaMouse;
 	
 	/**
 	 * Launch the application.
@@ -89,13 +83,12 @@ public class Interfaz {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		mediator = new Mediator();
+		mediator = new Mediator(this);
 		setupFrame();
 		setupMapContainer();
 		addMapaEvents();
 		setupPanelDeUsuario();
 		addPanelDeUsuarioEvents();
-		updateFrame();
 		arcoEnConstruccion = new Coordinate[2];
 	}
 
@@ -139,11 +132,10 @@ public class Interfaz {
 		panelDeUsuario.add(btnEliminarVertice);
 		frame.getContentPane().add(panelDeUsuario);
 	}
-
+	
 	private void dibujarGrafoCompleto() {
-		if (!mediator.isCompleto())
-			mediator.completarGrafo();
-		mostrarArcos();
+		desactivarInteracciones();
+		mediator.completarGrafo();
 	}
 
 	private void limpiarMapa() {
@@ -154,6 +146,7 @@ public class Interfaz {
 	private void addPanelDeUsuarioEvents() {
 		btnEliminarArco.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				mediator.calcularClusters();
 				mediator.eliminarArcoMasPesado();
 				mostrarArcos();
 			}
@@ -171,15 +164,19 @@ public class Interfaz {
 
 		btnDibujarGrafoCompleto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				cambiarTextoEstado("Completando grafo...");
 				dibujarGrafoCompleto();
-				activarBtnEliminarArco();
-				activarBtnKruskal();
 			}
 		});
 
 		btnKruskal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				aplicarKruskal();
+				try {
+					cambiarTextoEstado("Obteniendo AGM mediante Kruskal...");
+					aplicarKruskal();
+				} catch (InterruptedException | ExecutionException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 		
@@ -192,15 +189,16 @@ public class Interfaz {
 
 		btnEliminarAllVertices.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mediator.eliminarVertices();
 				mediator.eliminarArcos();
+				mediator.eliminarVertices();
 				limpiarMapa();
 			}
 		});
 
 		btnGuardarGrafo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println(mediator.guardarGrafo());
+				if(mediator.guardarGrafo())
+					cambiarTextoEstado("Grafo guardado!");;
 			}
 		});
 
@@ -219,6 +217,7 @@ public class Interfaz {
 				modoEliminarVertice = false;
 				modoAgregarVertice = modoAgregarVertice? false : true;
 				lblBarraDeEstado.setText("Modo agregar vértice " + (modoAgregarVertice ? "ON" : "OFF"));
+				cambiarTextoEstado("Modo agregar vértice " + (modoAgregarVertice ? "ON" : "OFF"));
 			}
 		});
 
@@ -227,7 +226,7 @@ public class Interfaz {
 				modoAgregarVertice = false;
 				modoEliminarVertice = false;
 				modoAgregarArco = modoAgregarArco ? false : true;
-				lblBarraDeEstado.setText("Modo agregar arco " + (modoAgregarArco ? "ON - Seleccione vértice origen" : "OFF"));
+				cambiarTextoEstado("Modo agregar arco " + (modoAgregarArco ? "ON" : "OFF"));
 			}
 		});
 		
@@ -236,7 +235,7 @@ public class Interfaz {
 				modoAgregarVertice = false;
 				modoAgregarArco = false;
 				modoEliminarVertice = modoEliminarVertice ? false : true;
-				lblBarraDeEstado.setText("Modo eliminar vértice " + (modoEliminarVertice ? "ON" : "OFF"));
+				cambiarTextoEstado("Modo eliminar vértice " + (modoEliminarVertice ? "ON" : "OFF"));
 			}
 		});
 	}
@@ -254,7 +253,7 @@ public class Interfaz {
 				MapMarker marker = masCercano(e.getPoint());
 			    Coordinate cercano = marker != null ? marker.getCoordinate() : null;
 				if (modoAgregarArco && cercano != null && mediator.existeCoordenada(cercano)) {
-					lblBarraDeEstado.setText("Seleccione el vértice " + (arcoEnConstruccion[0] == null ? "destino" : "origen"));
+					cambiarTextoEstado("Seleccione el vértice " + (arcoEnConstruccion[0] == null ? "destino" : "origen"));
 					for (int i = 0; i < arcoEnConstruccion.length; i++) {
 						if (cercano != null && arcoEnConstruccion[i] == null) {
 							arcoEnConstruccion[i] = cercano;
@@ -269,16 +268,19 @@ public class Interfaz {
 				}
 					
 				if (modoEliminarVertice && cercano != null && mediator.existeCoordenada(cercano)) {
-						mediator.eliminarVertice(masCercano(e.getPoint()).getCoordinate());
-						limpiarMapa();
-						showMapMarkers();
-						mostrarArcos();
+					mediator.eliminarVertice(cercano);
+					limpiarMapa();
+					showMapMarkers();
+					mostrarArcos();
 			}
 
 			mapa.addMouseMotionListener(new MouseMotionAdapter() {
 				@Override
 				public void mouseMoved(MouseEvent e) {
-					if((modoEliminarVertice || modoAgregarArco) && masCercano(e.getPoint()) != null) 
+					Coordinate c = (Coordinate) mapa.getPosition(e.getPoint());
+					lblCoordenadaMouse.setText("Lat = " + c.getLat() + "  Lon = " + c.getLon());
+					
+					if(modoAgregarVertice || (modoEliminarVertice || modoAgregarArco) && masCercano(e.getPoint()) != null) 
 						mapContainer.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 					 else 
 					mapContainer.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
@@ -309,18 +311,19 @@ public class Interfaz {
 		arcoEnConstruccion[1] = null;
 	}
 
-	private void aplicarKruskal() {
-		mediator.completarGrafo();
+	private void aplicarKruskal() throws InterruptedException, ExecutionException {
+		desactivarInteracciones();
 		mediator.aplicarKruskal();
-		mostrarArcos();
 	}
 
 	private void setupMapContainer() {
 		mapContainer = Recurso.setupMapContainer();
 		mapa = Recurso.setupMapa();
-		mapContainer.add(mapa);
 		lblBarraDeEstado = Recurso.setupLblBarraDeEstado();
-		mapa.add(lblBarraDeEstado);
+		lblCoordenadaMouse = Recurso.setupLblCoordenadaMouse();
+		mapContainer.add(lblCoordenadaMouse);
+		mapContainer.add(lblBarraDeEstado);
+		mapContainer.add(mapa);
 		frame.getContentPane().add(mapContainer);
 	}
 
@@ -354,35 +357,54 @@ public class Interfaz {
 	private void desactivarBtnCargarGrafo() {
 		btnCargarGrafo.setEnabled(false);
 	}
-
 	private void activarBtnCargarGrafo() {
 		btnCargarGrafo.setEnabled(true);
 	}
 	
-	private void desactivarBtnDibujarGrafoCompleto() {
+	private void desactivarInteracciones() {
+		modoAgregarArco = false;
+		modoAgregarVertice = false;
+		modoEliminarVertice = false;
+		menuSeleccionArchivo.setEnabled(false);
+		desactivarBtnCargarGrafo();
+		btnGuardarGrafo.setEnabled(false);
 		btnDibujarGrafoCompleto.setEnabled(false);
-	}
-
-	private void activarBtnDibujarGrafoCompleto() {
-		btnDibujarGrafoCompleto.setEnabled(true);
-	}
-
-	private void desactivarBtnEliminarArco() {
+		btnKruskal.setEnabled(false);
 		btnEliminarArco.setEnabled(false);
+		btnEliminarAllArcos.setEnabled(false);
+		btnEliminarAllVertices.setEnabled(false);
+		btnAgregarVertice.setEnabled(false);
+		btnAgregarArco.setEnabled(false);
+		btnEliminarVertice.setEnabled(false);
 	}
 
-	private void activarBtnEliminarArco() {
-		btnEliminarArco.setEnabled(true);
-	}
-	
-	private void activarBtnKruskal() {
+	private void activarInteracciones() {
+		if (menuSeleccionArchivo.getSelectedIndex() != 0)
+			activarBtnCargarGrafo();
+		menuSeleccionArchivo.setEnabled(true);
+		btnGuardarGrafo.setEnabled(true);
+		btnDibujarGrafoCompleto.setEnabled(true);
 		btnKruskal.setEnabled(true);
+		btnEliminarArco.setEnabled(true);
+		btnEliminarAllArcos.setEnabled(true);
+		btnEliminarAllVertices.setEnabled(true);
+		btnAgregarVertice.setEnabled(true);
+		btnAgregarArco.setEnabled(true);
+		btnEliminarVertice.setEnabled(true);
 	}
-	
-	private void updateFrame() {
-		SwingUtilities.updateComponentTreeUI(panelDeUsuario);
+
+	public void updateFrame() {
+		limpiarMapa();
+		showMapMarkers();
+		mostrarArcos();
+		activarInteracciones();
+		SwingUtilities.updateComponentTreeUI(frame);
 		frame.setVisible(true);
 		frame.toFront();
 		frame.requestFocus();
+	}
+	
+	public void cambiarTextoEstado(String s) {
+		lblBarraDeEstado.setText(s);
 	}
 }

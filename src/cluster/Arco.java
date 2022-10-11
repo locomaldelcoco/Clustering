@@ -1,10 +1,6 @@
 package cluster;
 
-import java.util.Set;
-
 import com.google.gson.annotations.Expose;
-
-import java.util.HashSet;
 
 public class Arco implements Comparable<Arco> {
 	@Expose
@@ -18,6 +14,13 @@ public class Arco implements Comparable<Arco> {
 		_verticeA = verticeA;
 		_verticeB = verticeB;
 		_distancia = distancia;
+	}
+
+	public boolean contiene(Vertice v) {
+		if (v == null) {
+			throw new IllegalArgumentException("Se paso un parametro null: " + v);
+		}
+		return _verticeA.equals(v) || _verticeB.equals(v);
 	}
 
 	public Vertice getVerticeA() {
@@ -51,7 +54,6 @@ public class Arco implements Comparable<Arco> {
 		return true;
 	}
 
-	@Override
 	public int compareTo(Arco arco1) {
 		return getDistancia() < arco1.getDistancia() ? 1 : getDistancia() > arco1.getDistancia() ? -1 : 0;
 	}
@@ -59,10 +61,6 @@ public class Arco implements Comparable<Arco> {
 	@Override
 	public String toString() {
 		return "VerticeA = " + _verticeA + ", VerticeB = " + _verticeB + ", Distancia = " + _distancia;
-	}
-
-	public boolean contiene(Vertice v) {
-		return _verticeA.equals(v) || _verticeB.equals(v);
 	}
 
 }
