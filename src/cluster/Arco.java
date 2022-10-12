@@ -63,14 +63,5 @@ public class Arco implements Comparable<Arco> {
 		return "VerticeA = " + _verticeA + ", VerticeB = " + _verticeB + ", Distancia = " + _distancia;
 	}
 	
-	public boolean esHoja() {
-		return this.getVerticeA().get_vecinos().size() < 2 ||	this.getVerticeB().get_vecinos().size() < 2; 
-	}
-	
-	public boolean esHojaSuelta() {
-		return this.getVerticeA().get_vecinos().contains(this.getVerticeB()) 
-											&& 
-				this.getVerticeB().get_vecinos().contains(this.getVerticeA());
-	}
 	
 }

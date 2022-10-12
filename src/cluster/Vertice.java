@@ -35,6 +35,8 @@ public class Vertice {
 	}
 
 	public boolean esVecino(Vertice otroVertice) {
+		if (_vecinos == null)
+			return false;
 		if (otroVertice == null) {
 			throw new IllegalArgumentException("El parametro no puede ser null");
 		}

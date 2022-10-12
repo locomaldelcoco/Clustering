@@ -63,7 +63,7 @@ public class AlgoritmoKruskal{
 		System.out.println("VECINOS B"+ pesado.getVerticeB().get_vecinos().toString() + "   "+ pesado.getVerticeA());
 		System.out.println("VECINOS A"+ pesado.getVerticeA().get_vecinos().toString() + "   "+ pesado.getVerticeB());
 		
-		if( pesado.esHoja()) {
+		if( agm.esHoja(pesado)) {
 			esHoja = true;
 			
 			if(esHoja && puedoEliminarArista){
@@ -71,13 +71,13 @@ public class AlgoritmoKruskal{
 			}
 			System.out.println("ES HOJA Y Hay: "+ agm.getCantidadDeClusters() + " Clusters");
 		}
-		else if( !pesado.esHoja()) {
+		else if( !agm.esHoja(pesado)) {
 			esHoja = false;
 			puedoEliminarArista = true;
 			agm.sumarCluster();
 			System.out.println("NO ES HOJA Y Hay: "+ agm.getCantidadDeClusters() + " Clusters");
 		}
-		else if( pesado.esHoja() && pesado.esHojaSuelta()) {
+		else if( agm.esHoja(pesado) && agm.esHojaAislada(pesado)) {
 			agm.restarCluster();
 		}
 		return puedoEliminarArista;

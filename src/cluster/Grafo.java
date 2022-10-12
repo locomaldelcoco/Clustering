@@ -20,7 +20,7 @@ public class Grafo {
 	public Grafo() {
 		_vertices = new ArrayList<>();
 		_arcos = new ArrayList<>();
-		_cantidadDeClusters=1;
+		_cantidadDeClusters = 1;
 		_isCompleto = false;
 	}
 
@@ -99,9 +99,9 @@ public class Grafo {
 	}
 
 	public void eliminarArcoMasPesado() {
-		if(!_arcos.isEmpty()) {
+		if (!_arcos.isEmpty()) {
 			eliminarArco(arcoMasPesado());
-		}else{
+		} else {
 			throw new IndexOutOfBoundsException("No hay arcos para eliminar");
 		}
 	}
@@ -140,7 +140,7 @@ public class Grafo {
 		vA.agregarVecino(vB);
 		vB.agregarVecino(vA);
 	}
-	
+
 	private void eliminarVecinos(Vertice vA, Vertice vB) {
 		vA.eliminarVecino(vB);
 		vB.eliminarVecino(vA);
@@ -153,29 +153,33 @@ public class Grafo {
 	public ArrayList<Arco> getArcos() {
 		return _arcos;
 	}
-	
+
 	public int tamano() {
 		return _vertices.size();
 	}
-		
+
 	public void eliminarAllArcos() {
 		_puedoEliminarArista = false;
 		_isCompleto = false;
-		for (Arco a : _arcos)
-		 eliminarArco(a);
+		Iterator<Arco> it = _arcos.iterator();
+		while (it.hasNext()) {
+			Arco arco = it.next();
+			if (arco.getVerticeA().get_vecinos() != null || arco.getVerticeB().get_vecinos() != null)
+				eliminarVecinos(arco.getVerticeA(), arco.getVerticeB());
+			it.remove();
+		}
 	}
-	
+
 	public void eliminarAllVertices() {
 		_puedoEliminarArista = false;
 		_isCompleto = false;
-		for (Vertice v : _vertices)
-			eliminarVertice(getVertice(v));
-		}
-	
+		_vertices.clear();
+	}
+
 	public int getCantidadDeClusters() {
 		return _cantidadDeClusters;
 	}
-	
+
 	public Vertice getVertice(Vertice vA) throws IllegalArgumentException {
 		for (Vertice v : _vertices) {
 			if (v.equals(vA))
@@ -187,12 +191,12 @@ public class Grafo {
 	@Override
 	public String toString() {
 		return "Vertices= " + _vertices + ", Arcos=" + _arcos;
-	}	
+	}
 
 	public void sumarCluster() {
 		_cantidadDeClusters++;
 	}
-	
+
 	public boolean getIsCompleto() {
 		return _isCompleto;
 	}
@@ -207,6 +211,15 @@ public class Grafo {
 
 	public void setPuedoEliminarArista(boolean value) {
 		_puedoEliminarArista = value;
+	}
+
+	public boolean esHoja(Arco a) {
+		return a.getVerticeA().get_vecinos().size() < 2 || a.getVerticeB().get_vecinos().size() < 2;
+	}
+
+	public boolean esHojaAislada(Arco a) {
+		return a.getVerticeA().get_vecinos().contains(a.getVerticeB())
+				&& a.getVerticeB().get_vecinos().contains(a.getVerticeA());
 	}
 
 }
