@@ -38,7 +38,6 @@ public class GestorArchivos {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("PASO 1");
 		return g;
 	}
 

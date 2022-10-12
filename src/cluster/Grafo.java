@@ -218,8 +218,10 @@ public class Grafo {
 	}
 
 	public boolean esHojaAislada(Arco a) {
-		return a.getVerticeA().get_vecinos().contains(a.getVerticeB())
-				&& a.getVerticeB().get_vecinos().contains(a.getVerticeA());
+		Vertice vA = getVertice(a.getVerticeA());
+		Vertice vB = getVertice(a.getVerticeB());
+		return vA.get_vecinos().size() == 1 && vA.esVecino(vB)
+				&& vB.get_vecinos().size() == 1  && vB.esVecino(vA);
 	}
 
 }

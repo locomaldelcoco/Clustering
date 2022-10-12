@@ -1,5 +1,6 @@
-package cluster;
+package clusterTest;
 
+import cluster.*;
 import static org.junit.Assert.*;
 
 import org.junit.Test;

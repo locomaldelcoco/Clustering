@@ -1,6 +1,7 @@
-package cluster;
+package clusterTest;
 
 import static org.junit.Assert.*;
+import cluster.*;
 import org.junit.Before;
 import org.junit.Test;
 
