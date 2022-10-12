@@ -17,10 +17,12 @@ import org.openstreetmap.gui.jmapviewer.Coordinate;
 public class Mediator {
 	private Interfaz _interfaz;
 	private Grafo _g;
+	private boolean isKruskalAplicado;
 
 	public Mediator(Interfaz interfaz) {
 		_interfaz = interfaz;
 		_g = new Grafo();
+		isKruskalAplicado = false;
 	}
 
 	public void completarGrafo() {
@@ -60,10 +62,16 @@ public class Mediator {
 		return ret;
 	}
 	
-	public void eliminarArcoMasPesado() {
+	public void crearCluster() {
+		if(!isKruskalAplicado) {
+			_interfaz.cambiarTextoEstado("NO SE PUEDE CREAR CLUSTER");
+			return;
+		}
+		
 		if (!AlgoritmoKruskal.puedoEliminarArista(_g)) {
-			_interfaz.cambiarTextoEstado("NO SE PUEDE ELIMINAR ARISTA - NÚMERO ÓPTIMO DE CLUSTERS");
+			_interfaz.cambiarTextoEstado("NO SE PUEDE CREAR CLUSTER - NÚMERO ÓPTIMO DE CLUSTERS");
 			_g.setPuedoEliminarArista(true);
+			_interfaz.updateFrame();
 			return;
 		}
 		_g.eliminarArcoMasPesado();
@@ -76,30 +84,36 @@ public class Mediator {
 	}
 
 	public void aplicarKruskal() throws InterruptedException, ExecutionException {
-		if (_g.getArcos().size() < _g.tamano()-1) {
+		if (_g.getVertices().size() < 1  || _g.getArcos().size() < _g.tamano()-1) {
 			_interfaz.cambiarTextoEstado("No se puede aplicar - Grafo no conexo");
 			_interfaz.updateFrame();
 			return;
 		}
-		if (_g.getVertices().size() < 1)
-			return;
 		MediatorAplicarKruskal thread = new MediatorAplicarKruskal(this, _g);
 		thread.execute();
 		_g = thread.get();
 	}
+	
+	public void setIsKruskalAplicado(boolean value) {
+		isKruskalAplicado = value;
+
+	}
 
 	public boolean agregarVertice(double lat, double lon) {
 		_interfaz.cambiarTextoEstado("Coordenada (" + lat + ", " + lon + ") - Agregada");
+		isKruskalAplicado = false;
 		return _g.agregarVertice(new Vertice(lat, lon));
 	}
 
 	public void eliminarArcos() {
 		_interfaz.cambiarTextoEstado("ARCOS ELIMINADOS!");
+		isKruskalAplicado = false;
 		_g.eliminarAllArcos();
 	}
 
 	public void eliminarVertices() {
 		_interfaz.cambiarTextoEstado("VÉRTICES ELIMINADOS!");
+		isKruskalAplicado = false;
 		_g.eliminarAllVertices();
 
 	}
@@ -109,6 +123,7 @@ public class Mediator {
 	}
 
 	public void cargarGrafo(String s) {
+		isKruskalAplicado = false;
 		_g = GestorArchivos.cargarGrafo(s);
 		_g.inicializarVecinos();
 
@@ -131,6 +146,7 @@ public class Mediator {
 		Vertice vA = new Vertice(c[0].getLat(), c[0].getLon());
 		Vertice vB = new Vertice(c[1].getLat(), c[1].getLon());
 		_interfaz.cambiarTextoEstado("Arco [(" + vA + ") , (" + vB + ")] - Agregado");
+		isKruskalAplicado = false;
 		return _g.agregarArco(vA, vB, DistanciaEuclidea.distancia(vA, vB));
 	}
 
@@ -138,6 +154,7 @@ public class Mediator {
 		Vertice v = new Vertice(c.getLat(), c.getLon());
 		_g.eliminarArcosDeVertice(_g.getVertice(v));
 		_g.eliminarVertice(v);
+		isKruskalAplicado = false;
 		_interfaz.cambiarTextoEstado("Coordenada " + c + " - Eliminada");
 	}
 

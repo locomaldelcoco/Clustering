@@ -35,7 +35,7 @@ public class Interfaz {
 	private JFrame frame;
 	private JPanel mapContainer;
 	private JMapViewer mapa;
-	private JButton btnEliminarArco;
+	private JButton btnCrearCluster;
 	private JPanel panelDeUsuario;
 	private Mediator mediator;
 	private JComboBox menuSeleccionArchivo;
@@ -113,7 +113,7 @@ public class Interfaz {
 		btnGuardarGrafo = Recurso.setupBtnGuardarGrafo();
 		btnDibujarGrafoCompleto = Recurso.setupBtnDibujarGrafoCompleto();
 		btnKruskal = Recurso.setupBtnKruskal(); 
-		btnEliminarArco = Recurso.setupBtnEliminarArco();
+		btnCrearCluster = Recurso.setupBtnCrearCluster();
 		btnEliminarAllArcos = Recurso.setupBtnEliminarAllArcos();
 		btnEliminarAllVertices = Recurso.setupBtnEliminarAllVertices();
 		btnAgregarVertice = Recurso.setupBtnAgregarVertice();
@@ -125,7 +125,7 @@ public class Interfaz {
 		panelDeUsuario.add(btnGuardarGrafo);
 		panelDeUsuario.add(btnDibujarGrafoCompleto);
 		panelDeUsuario.add(btnKruskal);
-		panelDeUsuario.add(btnEliminarArco);
+		panelDeUsuario.add(btnCrearCluster);
 		panelDeUsuario.add(btnEliminarAllArcos);
 		panelDeUsuario.add(btnEliminarAllVertices);
 		panelDeUsuario.add(btnAgregarVertice);
@@ -145,9 +145,9 @@ public class Interfaz {
 	}
 
 	private void addPanelDeUsuarioEvents() {
-		btnEliminarArco.addActionListener(new ActionListener() {
+		btnCrearCluster.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mediator.eliminarArcoMasPesado();
+				mediator.crearCluster();
 				mostrarArcos();
 			}
 		});
@@ -370,7 +370,7 @@ public class Interfaz {
 		btnGuardarGrafo.setEnabled(false);
 		btnDibujarGrafoCompleto.setEnabled(false);
 		btnKruskal.setEnabled(false);
-		btnEliminarArco.setEnabled(false);
+		btnCrearCluster.setEnabled(false);
 		btnEliminarAllArcos.setEnabled(false);
 		btnEliminarAllVertices.setEnabled(false);
 		btnAgregarVertice.setEnabled(false);
@@ -385,7 +385,7 @@ public class Interfaz {
 		btnGuardarGrafo.setEnabled(true);
 		btnDibujarGrafoCompleto.setEnabled(true);
 		btnKruskal.setEnabled(true);
-		btnEliminarArco.setEnabled(true);
+		btnCrearCluster.setEnabled(true);
 		btnEliminarAllArcos.setEnabled(true);
 		btnEliminarAllVertices.setEnabled(true);
 		btnAgregarVertice.setEnabled(true);

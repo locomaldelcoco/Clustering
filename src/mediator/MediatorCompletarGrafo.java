@@ -24,6 +24,7 @@ public class MediatorCompletarGrafo extends SwingWorker<Boolean, Long>{
 				if (!this.isCancelled()) {
 					_m.cambiarTextoEstado("Grafo completado");
 					_m.mostrarArcos();
+					_m.setIsKruskalAplicado(false);
 				}
 			} catch (Exception e) {
 				System.out.println("ERROR: " + e);

@@ -103,7 +103,7 @@ public class Recurso {
 		return btnKruskal;
 	}
 
-	public static JButton setupBtnEliminarArco() {
+	public static JButton setupBtnCrearCluster() {
 		JButton btnEliminarArco = new JButton("Crear Cluster");
 		btnEliminarArco.setBounds(650, 265, 124, 22);
 		btnEliminarArco.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
