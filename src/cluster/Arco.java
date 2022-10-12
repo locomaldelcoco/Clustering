@@ -64,9 +64,7 @@ public class Arco implements Comparable<Arco> {
 	}
 	
 	public boolean esHoja() {
-		return (this.getVerticeA().get_vecinos().size() == 0 || this.getVerticeA().get_vecinos().size() == 1) 
-												||
-			(this.getVerticeB().get_vecinos().size() == 0 || this.getVerticeB().get_vecinos().size() == 1); 
+		return this.getVerticeA().get_vecinos().size() < 2 ||	this.getVerticeB().get_vecinos().size() < 2; 
 	}
 	
 	public boolean esHojaSuelta() {

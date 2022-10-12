@@ -10,14 +10,17 @@ public class Grafo {
 	private ArrayList<Vertice> _vertices;
 	@Expose
 	private ArrayList<Arco> _arcos;
-	private int _CantidadDeClusters;
+	@Expose
+	private int _cantidadDeClusters;
+	@Expose
+	private boolean _puedoEliminarArista;
 	@Expose
 	private boolean _isCompleto;
 
 	public Grafo() {
 		_vertices = new ArrayList<>();
 		_arcos = new ArrayList<>();
-		_CantidadDeClusters=1;
+		_cantidadDeClusters=1;
 		_isCompleto = false;
 	}
 
@@ -40,6 +43,7 @@ public class Grafo {
 		if (_vertices.contains(v))
 			return false;
 		_isCompleto = false;
+		_puedoEliminarArista = false;
 		_vertices.add(v);
 		return true;
 	}
@@ -71,16 +75,26 @@ public class Grafo {
 			return false;
 		}
 		_arcos.add(a);
+		_puedoEliminarArista = false;
 		agregarVecinos(vA, vB);
 		return true;
 	}
 
 	public void eliminarArco(Arco arco) {
+		System.out.println("ARCO ELIMINADO NASI:  " + arco);
 		if (arco == null) {
 			throw new IllegalArgumentException("El parametro no puede ser null");
 		}
 		eliminarVecinos(arco.getVerticeA(), arco.getVerticeB());
-		_arcos.remove(arco);
+
+		Iterator<Arco> it = _arcos.iterator();
+		while (it.hasNext()) {
+			Arco a = it.next();
+			if (a.equals(arco))
+				it.remove();
+		}
+
+		_puedoEliminarArista = false;
 		_isCompleto = false;
 	}
 
@@ -97,6 +111,7 @@ public class Grafo {
 			throw new IllegalArgumentException("El parametro no puede ser null");
 		}
 		_vertices.remove(v);
+		_puedoEliminarArista = false;
 		_isCompleto = false;
 	}
 
@@ -104,11 +119,9 @@ public class Grafo {
 		if (v == null) {
 			throw new IllegalArgumentException("El parametro no puede ser null");
 		}
-		Iterator<Arco> it = _arcos.iterator();
-		while (it.hasNext()) {
-			Arco a = it.next();
+		for (Arco a : _arcos) {
 			if (a.contiene(v))
-				it.remove();
+				eliminarArco(a);
 		}
 		_isCompleto = false;
 	}
@@ -146,17 +159,21 @@ public class Grafo {
 	}
 		
 	public void eliminarAllArcos() {
+		_puedoEliminarArista = false;
 		_isCompleto = false;
-		_arcos.clear();
+		for (Arco a : _arcos)
+		 eliminarArco(a);
 	}
 	
 	public void eliminarAllVertices() {
+		_puedoEliminarArista = false;
 		_isCompleto = false;
-		_vertices.clear();
-	}
+		for (Vertice v : _vertices)
+			eliminarVertice(getVertice(v));
+		}
 	
 	public int getCantidadDeClusters() {
-		return _CantidadDeClusters;
+		return _cantidadDeClusters;
 	}
 	
 	public Vertice getVertice(Vertice vA) throws IllegalArgumentException {
@@ -173,7 +190,7 @@ public class Grafo {
 	}	
 
 	public void sumarCluster() {
-		_CantidadDeClusters++;
+		_cantidadDeClusters++;
 	}
 	
 	public boolean getIsCompleto() {
@@ -181,7 +198,15 @@ public class Grafo {
 	}
 
 	public void restarCluster() {
-		_CantidadDeClusters--;
+		_cantidadDeClusters--;
+	}
+
+	public boolean getPuedoEliminarArista() {
+		return _puedoEliminarArista;
+	}
+
+	public void setPuedoEliminarArista(boolean value) {
+		_puedoEliminarArista = value;
 	}
 
 }

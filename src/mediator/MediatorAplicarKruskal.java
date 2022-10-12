@@ -24,11 +24,9 @@ public class MediatorAplicarKruskal extends SwingWorker<Grafo, Long>{
 			try {
 				if (!this.isCancelled()) {
 					_m.cambiarTextoEstado("Kruskal aplicado");
-					_m.setIsCompleto(false);
 					_m.mostrarArcos();
 				}
 			} catch (Exception e) {
-				_m._isCompleto = false;
 				System.out.println("ERROR: " + e);
 			}
 	}

@@ -17,16 +17,14 @@ import org.openstreetmap.gui.jmapviewer.Coordinate;
 public class Mediator {
 	private Interfaz _interfaz;
 	private Grafo _g;
-	protected boolean _isCompleto;
 
 	public Mediator(Interfaz interfaz) {
 		_interfaz = interfaz;
 		_g = new Grafo();
-		_isCompleto = _g.getIsCompleto();
 	}
 
 	public void completarGrafo() {
-		if (_isCompleto) {
+		if (_g.getIsCompleto()) {
 			_interfaz.cambiarTextoEstado("Grafo ya es completo");
 			_interfaz.updateFrame();
 			return;
@@ -62,13 +60,14 @@ public class Mediator {
 		return ret;
 	}
 	
-	public void calcularClusters() {
-		AlgoritmoKruskal.calcularClusters(_g);
-	}
-	
 	public void eliminarArcoMasPesado() {
+		if (!AlgoritmoKruskal.puedoEliminarArista(_g)) {
+			_interfaz.cambiarTextoEstado("NO SE PUEDE ELIMINAR ARISTA - NÚMERO ÓPTIMO DE CLUSTERS");
+			_g.setPuedoEliminarArista(true);
+			return;
+		}
 		_g.eliminarArcoMasPesado();
-		_interfaz.cambiarTextoEstado("Arco más pesado eliminado");
+		_interfaz.cambiarTextoEstado("CLUSTER CREADO");
 	}
 
 	public static String[] getArchivos() {
@@ -82,7 +81,6 @@ public class Mediator {
 			_interfaz.updateFrame();
 			return;
 		}
-		_isCompleto = false;
 		if (_g.getVertices().size() < 1)
 			return;
 		MediatorAplicarKruskal thread = new MediatorAplicarKruskal(this, _g);
@@ -91,19 +89,16 @@ public class Mediator {
 	}
 
 	public boolean agregarVertice(double lat, double lon) {
-		_isCompleto = false;
 		_interfaz.cambiarTextoEstado("Coordenada (" + lat + ", " + lon + ") - Agregada");
 		return _g.agregarVertice(new Vertice(lat, lon));
 	}
 
 	public void eliminarArcos() {
-		_isCompleto = false;
 		_interfaz.cambiarTextoEstado("ARCOS ELIMINADOS!");
 		_g.eliminarAllArcos();
 	}
 
 	public void eliminarVertices() {
-		_isCompleto = false;
 		_interfaz.cambiarTextoEstado("VÉRTICES ELIMINADOS!");
 		_g.eliminarAllVertices();
 
@@ -124,7 +119,6 @@ public class Mediator {
 			Vertice vB = a.getVerticeB();
 			_g.agregarArco(_g.getVertice(vA), _g.getVertice(vB), a.getDistancia());
 		}
-		_isCompleto = _g.getIsCompleto();
 		_interfaz.cambiarTextoEstado("Archivo " + s + " - Cargado");
 	}
 
@@ -144,7 +138,6 @@ public class Mediator {
 		Vertice v = new Vertice(c.getLat(), c.getLon());
 		_g.eliminarArcosDeVertice(_g.getVertice(v));
 		_g.eliminarVertice(v);
-		_isCompleto = false;
 		_interfaz.cambiarTextoEstado("Coordenada " + c + " - Eliminada");
 	}
 
@@ -154,9 +147,5 @@ public class Mediator {
 	
 	public void cambiarTextoEstado(String s) {
 		_interfaz.cambiarTextoEstado(s);
-	}
-	
-	public void setIsCompleto(Boolean value) {
-		_isCompleto = value;
 	}
 }

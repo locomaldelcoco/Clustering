@@ -55,8 +55,9 @@ public class AlgoritmoKruskal{
 		return agm;
 	}
 	
-	static boolean numeroOptimo;
-	public static void calcularClusters(Grafo agm) {
+	
+	public static boolean puedoEliminarArista(Grafo agm) {
+		boolean puedoEliminarArista = agm.getPuedoEliminarArista();
 		Arco pesado = agm.arcoMasPesado();
 		boolean esHoja = true;
 		System.out.println("VECINOS B"+ pesado.getVerticeB().get_vecinos().toString() + "   "+ pesado.getVerticeA());
@@ -65,21 +66,21 @@ public class AlgoritmoKruskal{
 		if( pesado.esHoja()) {
 			esHoja = true;
 			
-			if(esHoja && numeroOptimo){
-				JOptionPane.showMessageDialog(null, "NUMERO OPTIMO RECOMENDABLE DE CLUSTERS : " + agm.getCantidadDeClusters());
-				numeroOptimo=false;
+			if(esHoja && puedoEliminarArista){
+				puedoEliminarArista=false;
 			}
 			System.out.println("ES HOJA Y Hay: "+ agm.getCantidadDeClusters() + " Clusters");
 		}
-		if( !pesado.esHoja()) {
+		else if( !pesado.esHoja()) {
 			esHoja = false;
-			numeroOptimo = true;
+			puedoEliminarArista = true;
 			agm.sumarCluster();
 			System.out.println("NO ES HOJA Y Hay: "+ agm.getCantidadDeClusters() + " Clusters");
 		}
-		if( pesado.esHoja() && pesado.esHojaSuelta()) {
+		else if( pesado.esHoja() && pesado.esHojaSuelta()) {
 			agm.restarCluster();
 		}
+		return puedoEliminarArista;
 		
 	}
 	
